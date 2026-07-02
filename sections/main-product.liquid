@@ -1,0 +1,261 @@
+<!-- Premium Custom Product Page Section -->
+<div class="product-page-wrapper">
+  <div class="product-core-container">
+    
+    <!-- Left Column: Product Gallery -->
+    <div class="product-gallery-col">
+      <div class="main-image-viewport">
+        {% if product.featured_image %}
+          <img src="{{ product.featured_image | img_url: '800x' }}" alt="{{ product.title | escape }}">
+        {% else %}
+          <!-- Fallback image from Unsplash for setup -->
+          <img src="https://images.unsplash.com/photo-1618886614638-80e3c103d31a?auto=format&fit=crop&q=80&w=800" alt="Product Dummy">
+        {% endif %}
+      </div>
+    </div>
+
+    <!-- Right Column: Product Checkout Actions -->
+    <div class="product-details-col">
+      <span class="product-brand-vendor">{{ product.vendor | default: 'BRAND POINT' }}</span>
+      <h1 class="product-main-title">{{ product.title | default: 'Oversized Premium Heavyweight Tee' }}</h1>
+      
+      <div class="product-price-bracket">
+        <span class="current-price-tag">{{ product.price | money | default: '₹2,499' }}</span>
+        <span class="old-price-tag">₹3,499</span>
+        <span class="badge-saved-percentage">SAVE 28%</span>
+      </div>
+
+      <div class="product-meta-reviews">
+        <span class="rating-stars-yellow">★★★★★</span>
+        <span class="rating-numeric-count">(48 verified reviews)</span>
+      </div>
+
+      <hr class="divider-line">
+
+      <!-- Product Form for Variants -->
+      {% form 'product', product, id: 'AddToCartForm' %}
+        <!-- Size Selection Block -->
+        <div class="variant-selector-block">
+          <label class="variant-label">SELECT SIZE</label>
+          <div class="size-swatch-grid">
+            <div class="swatch-item">S</div>
+            <div class="swatch-item active">M</div>
+            <div class="swatch-item">L</div>
+            <div class="swatch-item">XL</div>
+          </div>
+        </div>
+
+        <!-- Quantity & Add Button Row -->
+        <div class="purchase-actions-row">
+          <div class="quantity-picker-box">
+            <button type="button" class="qty-btn">-</button>
+            <input type="number" id="Quantity" name="quantity" value="1" min="1" class="qty-input">
+            <button type="button" class="qty-btn">+</button>
+          </div>
+          
+          <button type="submit" name="add" id="AddToCartBtn" class="btn-primary-add-cart">
+            ADD TO CART
+          </button>
+        </div>
+      {% endform %}
+
+      <!-- Minimal Collapse Toggles -->
+      <div class="product-accordion-box">
+        <div class="accordion-item">
+          <h3 class="accordion-title">DESCRIPTION <span class="icon">+</span></h3>
+          <p class="accordion-content">Crafted from 100% premium heavyweight terry cotton. Featuring dropped shoulders, a tight ribbed neck rib, and an ultra-soft feel designed for daily comfortable streetwear durability.</p>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<style>
+  .product-page-wrapper {
+    background-color: #000000;
+    color: #ffffff;
+    padding: 40px 15px;
+    min-height: 80vh;
+  }
+  .product-core-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 30px;
+  }
+  .main-image-viewport {
+    width: 100%;
+    aspect-ratio: 3 / 4;
+    background-color: #111111;
+    border-radius: 6px;
+    overflow: hidden;
+  }
+  .main-image-viewport img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  .product-brand-vendor {
+    font-size: 11px;
+    color: #666666;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    display: block;
+    margin-bottom: 8px;
+  }
+  .product-main-title {
+    font-size: 24px;
+    font-weight: 600;
+    margin: 0 0 15px 0;
+    letter-spacing: 0.5px;
+  }
+  .product-price-bracket {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 12px;
+  }
+  .current-price-tag {
+    font-size: 22px;
+    font-weight: 700;
+  }
+  .old-price-tag {
+    font-size: 14px;
+    color: #555555;
+    text-decoration: line-through;
+  }
+  .badge-saved-percentage {
+    background-color: #ffffff;
+    color: #000000;
+    font-size: 10px;
+    font-weight: 700;
+    padding: 2px 8px;
+    border-radius: 10px;
+  }
+  .rating-stars-yellow {
+    color: #ffcc00;
+    font-size: 12px;
+  }
+  .rating-numeric-count {
+    color: #666666;
+    font-size: 11px;
+    margin-left: 5px;
+  }
+  .divider-line {
+    border: 0;
+    border-top: 1px solid #111111;
+    margin: 25px 0;
+  }
+  .variant-label {
+    font-size: 11px;
+    font-weight: 600;
+    color: #888888;
+    letter-spacing: 1.5px;
+    display: block;
+    margin-bottom: 12px;
+  }
+  .size-swatch-grid {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 30px;
+  }
+  .swatch-item {
+    border: 1px solid #333333;
+    padding: 10px 20px;
+    font-size: 12px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+  }
+  .swatch-item.active, .swatch-item:hover {
+    border-color: #ffffff;
+    background-color: #ffffff;
+    color: #000000;
+  }
+  .purchase-actions-row {
+    display: flex;
+    gap: 15px;
+    margin-bottom: 40px;
+  }
+  .quantity-picker-box {
+    display: flex;
+    border: 1px solid #333333;
+    align-items: center;
+  }
+  .qty-btn {
+    background: transparent;
+    border: 0;
+    color: #ffffff;
+    width: 35px;
+    height: 45px;
+    cursor: pointer;
+    font-size: 16px;
+  }
+  .qty-input {
+    background: transparent;
+    border: 0;
+    color: #ffffff;
+    width: 40px;
+    text-align: center;
+    font-size: 14px;
+    -moz-appearance: textfield;
+  }
+  .qty-input::-webkit-outer-spin-button, .qty-input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+  }
+  .btn-primary-add-cart {
+    flex: 1;
+    background-color: #ffffff;
+    color: #000000;
+    border: 1px solid #ffffff;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+  }
+  .btn-primary-add-cart:hover {
+    background-color: transparent;
+    color: #ffffff;
+  }
+  .product-accordion-box {
+    border-top: 1px solid #111111;
+  }
+  .accordion-item {
+    padding: 15px 0;
+  }
+  .accordion-title {
+    font-size: 12px;
+    font-weight: 600;
+    display: flex;
+    justify-content: space-between;
+    letter-spacing: 1px;
+    margin: 0 0 10px 0;
+  }
+  .accordion-content {
+    font-size: 13px;
+    color: #aaaaaa;
+    line-height: 1.6;
+    margin: 0;
+  }
+
+  @media (min-width: 768px) {
+    .product-core-container {
+      grid-template-columns: 1.1fr 0.9fr;
+      gap: 50px;
+      padding: 20px 0;
+    }
+    .product-main-title {
+      font-size: 32px;
+    }
+  }
+</style>
+
+{% schema %}
+{
+  "name": "Main Product Details",
+  "settings": []
+}
+{% endschema %}
