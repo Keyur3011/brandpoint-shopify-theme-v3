@@ -1,0 +1,160 @@
+<!-- Shop By Category Section -->
+<div class="category-section">
+  <div class="section-header">
+    <h2 class="section-title">SHOP BY CATEGORY</h2>
+    <p class="section-subtitle">Explore our curated collections</p>
+  </div>
+
+  <div class="category-grid">
+    <!-- Category 1: Shirts -->
+    <a href="/collections/shirts" class="category-card">
+      <div class="category-overlay"></div>
+      <div class="category-image" style="background-image: url('https://images.unsplash.com/photo-1624378439575-d8705ad7ae80?auto=format&fit=crop&q=80&w=600');"></div>
+      <div class="category-text">SHIRTS</div>
+    </a>
+
+    <!-- Category 2: Denim -->
+    <a href="/collections/denim" class="category-card">
+      <div class="category-overlay"></div>
+      <div class="category-image" style="background-image: url('https://images.unsplash.com/photo-1576995853123-5a10305d93c0?auto=format&fit=crop&q=80&w=600');"></div>
+      <div class="category-text">DENIM</div>
+    </a>
+
+    <!-- Category 3: T-Shirts -->
+    <a href="/collections/t-shirts" class="category-card">
+      <div class="category-overlay"></div>
+      <div class="category-image" style="background-image: url('https://images.unsplash.com/photo-1521572267360-ee0c2909d518?auto=format&fit=crop&q=80&w=600');"></div>
+      <div class="category-text">T-SHIRTS</div>
+    </a>
+
+    <!-- Category 4: Cord Set -->
+    <a href="/collections/cord-set" class="category-card">
+      <div class="category-overlay"></div>
+      <div class="category-image" style="background-image: url('https://images.unsplash.com/photo-1618220179428-22790b461013?auto=format&fit=crop&q=80&w=600');"></div>
+      <div class="category-text">CORD SET</div>
+    </a>
+
+    <!-- Category 5: Track Pants -->
+    <a href="/collections/track-pants" class="category-card">
+      <div class="category-overlay"></div>
+      <div class="category-image" style="background-image: url('https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?auto=format&fit=crop&q=80&w=600');"></div>
+      <div class="category-text">TRACK</div>
+    </a>
+
+    <!-- Category 6: Accessories -->
+    <a href="/collections/accessories" class="category-card">
+      <div class="category-overlay"></div>
+      <div class="category-image" style="background-image: url('https://images.unsplash.com/photo-1523275335684-37898b6baf30?auto=format&fit=crop&q=80&w=600');"></div>
+      <div class="category-text">ACCESSORIES</div>
+    </a>
+  </div>
+</div>
+
+<style>
+  .category-section {
+    background-color: #000000;
+    padding: 60px 20px;
+    max-width: 1400px;
+    margin: 0 auto;
+  }
+
+  .section-header {
+    text-align: center;
+    margin-bottom: 40px;
+  }
+
+  .section-title {
+    font-size: 26px;
+    font-weight: 500;
+    color: #ffffff;
+    letter-spacing: 3px;
+    margin: 0 0 10px 0;
+    text-transform: uppercase;
+  }
+
+  .section-subtitle {
+    font-size: 12px;
+    color: #777777;
+    letter-spacing: 1px;
+    margin: 0;
+  }
+
+  /* Grid Layout - 2 columns on mobile, matching your screenshots perfectly */
+  .category-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 15px;
+  }
+
+  .category-card {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 3 / 4; /* Perfect vertical rectangle shape */
+    overflow: hidden;
+    display: block;
+    text-decoration: none;
+    background-color: #111111;
+  }
+
+  .category-image {
+    width: 100%;
+    height: 100%;
+    background-size: cover;
+    background-position: center;
+    transition: transform 0.5s ease;
+  }
+
+  .category-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(to top, rgba(0, 0, 0, 0.7) 0%, rgba(0, 0, 0, 0.1) 50%);
+    z-index: 2;
+  }
+
+  .category-text {
+    position: absolute;
+    bottom: 20px;
+    left: 20px;
+    color: #ffffff;
+    font-size: 14px;
+    font-weight: 600;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    z-index: 3;
+    font-family: var(--font-heading);
+  }
+
+  /* Zoom Effect on Hover */
+  .category-card:hover .category-image {
+    transform: scale(1.05);
+  }
+
+  /* Desktop Optimization */
+  @media (min-width: 992px) {
+    .category-section {
+      padding: 80px 40px;
+    }
+    .category-grid {
+      grid-template-columns: repeat(3, 1fr); /* 3 columns on big screens */
+      gap: 25px;
+    }
+    .section-title {
+      font-size: 32px;
+    }
+    .category-text {
+      font-size: 16px;
+      bottom: 25px;
+      left: 25px;
+    }
+  }
+</style>
+
+{% schema %}
+{
+  "name": "Category Grid",
+  "settings": []
+}
+{% endschema %}
