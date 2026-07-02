@@ -1,0 +1,52 @@
+<div class="announcement-bar-master">
+  <div class="announcement-slider">
+    <div class="announcement-item">
+      <span class="announcement-text">FREE SHIPPING ON ORDERS ABOVE ₹2,999 | USE CODE: <strong class="highlight-code">LUXURY25</strong></span>
+    </div>
+  </div>
+</div>
+
+<style>
+  .announcement-bar-master {
+    background-color: #ffffff; /* Contrast Clean White */
+    color: #000000; /* Deep Bold Black */
+    padding: 10px 0;
+    text-align: center;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    border-bottom: 1px solid #eeeeee;
+    letter-spacing: 1.5px;
+    font-weight: 600;
+  }
+
+  .announcement-slider {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .announcement-item {
+    font-size: 10px; /* Precise and sharp mobile view sizing */
+    text-transform: uppercase;
+  }
+
+  .highlight-code {
+    text-decoration: underline;
+    font-weight: 800;
+    margin-left: 2px;
+  }
+
+  /* Desktop View Optimization */
+  @media (min-width: 768px) {
+    .announcement-item {
+      font-size: 11px;
+      letter-spacing: 2px;
+    }
+  }
+</style>
+
+{% schema %}
+{
+  "name": "Announcement Bar",
+  "settings": []
+}
+{% endschema %}
