@@ -1,0 +1,166 @@
+<!-- Announcement Bar Section -->
+<div class="announcement-bar">
+  <p class="announcement-bar__message">
+    FREE SHIPPING ON ORDERS ABOVE ₹2,999 | USE CODE: <span class="highlight">LUXURY25</span>
+  </p>
+</div>
+
+<!-- Main Header Section -->
+<header class="site-header">
+  <div class="header-container">
+    
+    <!-- Left: Hamburger Menu Icon -->
+    <div class="header-item header-item--menu">
+      <button type="button" class="icon-button menu-toggle" aria-label="Menu">
+        <svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" stroke-width="1.5" fill="none"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
+      </button>
+    </div>
+
+    <!-- Center: Logo -->
+    <div class="header-item header-item--logo">
+      <a href="/" class="site-logo">BRAND POINT</a>
+    </div>
+
+    <!-- Right: Icons (Search, Account, Wishlist, Cart) -->
+    <div class="header-item header-item--icons">
+      <!-- Search -->
+      <a href="/search" class="icon-button" aria-label="Search">
+        <svg viewBox="0 0 24 24" width="20" height="20" stroke="currentColor" stroke-width="1.5" fill="none"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+      </a>
+      <!-- Account -->
+      <a href="/account" class="icon-button" aria-label="Account">
+        <svg viewBox="0 0 24 24" width="20" height="20" stroke="currentColor" stroke-width="1.5" fill="none"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+      </a>
+      <!-- Wishlist -->
+      <a href="/pages/wishlist" class="icon-button wishlist-icon" aria-label="Wishlist">
+        <svg viewBox="0 0 24 24" width="20" height="20" stroke="currentColor" stroke-width="1.5" fill="none"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>
+        <span class="icon-badge">0</span>
+      </a>
+      <!-- Cart -->
+      <a href="/cart" class="icon-button cart-icon" aria-label="Cart">
+        <svg viewBox="0 0 24 24" width="20" height="20" stroke="currentColor" stroke-width="1.5" fill="none"><circle cx="9" cy="21" r="1"></circle><circle cx="20" cy="21" r="1"></circle><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path></svg>
+        <span class="icon-badge">0</span>
+      </a>
+    </div>
+
+  </div>
+</header>
+
+<style>
+  /* Announcement Bar Styles */
+  .announcement-bar {
+    background-color: #ffffff;
+    color: #000000;
+    text-align: center;
+    padding: 8px 4px;
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    font-family: var(--font-heading);
+    border-bottom: 1px solid #e5e5e5;
+  }
+  .announcement-bar .highlight {
+    font-weight: 700;
+    text-decoration: underline;
+  }
+
+  /* Header Styles */
+  .site-header {
+    background-color: rgba(0, 0, 0, 0.95);
+    backdrop-filter: blur(5px);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    border-bottom: 1px solid var(--border-color);
+  }
+  .header-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 20px;
+    max-width: 1400px;
+    margin: 0 auto;
+  }
+  .header-item {
+    display: flex;
+    align-items: center;
+  }
+  .header-item--menu {
+    flex: 1;
+    justify-content: flex-start;
+  }
+  .header-item--logo {
+    flex: 2;
+    justify-content: center;
+  }
+  .header-item--icons {
+    flex: 1;
+    justify-content: flex-end;
+    gap: 15px;
+  }
+
+  /* Logo Typography */
+  .site-logo {
+    color: #ffffff;
+    text-decoration: none;
+    font-size: 20px;
+    font-weight: 700;
+    letter-spacing: 3px;
+    font-family: var(--font-heading);
+  }
+
+  /* Buttons & Icons */
+  .icon-button {
+    background: none;
+    border: none;
+    color: #ffffff;
+    padding: 5px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+    position: relative;
+    transition: color 0.2s ease;
+  }
+  .icon-button:hover {
+    color: var(--text-muted);
+  }
+  .icon-badge {
+    position: absolute;
+    top: -2px;
+    right: -4px;
+    background-color: #ffffff;
+    color: #000000;
+    font-size: 8px;
+    font-weight: 700;
+    border-radius: 50%;
+    width: 14px;
+    height: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  /* Mobile Responsive adjustments */
+  @media (max-width: 768px) {
+    .header-container {
+      padding: 12px 15px;
+    }
+    .site-logo {
+      font-size: 18px;
+      letter-spacing: 2px;
+    }
+    .header-item--icons {
+      gap: 10px;
+    }
+  }
+</style>
+
+{% schema %}
+{
+  "name": "Header",
+  "settings": []
+}
+{% endschema %}
