@@ -1,0 +1,1 @@
+# brandpoint-shopify-theme-v3
