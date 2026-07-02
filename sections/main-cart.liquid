@@ -1,0 +1,201 @@
+<!-- Premium Minimal Cart Section -->
+<div class="cart-page-wrapper">
+  <div class="cart-inner-container">
+    <h1 class="cart-title-heading">YOUR BAG</h1>
+
+    {% if cart.item_count > 0 %}
+      <form action="/cart" method="post" novalidate class="cart-active-form">
+        <div class="cart-table-layout">
+          
+          <!-- Loop through items loaded in cart pipeline -->
+          {% for item in cart.items %}
+            <div class="cart-product-row">
+              <div class="cart-item-image-box">
+                <img src="{{ item.image | img_url: '200x' }}" alt="{{ item.title | escape }}">
+              </div>
+              
+              <div class="cart-item-details-box">
+                <h2 class="cart-item-name"><a href="{{ item.url }}">{{ item.product.title }}</a></h2>
+                <p class="cart-item-variant-meta">{{ item.variant.title }}</p>
+                <div class="cart-item-price-element">{{ item.final_price | money }}</div>
+              </div>
+
+              <div class="cart-item-actions-box">
+                <div class="cart-qty-picker">
+                  <input type="number" name="updates[]" id="updates_{{ item.key }}" value="{{ item.quantity }}" min="0" class="cart-qty-input">
+                </div>
+                <a href="/cart/change?line={{ forloop.index }}&quantity=0" class="cart-remove-link">Remove</a>
+              </div>
+            </div>
+          {% endfor %}
+
+        </div>
+
+        <!-- Order Summary Checklist Box -->
+        <div class="cart-summary-card">
+          <div class="summary-row-item subtotal-row">
+            <span>SUBTOTAL</span>
+            <span class="total-price-digit">{{ cart.total_price | money }}</span>
+          </div>
+          <p class="shipping-disclaimer-note">Shipping fees and discount promo codes are computed at checkout.</p>
+          
+          <button type="submit" name="checkout" class="btn-checkout-primary">
+            PROCEED TO CHECKOUT
+          </button>
+        </div>
+      </form>
+    {% else %}
+      <!-- Empty State handling template view -->
+      <div class="cart-empty-state-box">
+        <p class="empty-msg">Your shopping bag is currently empty.</p>
+        <a href="/collections/all" class="btn-continue-shopping">CONTINUE SHOPPING</a>
+      </div>
+    {% endif %}
+
+  </div>
+</div>
+
+<style>
+  .cart-page-wrapper {
+    background-color: #000000;
+    color: #ffffff;
+    padding: 60px 15px;
+    min-height: 70vh;
+  }
+  .cart-inner-container {
+    max-width: 800px;
+    margin: 0 auto;
+  }
+  .cart-title-heading {
+    font-size: 24px;
+    font-weight: 500;
+    letter-spacing: 2px;
+    text-align: center;
+    margin: 0 0 40px 0;
+    text-transform: uppercase;
+  }
+  .cart-table-layout {
+    border-top: 1px solid #111111;
+    margin-bottom: 30px;
+  }
+  .cart-product-row {
+    display: flex;
+    align-items: center;
+    padding: 20px 0;
+    border-bottom: 1px solid #111111;
+    gap: 15px;
+  }
+  .cart-item-image-box {
+    width: 70px;
+    aspect-ratio: 3 / 4;
+    background-color: #111111;
+    overflow: hidden;
+  }
+  .cart-item-image-box img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  .cart-item-details-box {
+    flex: 1;
+  }
+  .cart-item-name {
+    font-size: 14px;
+    font-weight: 500;
+    margin: 0 0 4px 0;
+  }
+  .cart-item-name a {
+    text-decoration: none;
+  }
+  .cart-item-variant-meta {
+    font-size: 11px;
+    color: #666666;
+    margin: 0 0 8px 0;
+  }
+  .cart-item-price-element {
+    font-size: 13px;
+    font-weight: 700;
+  }
+  .cart-item-actions-box {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 10px;
+  }
+  .cart-qty-input {
+    background: transparent;
+    border: 1px solid #333333;
+    color: #ffffff;
+    width: 45px;
+    padding: 6px;
+    text-align: center;
+    font-size: 12px;
+  }
+  .cart-remove-link {
+    font-size: 11px;
+    color: #666666;
+    text-decoration: underline;
+  }
+  .cart-summary-card {
+    background-color: #050505;
+    padding: 25px 20px;
+    border: 1px solid #111111;
+    text-align: right;
+  }
+  .summary-row-item {
+    display: flex;
+    justify-content: space-between;
+    font-size: 12px;
+    letter-spacing: 1px;
+    margin-bottom: 10px;
+  }
+  .subtotal-row {
+    font-size: 14px;
+    font-weight: 600;
+    color: #ffffff;
+  }
+  .total-price-digit {
+    font-size: 18px;
+    font-weight: 700;
+  }
+  .shipping-disclaimer-note {
+    font-size: 11px;
+    color: #555555;
+    margin: 0 0 20px 0;
+  }
+  .btn-checkout-primary {
+    width: 100%;
+    background-color: #ffffff;
+    color: #000000;
+    border: 1px solid #ffffff;
+    padding: 14px 0;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+  }
+  .btn-checkout-primary:hover {
+    background-color: transparent;
+    color: #ffffff;
+  }
+  .cart-empty-state-box {
+    text-align: center;
+    padding: 40px 0;
+  }
+  .empty-msg {
+    color: #666666;
+    font-size: 14px;
+    margin-bottom: 20px;
+  }
+  .btn-continue-shopping {
+    display: inline-block;
+    border: 1px solid #ffffff;
+    color: #ffffff;
+    padding: 12px 30px;
+    font-size: 11px;
+    font-weight: 600;
+    text-decoration: none;
+    letter-spacing: 1px;
+  }
+</style>
