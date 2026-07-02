@@ -1,0 +1,85 @@
+<!doctype html>
+<html class="no-js" lang="{{ request.locale.iso_code }}">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <meta name="theme-color" content="#000000">
+    <link rel="canonical" href="{{ canonical_url }}">
+
+    <title>
+      {{ page_title }}
+      {%- if current_tags %} &ndash; tagged "{{ current_tags | join: ', ' }}"{% endif -%}
+      {%- if current_page != 1 %} &ndash; Page {{ current_page }}{% endif -%}
+      {%- assign escaped_page_title = page_title | escape -%}
+      {%- unless escaped_page_title contains shop.name %} &ndash; {{ shop.name }}{% endunless -%}
+    </title>
+
+    {% if page_description %}
+      <meta name="description" content="{{ page_description | escape }}">
+    {% endif %}
+
+    <!-- Global Variables & Typography Setup -->
+    <style>
+      :root {
+        --bg-color: #000000;
+        --text-color: #ffffff;
+        --accent-color: #ffcc00;
+        --border-color: rgba(255, 255, 255, 0.1);
+        --font-body: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+        --font-heading: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      }
+
+      /* Base Reset Settings */
+      body {
+        margin: 0;
+        padding: 0;
+        background-color: var(--bg-color);
+        color: var(--text-color);
+        font-family: var(--font-body);
+        -webkit-font-smoothing: antialiased;
+        overflow-x: hidden;
+      }
+
+      a {
+        color: inherit;
+      }
+    </style>
+
+    {{ content_for_header }}
+  </head>
+
+  <body>
+    <!-- 1. Announcement Bar Section -->
+    {% section 'announcement-bar' %}
+
+    <!-- 2. Header / Navigation Section -->
+    {% section 'header' %}
+
+    <!-- 3. Main Content Wrapper -->
+    <main id="MainContent" class="content-for-layout focus-none" role="main" tabindex="-1">
+      {% if request.page_type == 'index' %}
+        <!-- Homepage Dynamic Architecture Sections Grid -->
+        {% section 'hero-slider' %}
+        {% section 'category-grid' %}
+        {% section 'trust-badges' %}
+        {% section 'product-grid' %}
+        {% section 'featured-product' %}
+        {% section 'testimonials' %}
+      {% else %}
+        <!-- Content for other subpages like Cart, Accounts, Products, Collections -->
+        {{ content_for_layout }}
+      {% endif %}
+    </main>
+
+    <!-- 4. Footer Section -->
+    {% section 'footer' %}
+
+    <!-- Global JavaScript Configurations for Slider Interactions -->
+    <script>
+      document.addEventListener('DOMContentLoaded', function() {
+        console.log("Brand Point premium theme engine initiated successfully.");
+      });
+    </script>
+  </body>
+</html>
