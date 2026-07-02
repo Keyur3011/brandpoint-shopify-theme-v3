@@ -1,0 +1,120 @@
+<!-- Premium Testimonials Section -->
+<div class="testimonials-section">
+  <div class="section-header">
+    <h2 class="section-title">WHAT OUR COMMUNITY SAYS</h2>
+    <p class="section-subtitle">Real reviews from verified Brand Point buyers</p>
+  </div>
+
+  <div class="testimonials-slider">
+    <!-- Review 1 -->
+    <div class="testimonial-card">
+      <div class="testimonial-stars">★★★★★</div>
+      <p class="testimonial-text">
+        "The fit of the Cord Set is absolutely incredible. The fabric feels premium, heavy, and perfect for daily streetwear. Will definitely order more soon!"
+      </p>
+      <div class="testimonial-author">
+        <span class="author-name">Rohan Singh</span>
+        <span class="author-location">Delhi, India</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Review Dots Navigation -->
+  <div class="testimonial-dots">
+    <span class="t-dot active"></span>
+    <span class="t-dot"></span>
+    <span class="t-dot"></span>
+  </div>
+</div>
+
+<style>
+  .testimonials-section {
+    background-color: #050505;
+    padding: 60px 15px;
+    text-align: center;
+    border-top: 1px solid rgba(255, 255, 255, 0.05);
+  }
+
+  .testimonials-slider {
+    max-width: 700px;
+    margin: 0 auto;
+    position: relative;
+  }
+
+  .testimonial-card {
+    padding: 10px 10px 25px 10px;
+  }
+
+  .testimonial-stars {
+    color: #ffcc00;
+    font-size: 14px;
+    letter-spacing: 2px;
+    margin-bottom: 20px;
+  }
+
+  .testimonial-text {
+    font-size: 15px;
+    color: #e5e5e5;
+    line-height: 1.7;
+    font-weight: 300;
+    font-style: italic;
+    margin: 0 0 25px 0;
+  }
+
+  .testimonial-author {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+  }
+
+  .author-name {
+    font-size: 12px;
+    font-weight: 600;
+    color: #ffffff;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+  }
+
+  .author-location {
+    font-size: 10px;
+    color: #666666;
+    letter-spacing: 0.5px;
+  }
+
+  /* Slider Dots */
+  .testimonial-dots {
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+    margin-top: 10px;
+  }
+
+  .t-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background-color: rgba(255, 255, 255, 0.2);
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
+
+  .t-dot.active {
+    background-color: #ffffff;
+  }
+
+  @media (min-width: 768px) {
+    .testimonials-section {
+      padding: 80px 40px;
+    }
+    .testimonial-text {
+      font-size: 18px;
+    }
+  }
+</style>
+
+{% schema %}
+{
+  "name": "Testimonials",
+  "settings": []
+}
+{% endschema %}
