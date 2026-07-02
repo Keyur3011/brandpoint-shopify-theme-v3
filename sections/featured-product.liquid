@@ -1,0 +1,188 @@
+<!-- Premium Featured Product Section -->
+<div class="featured-product-section">
+  <div class="section-header">
+    <h2 class="section-title">FEATURED</h2>
+    <p class="section-subtitle">Editor's picks from the latest collection</p>
+  </div>
+
+  <div class="featured-product-container">
+    <!-- Big Product Image Box -->
+    <div class="featured-image-wrapper">
+      <div class="featured-image" style="background-image: url('https://images.unsplash.com/photo-1552374196-1ab2a1c593e8?auto=format&fit=crop&q=80&w=800');"></div>
+    </div>
+
+    <!-- Product Details Content -->
+    <div class="featured-product-info">
+      <span class="featured-vendor">BOTTOMS</span>
+      <h3 class="featured-item-title">Streetwear Track Pants</h3>
+      
+      <div class="featured-price-rating">
+        <span class="featured-price">₹3,999</span>
+        <span class="featured-stars">★★★★★</span>
+      </div>
+      
+      <p class="featured-description">
+        Premium quality crafted with attention to detail. Perfect for the modern wardrobe.
+      </p>
+      
+      <div class="featured-action-box">
+        <a href="/products/streetwear-track-pants" class="btn-featured-view">VIEW PRODUCT</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<style>
+  .featured-product-section {
+    background-color: #000000;
+    padding: 50px 15px;
+    border-top: 1px solid var(--border-color);
+  }
+
+  .section-header {
+    text-align: center;
+    margin-bottom: 30px;
+  }
+
+  .section-title {
+    font-size: 26px;
+    font-weight: 500;
+    color: #ffffff;
+    letter-spacing: 3px;
+    margin: 0 0 8px 0;
+    text-transform: uppercase;
+  }
+
+  .section-subtitle {
+    font-size: 11px;
+    color: #777777;
+    letter-spacing: 1px;
+    margin: 0;
+  }
+
+  .featured-product-container {
+    max-width: 800px; /* Kept focused and structured like mobile figma */
+    margin: 0 auto;
+    background-color: transparent;
+  }
+
+  /* Big elegant vertical photo frame */
+  .featured-image-wrapper {
+    width: 100%;
+    aspect-ratio: 3 / 4;
+    background-color: #111111;
+    overflow: hidden;
+    border-radius: 8px; /* Slightly soft modern corners as seen in screenshot */
+    margin-bottom: 20px;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+  }
+
+  .featured-image {
+    width: 100%;
+    height: 100%;
+    background-size: cover;
+    background-position: center;
+    transition: transform 0.6s ease;
+  }
+
+  .featured-product-container:hover .featured-image {
+    transform: scale(1.03);
+  }
+
+  /* Typography & Details matching your exact figma layout */
+  .featured-product-info {
+    padding: 0 5px;
+    text-align: left;
+  }
+
+  .featured-vendor {
+    display: block;
+    font-size: 10px;
+    color: #666666;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    margin-bottom: 6px;
+    font-weight: 500;
+  }
+
+  .featured-item-title {
+    font-size: 22px;
+    font-weight: 500;
+    color: #ffffff;
+    margin: 0 0 10px 0;
+    letter-spacing: 0.5px;
+  }
+
+  .featured-price-rating {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    margin-bottom: 15px;
+  }
+
+  .featured-price {
+    font-size: 18px;
+    font-weight: 700;
+    color: #ffffff;
+  }
+
+  .featured-stars {
+    color: #ffcc00;
+    font-size: 12px;
+    letter-spacing: 1px;
+  }
+
+  .featured-description {
+    font-size: 12px;
+    color: #aaaaaa;
+    line-height: 1.6;
+    margin: 0 0 25px 0;
+    font-weight: 300;
+    max-width: 500px;
+  }
+
+  /* Solid Sharp Black Button on White Text or White Outline style */
+  .btn-featured-view {
+    display: inline-block;
+    background-color: #ffffff;
+    color: #000000;
+    padding: 14px 45px;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 2px;
+    text-decoration: none;
+    text-transform: uppercase;
+    transition: all 0.3s ease;
+    border: 1px solid #ffffff;
+  }
+
+  .btn-featured-view:hover {
+    background-color: transparent;
+    color: #ffffff;
+  }
+
+  /* Desktop Optimization to keep it looking clean */
+  @media (min-width: 768px) {
+    .featured-product-container {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      align-items: center;
+      gap: 40px;
+      max-width: 1100px;
+      padding: 20px 0;
+    }
+    .featured-image-wrapper {
+      margin-bottom: 0;
+    }
+    .featured-item-title {
+      font-size: 28px;
+    }
+  }
+</style>
+
+{% schema %}
+{
+  "name": "Featured Product",
+  "settings": []
+}
+{% endschema %}
