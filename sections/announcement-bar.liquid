@@ -1,99 +1,80 @@
-<!-- Uncopyable Cinematic Luxury Announcement Bar -->
-<div class="brandpoint-cinematic-banner">
-  <div class="luxury-scroll-track">
-    <div class="luxury-scroll-content">
-      <span>WELCOME TO BRAND POINT FASHION</span>
-      <span class="luxury-divider">•</span>
-      <span>THE NEW ERA OF STREETWEAR</span>
-      <span class="luxury-divider">•</span>
-      <span>WELCOME TO BRAND POINT FASHION</span>
-      <span class="luxury-divider">•</span>
-      <span>THE NEW ERA OF STREETWEAR</span>
-      <span class="luxury-divider">•</span>
-    </div>
-    <!-- Seamless Loop for Infinite Motion -->
-    <div class="luxury-scroll-content" aria-hidden="true">
-      <span>WELCOME TO BRAND POINT FASHION</span>
-      <span class="luxury-divider">•</span>
-      <span>THE NEW ERA OF STREETWEAR</span>
-      <span class="luxury-divider">•</span>
-      <span>WELCOME TO BRAND POINT FASHION</span>
-      <span class="luxury-divider">•</span>
-      <span>THE NEW ERA OF STREETWEAR</span>
-      <span class="luxury-divider">•</span>
+<!-- Brand Point Premium Moving Announcement Bar (Single Ticker) -->
+<div class="brand-point-announcement-bar">
+  <div class="bp-ticker-wrapper">
+    <div class="bp-ticker-content">
+      <span>THE NEW ERA OF STREETWEAR &nbsp;&nbsp;•&nbsp;&nbsp; WELCOME TO BRAND POINT FASHION &nbsp;&nbsp;•&nbsp;&nbsp; </span>
+      <span>THE NEW ERA OF STREETWEAR &nbsp;&nbsp;•&nbsp;&nbsp; WELCOME TO BRAND POINT FASHION &nbsp;&nbsp;•&nbsp;&nbsp; </span>
+      <span>THE NEW ERA OF STREETWEAR &nbsp;&nbsp;•&nbsp;&nbsp; WELCOME TO BRAND POINT FASHION &nbsp;&nbsp;•&nbsp;&nbsp; </span>
+      <span>THE NEW ERA OF STREETWEAR &nbsp;&nbsp;•&nbsp;&nbsp; WELCOME TO BRAND POINT FASHION &nbsp;&nbsp;•&nbsp;&nbsp; </span>
     </div>
   </div>
 </div>
 
 <style>
-  .brandpoint-cinematic-banner {
-    background: #ffffff; /* प्योर वाइट एलिगेंस */
-    border-bottom: 1px solid #e5e5e5;
-    overflow: hidden;
-    position: relative;
-    width: 100%;
+  /* Fresh and Clean Layout for Top Bar */
+  .brand-point-announcement-bar {
+    background-color: #ffffff;
+    border-bottom: 1px solid #eeeeee;
     padding: 12px 0;
-    display: flex;
-    align-items: center;
+    overflow: hidden;
+    width: 100%;
+    position: relative;
+    z-index: 99999;
   }
-
-  .luxury-scroll-track {
+  
+  .bp-ticker-wrapper {
     display: flex;
-    width: max-content;
-    animation: luxuryPan 25s linear infinite; /* सुपर स्मूथ इंटरनेशनल मोशन */
-  }
-
-  .luxury-scroll-content {
-    display: flex;
-    align-items: center;
-    justify-content: space-around;
+    overflow: hidden;
     white-space: nowrap;
-    width: max-content;
+    width: 100%;
   }
 
-  /* 3D Cinematic Typography */
-  .luxury-scroll-content span {
+  .bp-ticker-content {
+    display: inline-block;
+    padding-left: 100%;
+    animation: bpMarqueeAnimation 30s linear infinite;
+  }
+
+  .bp-ticker-content span {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    font-size: 11px;
+    font-weight: 800;
     color: #000000;
-    font-family: 'Helvetica Neue', Arial, sans-serif;
-    font-size: 13px;
-    font-weight: 900; /* अल्ट्रा-बोल्ड इंप्रेशन */
-    letter-spacing: 4px; /* हाई-एंड फैशन स्पेसिंग */
-    padding: 0 30px;
+    letter-spacing: 2px;
     text-transform: uppercase;
     display: inline-block;
-    
-    /* Secret Micro-Glow Effect जो इसे रियलिस्टिक और अनकॉपीएबल बनाता है */
-    text-shadow: 0px 0px 1px rgba(0,0,0,0.2), 0.5px 0.5px 0px rgba(0,0,0,0.1);
   }
 
-  .luxury-scroll-content .luxury-divider {
-    color: #cccccc;
-    font-size: 16px;
-    padding: 0;
-    font-weight: 400;
+  /* Infinite Scrolling Logic */
+  @keyframes bpMarqueeAnimation {
+    0% {
+      transform: translate3d(0, 0, 0);
+    }
+    100% {
+      transform: translate3d(-100%, 0, 0);
+    }
   }
 
-  /* जब कोई माउस ले जाए तो मोशन हल्का सा थमे (Premium UX Feature) */
-  .brandpoint-cinematic-banner:hover .luxury-scroll-track {
-    animation-play-state: paused;
-  }
-
-  /* Infinite Loop Mathematics */
-  @keyframes luxuryPan {
-    0% { transform: translate3d(0, 0, 0); }
-    100% { transform: translate3d(-50%, 0, 0); }
-  }
-
-  /* Mobile Optimization */
-  @media (max-width: 768px) {
-    .brandpoint-cinematic-banner { padding: 10px 0; }
-    .luxury-scroll-content span { font-size: 11px; letter-spacing: 3px; padding: 0 20px; }
+  /* Mobile Tweaks */
+  @media (max-width: 749px) {
+    .brand-point-announcement-bar {
+      padding: 10px 0;
+    }
+    .bp-ticker-content span {
+      font-size: 10px;
+      letter-spacing: 1.5px;
+    }
   }
 </style>
 
 {% schema %}
 {
-  "name": "Cinematic Banner",
-  "settings": []
+  "name": "Announcement Bar",
+  "settings": [],
+  "presets": [
+    {
+      "name": "Announcement Bar"
+    }
+  ]
 }
 {% endschema %}
