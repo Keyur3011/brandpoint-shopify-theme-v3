@@ -1,0 +1,130 @@
+<div class="collection-page-wrapper">
+  <div class="collection-container">
+    
+    <h1 class="collection-main-title">{{ collection.title | upcase }}</h1>
+    <p class="collection-product-count">{{ collection.products_count }} PRODUCTS AVAILABLE</p>
+
+    <div class="collection-products-grid">
+      {% for product in collection.products %}
+        <div class="collection-product-card">
+          <a href="{{ product.url }}" class="product-card-link">
+            <div class="product-img-holder">
+              {% if product.featured_image %}
+                <img src="{{ product.featured_image | img_url: '400x500', crop: 'center' }}" alt="{{ product.title }}">
+              {% else %}
+                <img src="https://images.unsplash.com/photo-1618886614638-80e3c103d31a?auto=format&fit=crop&q=80&w=400" alt="Dummy">
+              {% endif %}
+            </div>
+            <div class="product-info-holder">
+              <h3 class="product-grid-title">{{ product.title }}</h3>
+              <div class="product-grid-price">{{ product.price | money }}</div>
+            </div>
+          </a>
+        </div>
+      {% else %}
+        <div class="no-products-notice">
+          <p>No products found in this category yet. Please add products and assign tags in Shopify Admin.</p>
+        </div>
+      {% endfor %}
+    </div>
+
+  </div>
+</div>
+
+<style>
+  .collection-page-wrapper {
+    background-color: #000000;
+    color: #ffffff;
+    padding: 60px 15px;
+    min-height: 80vh;
+    font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+  }
+  .collection-container {
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+  .collection-main-title {
+    font-size: 28px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-align: center;
+    margin: 0 0 5px 0;
+  }
+  .collection-product-count {
+    font-size: 11px;
+    color: #666666;
+    text-align: center;
+    letter-spacing: 1px;
+    margin-bottom: 40px;
+  }
+  .collection-products-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+  }
+  .collection-product-card {
+    background-color: #050505;
+    border: 1px solid #111111;
+    transition: transform 0.3s ease;
+  }
+  .product-card-link {
+    text-decoration: none;
+    color: inherit;
+  }
+  .product-img-holder {
+    width: 100%;
+    aspect-ratio: 3 / 4;
+    background-color: #111111;
+    overflow: hidden;
+  }
+  .product-img-holder img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.5s ease;
+  }
+  .collection-product-card:hover .product-img-holder img {
+    transform: scale(1.05);
+  }
+  .product-info-holder {
+    padding: 15px 10px;
+    text-align: center;
+  }
+  .product-grid-title {
+    font-size: 13px;
+    font-weight: 500;
+    margin: 0 0 5px 0;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .product-grid-price {
+    font-size: 14px;
+    font-weight: 700;
+    color: #ffffff;
+  }
+  .no-products-notice {
+    grid-column: 1 / -1;
+    text-align: center;
+    padding: 60px 0;
+    color: #555555;
+    font-size: 14px;
+  }
+
+  @media (min-width: 768px) {
+    .collection-products-grid {
+      grid-template-columns: repeat(4, 1fr);
+      gap: 30px;
+    }
+    .collection-main-title {
+      font-size: 36px;
+    }
+  }
+</style>
+
+{% schema %}
+{
+  "name": "Main Collection Grid",
+  "settings": []
+}
+{% endschema %}
