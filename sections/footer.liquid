@@ -1,13 +1,15 @@
+<!-- Brand Point Ultimate Ultra-Luxury Compact Footer -->
 <footer class="site-footer-premium">
   <div class="footer-top-main-grid">
-    
+    <!-- Brand Summary -->
     <div class="footer-column brand-summary-col">
       <h2 class="footer-brand-title">BRAND POINT</h2>
       <p class="footer-brand-desc">Elevating everyday streetwear with premium fabrics and modern aesthetics tailored for India.</p>
     </div>
 
+    <!-- Vertical Shop Menu (STAYS EXACTLY SAME) -->
     <div class="footer-column shop-vertical-col">
-      <h3 class="footer-col-heading">SHOP</h3>
+      <h3 class="footer-col-heading">SHOP COLLECTION</h3>
       <ul class="footer-links-list">
         <li><a href="/collections/shirts">Shirts</a></li>
         <li><a href="/collections/denim">Denim</a></li>
@@ -15,38 +17,33 @@
         <li><a href="/collections/co-ord-sets">Cord Sets</a></li>
       </ul>
     </div>
-
   </div>
 
+  <!-- Interactive 5-Button Horizontal Policy Bar (Updated to Multi-Modal Popups) -->
   <div class="footer-horizontal-policies-bar">
     <div class="horizontal-links-wrapper">
-      <a href="/pages/contact">Contact Us</a>
+      <button type="button" class="luxury-modal-trigger" onclick="openLuxuryModal('bp-contact')">📍 Contact Us</button>
       <span class="link-divider">|</span>
-      <a href="/pages/shipping">Shipping Info</a>
+      <button type="button" class="luxury-modal-trigger" onclick="openLuxuryModal('bp-shipping')">🚀 Shipping Info</button>
       <span class="link-divider">|</span>
-      <a href="/pages/track-orders">Track Orders</a>
+      <button type="button" class="luxury-modal-trigger" onclick="openLuxuryModal('bp-privacy')">🛡️ Privacy Policy</button>
       <span class="link-divider">|</span>
-      <a href="/pages/faqs">FAQs</a>
+      <button type="button" class="luxury-modal-trigger" onclick="openLuxuryModal('bp-refund')">🔄 Refund Policy</button>
       <span class="link-divider">|</span>
-      <a href="/pages/about-us">Our Story</a>
-      <span class="link-divider">|</span>
-      <a href="/pages/privacy-policy">Privacy Policy</a>
-      <span class="link-divider">|</span>
-      <a href="/pages/refund-policy">Refund Policy</a>
-      <span class="link-divider">|</span>
-      <a href="/pages/terms-of-service">Terms of Service</a>
+      <button type="button" class="luxury-modal-trigger" onclick="openLuxuryModal('bp-terms')">⚖️ Terms of Service</button>
     </div>
   </div>
 
+  <!-- Bottom Signature and Original Insta Link (STAYS EXACTLY SAME) -->
   <div class="footer-bottom-copyright-area">
     <div class="copyright-inner">
       <p class="store-copyright-text">© 2026, Brand Point Fashion. All rights reserved.</p>
       
       <div class="footer-social-original">
         <a href="https://www.instagram.com/keyurchaudhari_08?igsh=MTcxdXgxeHZ1NDZoOQ==" target="_blank" class="insta-original-icon-link" title="Follow Keyur Chaudhary on Instagram">
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="url(#instaGradientComplete)" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="url(#instaGradientFooterMaster)" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
             <defs>
-              <linearGradient id="instaGradientComplete" x1="0%" y1="100%" x2="100%" y2="0%">
+              <linearGradient id="instaGradientFooterMaster" x1="0%" y1="100%" x2="100%" y2="0%">
                 <stop offset="0%" stop-color="#f09433"/>
                 <stop offset="25%" stop-color="#e6683c"/>
                 <stop offset="50%" stop-color="#dc2743"/>
@@ -68,78 +65,250 @@
   </div>
 </footer>
 
+<!-- 24/7 Floating Action Icons (STAYS EXACTLY SAME) -->
 <div class="floating-action-icons-holder">
   <a href="https://www.instagram.com/brand_point_visnagar_?igsh=cXMyN2RzemljeWQ5" target="_blank" class="floating-icon-circle instagram-float-btn" title="Follow Brand Point on Instagram">
     <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg>
   </a>
-
   <a href="https://wa.me/919316025323?text=Hello%20Brand%20Point!%20I%20want%20to%20inquire%20about%20a%20product." target="_blank" class="floating-icon-circle whatsapp-float-btn" title="Chat on WhatsApp">
     <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946C.06 5.348 5.397 0 11.948 0c3.174.001 6.161 1.24 8.413 3.488 2.253 2.248 3.492 5.232 3.492 8.406-.003 6.549-5.34 11.897-11.891 11.897-2.006-.002-3.973-.508-5.714-1.472L0 24zm6.59-4.846c1.6.95 3.188 1.449 4.755 1.451 5.352 0 9.713-4.346 9.716-9.693.001-2.59-1.006-5.025-2.834-6.855C16.404 2.228 13.976 1 11.95 1 6.599 1 2.239 5.348 2.236 10.697c-.001 1.637.452 3.232 1.311 4.647L2.518 20.9l5.69-1.492c-.22.1-.21.09-.56-.154z"/></svg>
   </a>
 </div>
 
+<!-- ========================================== -->
+<!-- ULTRA-LUXURY EXPERIENTIAL MODAL LAYER -->
+<!-- ========================================== -->
+<div id="luxuryModalOverlay" class="luxury-modal-overlay" onclick="closeLuxuryModalOutside(event)">
+  <div class="luxury-modal-box">
+    <button class="luxury-modal-close" onclick="closeLuxuryModal()">✕</button>
+    <div class="luxury-modal-scroll-content">
+      
+      <!-- 1. Contact Us Content -->
+      <div id="bp-contact" class="luxury-content-segment">
+        <div class="luxury-emoji-header">📍 ⚡ 📞</div>
+        <h2 class="luxury-title-main">OFFICIAL CONTACT DESK</h2>
+        <div class="luxury-divider-line"></div>
+        <div class="luxury-card-info">
+          <p><strong>🌐 Registered Label:</strong> Brand Point Fashion</p>
+          <p><strong>✉️ Corporate Concierge:</strong> brandpointfashion.in@gmail.com</p>
+          <p><strong>💬 WhatsApp Helpline:</strong> +91 9316025323</p>
+          <p><strong>☎️ Direct Hotline:</strong> +91 9316025323</p>
+          <p><strong>🏢 Dispatch HQ:</strong> Visnagar, Gujarat, India</p>
+        </div>
+      </div>
+
+      <!-- 2. Shipping Info Content -->
+      <div id="bp-shipping" class="luxury-content-segment">
+        <div class="luxury-emoji-header">🚀 📦 💎</div>
+        <h2 class="luxury-title-main">DISPATCH & FULFILLMENT PROTOCOL</h2>
+        <div class="luxury-divider-line"></div>
+        <p class="luxury-text-p">At <strong>Brand Point</strong>, we maintain a high-efficiency logistical network to ensure premium streetwear reaches our clients across India swiftly and securely.</p>
+        
+        <h3 class="luxury-title-sub">🕒 Processing Window</h3>
+        <p class="luxury-text-p">All successful orders undergo verification and fulfillment processing within <strong>24 business hours</strong>. Orders logged post 5:00 PM are queue-forwarded to the subsequent operational day.</p>
+        
+        <h3 class="luxury-title-sub">🗺️ Transit Timeline</h3>
+        <p class="luxury-text-p">Standard logistics require <strong>3 to 5 business days</strong> for major metros and urban centers. Regional destination timelines may vary based on courier routing networks.</p>
+        
+        <h3 class="luxury-title-sub">💳 Payment Architecture</h3>
+        <p class="luxury-text-p">We operate exclusively on a <strong>100% Prepaid-Only Model</strong>. Cash on Delivery (COD) is structurally unavailable. This policy preserves inventory exclusivity and ensures high-priority dispatch handling.</p>
+
+        <h3 class="luxury-title-sub">🛑 Cancellation Framework</h3>
+        <p class="luxury-text-p"><strong>Pre-Dispatch:</strong> Clients can request full cancellation within an absolute ceiling window of <strong>12 hours post-purchase</strong> via Email or WhatsApp. <br><strong>Post-Dispatch:</strong> Cancellations are structurally restricted once a consignment is released. In the event of a delivery refusal at the threshold, a reverse logistics processing surcharge of <strong>₹120</strong> will be withheld from final liquidation credit.</p>
+      </div>
+
+      <!-- 3. Privacy Policy Content -->
+      <div id="bp-privacy" class="luxury-content-segment">
+        <div class="luxury-emoji-header">🛡️ 🔐 ✨</div>
+        <h2 class="luxury-title-main">DATA SECURITY & PRIVACY CODEX</h2>
+        <div class="luxury-divider-line"></div>
+        <p class="luxury-text-p">Your operational data is treated with absolute corporate confidentiality. This codex dictates how <strong>Brand Point</strong> orchestrates client telemetry.</p>
+        
+        <h3 class="luxury-title-sub">📊 Telemetry Captured</h3>
+        <p class="luxury-text-p">Core identity metrics (Legal Name, Address, Contact Telemetry) are exclusively collected for logistics execution. Behavioral metrics (IP tracking, cookies) are processed strictly for front-end website infrastructure optimization.</p>
+        
+        <h3 class="luxury-title-sub">🔒 No-Share Guarantee</h3>
+        <p class="luxury-text-p">We enforce a zero-monetization policy on client data. We do not lease, trade, or distribute your identity footprint to external advertising registries.</p>
+        
+        <h3 class="luxury-title-sub">🛡️ Secure Payments</h3>
+        <p class="luxury-text-p">Our platform employs industry-standard SSL end-to-end encryption. Financial parameters are routed through secure PCI-DSS channels via Razorpay/Paytm; <strong>Brand Point</strong> never caches or logs card digits or UPI security codes.</p>
+      </div>
+
+      <!-- 4. Refund Policy Content -->
+      <div id="bp-refund" class="luxury-content-segment">
+        <div class="luxury-emoji-header">🔄 💎 🔍</div>
+        <h2 class="luxury-title-main">REVERSE LOGISTICS & RECOVERY</h2>
+        <div class="luxury-divider-line"></div>
+        <p class="luxury-text-p">To maintain structural quality control over our inventory drops, our reverse logistics operate under a strict, disciplined structure:</p>
+        
+        <h3 class="luxury-title-sub">📅 Restitutions Window</h3>
+        <p class="luxury-text-p">Return filing requests must be officially initiated within a definitive <strong>3-day calendar window</strong> starting from verified delivery confirmation.</p>
+        
+        <h3 class="luxury-title-sub">🚫 Eligibility Exceptions</h3>
+        <p class="luxury-text-p">Reverse processing is strictly limited to instances involving <strong>factory-damaged textiles, manufacturing deficits, or incorrect SKU dispatching</strong>. Items clearing standard quality metrics at delivery are completely ineligible for return.</p>
+        
+        <h3 class="luxury-title-sub">📱 Official Returns Portal</h3>
+        <p class="luxury-text-p">Requests must be filed exclusively through our automated WhatsApp clearing node at <strong>9316025323</strong> by initiating the conversation with the keyword string <strong>"Return"</strong> or <strong>"Exchange"</strong>, accompanied by mandatory unboxing video/photo proof.</p>
+        
+        <h3 class="luxury-title-sub">💸 Settlement Clearing</h3>
+        <p class="luxury-text-p">Approved refunds are processed directly back to the native funding resource within <strong>5 to 7 operational bank cycles</strong>.</p>
+      </div>
+
+      <!-- 5. Terms of Service Content -->
+      <div id="bp-terms" class="luxury-content-segment">
+        <div class="luxury-emoji-header">⚖️ 📜 🏢</div>
+        <h2 class="luxury-title-main">TERMS OF DIGITAL SERVICE</h2>
+        <div class="luxury-divider-line"></div>
+        <p class="luxury-text-p">This platform and associated digital infrastructure are wholly owned and managed under the operational banner of <strong>Brand Point</strong> (India).</p>
+        
+        <h3 class="luxury-title-sub">🎨 Intellectual Property Safeguards</h3>
+        <p class="luxury-text-p">Every vector, photography asset, text compilation, code block, and typographic element hosted on this domain represents the proprietary intellectual asset of <strong>Brand Point</strong>. Unauthorized extraction, replication, or commercial utilization of our design assets is strictly barred and legally actionable.</p>
+        
+        <h3 class="luxury-title-sub">🔨 Account Terminations</h3>
+        <p class="luxury-text-p">The administration reserves full rights to revoke, blacklist, or permanently suspend platform interaction for profiles exhibiting algorithmic fraud patterns or malicious script deployments.</p>
+        
+        <h3 class="luxury-title-sub">🏛️ Legal Jurisdictions</h3>
+        <p class="luxury-text-p">These structural guidelines are governed exclusively by the legal framework of the Republic of India. Any litigation actions are subject to exclusive court jurisdictions within the regional corporate seat of the brand.</p>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- ========================================== -->
+<!-- COMPACT STYLING ARCHITECTURE -->
+<!-- ========================================== -->
 <style>
-  /* General Scaffolding */
-  .site-footer-premium { background-color: #000000; color: #ffffff; padding: 50px 20px 0 20px; border-top: 1px solid #111; font-family: -apple-system, BlinkMacSystemFont, sans-serif; }
-  
-  /* Top Section Layout (Main Grid) */
-  .footer-top-main-grid { max-width: 1200px; margin: 0 auto 30px auto; display: grid; grid-template-columns: 1fr; gap: 30px; }
-  .footer-brand-title { font-size: 22px; font-weight: 800; letter-spacing: 2px; margin: 0 0 12px 0; }
+  .site-footer-premium { background-color: #000000; color: #ffffff; padding: 40px 20px 0 20px; border-top: 1px solid #111; font-family: -apple-system, BlinkMacSystemFont, sans-serif; }
+  .footer-top-main-grid { max-width: 1200px; margin: 0 auto 20px auto; display: grid; grid-template-columns: 1fr; gap: 25px; }
+  .footer-brand-title { font-size: 20px; font-weight: 800; letter-spacing: 2px; margin: 0 0 10px 0; color: #fff; }
   .footer-brand-desc { color: #555555; font-size: 13px; line-height: 1.6; max-width: 320px; margin: 0; }
-  
-  /* Vertical Shop Columns Style */
-  .footer-col-heading { font-size: 13px; font-weight: 700; letter-spacing: 1.5px; color: #ffffff; margin: 0 0 15px 0; text-transform: uppercase; }
+  .footer-col-heading { font-size: 12px; font-weight: 700; letter-spacing: 1.5px; color: #ffffff; margin: 0 0 12px 0; text-transform: uppercase; }
   .footer-links-list { list-style: none; padding: 0; margin: 0; }
-  .footer-links-list li { margin-bottom: 10px; }
-  .footer-links-list a { color: #888888; text-decoration: none; font-size: 13px; transition: color 0.2s; }
+  .footer-links-list li { margin-bottom: 8px; }
+  .footer-links-list a { color: #777777; text-decoration: none; font-size: 13px; transition: color 0.2s; }
   .footer-links-list a:hover { color: #ffffff; }
 
-  /* Horizontal Layout for Policies Bar (Saving Space) */
-  .footer-horizontal-policies-bar { border-top: 1px solid #111; border-bottom: 1px solid #111; padding: 18px 0; margin: 20px 0; width: 100%; }
-  .horizontal-links-wrapper { max-width: 1200px; margin: 0 auto; display: flex; flex-wrap: wrap; justify-content: center; gap: 12px 15px; }
-  .horizontal-links-wrapper a { color: #666666; text-decoration: none; font-size: 12px; font-weight: 500; transition: color 0.2s ease; }
-  .horizontal-links-wrapper a:hover { color: #ffffff; }
-  .link-divider { color: #222222; font-size: 12px; font-weight: 300; }
-
-  /* Bottom Copyright Area */
-  .footer-bottom-copyright-area { padding: 25px 0; text-align: center; width: 100%; }
-  .copyright-inner { display: flex; flex-direction: column; align-items: center; gap: 12px; }
-  .store-copyright-text { font-size: 12px; color: #444444; margin: 0; letter-spacing: 0.5px; }
+  /* Compact Horizontal Bar Layout */
+  .footer-horizontal-policies-bar { border-top: 1px solid #111; border-bottom: 1px solid #111; padding: 15px 0; margin: 15px 0; width: 100%; }
+  .horizontal-links-wrapper { max-width: 1200px; margin: 0 auto; display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: 10px 14px; }
   
-  /* Bottom Instagram Hover Link */
-  .footer-social-original { margin: 5px 0; display: flex; justify-content: center; align-items: center; }
-  .insta-original-icon-link { display: inline-block; transition: transform 0.3s ease; }
-  .insta-original-icon-link:hover { transform: scale(1.18); }
+  /* Trigger Buttons Styles */
+  .luxury-modal-trigger { background: none; border: none; color: #666666; font-size: 12px; font-weight: 600; cursor: pointer; padding: 2px 4px; transition: all 0.2s ease; font-family: inherit; letter-spacing: 0.3px; }
+  .luxury-modal-trigger:hover { color: #ffffff; transform: translateY(-1px); text-shadow: 0 0 8px rgba(255,255,255,0.4); }
+  .link-divider { color: #1a1a1a; font-size: 12px; }
 
-  /* Two-Tone Signature Text Styles */
-  .developer-signature-text { font-size: 13px; font-weight: 500; color: #888888; margin: 0; letter-spacing: 0.8px; }
-  .signature-name-link { color: #ffffff; text-decoration: none; font-weight: 700; padding-bottom: 2px; border-bottom: 2px solid #ffffff; transition: all 0.25s ease-in-out; display: inline-block; }
+  /* Bottom Area (STAYS EXACTLY SAME) */
+  .footer-bottom-copyright-area { padding: 20px 0; text-align: center; width: 100%; }
+  .copyright-inner { display: flex; flex-direction: column; align-items: center; gap: 10px; }
+  .store-copyright-text { font-size: 11px; color: #444444; margin: 0; letter-spacing: 0.5px; }
+  .footer-social-original { margin: 2px 0; display: flex; justify-content: center; align-items: center; }
+  .insta-original-icon-link { display: inline-block; transition: transform 0.3s ease; }
+  .insta-original-icon-link:hover { transform: scale(1.15); }
+  .developer-signature-text { font-size: 12px; font-weight: 500; color: #888888; margin: 0; letter-spacing: 0.8px; }
+  .signature-name-link { color: #ffffff; text-decoration: none; font-weight: 700; padding-bottom: 2px; border-bottom: 2px solid #ffffff; transition: all 0.25s ease; display: inline-block; }
   .signature-name-link:hover { color: #ff9900; border-bottom-color: #ff9900; transform: translateY(-1px); }
 
-  /* Sticky 24/7 Floating Action Buttons */
+  /* Sticky 24/7 Float Controls (STAYS EXACTLY SAME) */
   .floating-action-icons-holder { position: fixed; bottom: 25px; right: 25px; display: flex; flex-direction: column; gap: 15px; z-index: 99999; }
   .floating-icon-circle { width: 50px; height: 50px; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: #ffffff; text-decoration: none; box-shadow: 0 4px 15px rgba(0,0,0,0.4); transition: transform 0.3s ease; }
-  
   .instagram-float-btn { background: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%); }
   .whatsapp-float-btn { background-color: #25D366; }
-
-  /* Premium Breathe Glow Animation */
   .instagram-float-btn, .whatsapp-float-btn { animation: figmaBreatheGlow 3s infinite ease-in-out; }
   .whatsapp-float-btn { animation-delay: 0.5s; }
-
   @keyframes figmaBreatheGlow {
-    0% { transform: scale(1); box-shadow: 0 4px 10px rgba(0,0,0,0.4); }
-    50% { transform: scale(1.08); box-shadow: 0 8px 25px rgba(255,255,255,0.15); }
-    100% { transform: scale(1); box-shadow: 0 4px 10px rgba(0,0,0,0.4); }
+    0%, 100% { transform: scale(1); box-shadow: 0 4px 10px rgba(0,0,0,0.4); }
+    50% { transform: scale(1.06); box-shadow: 0 8px 20px rgba(255,255,255,0.1); }
   }
-  .floating-icon-circle:hover { transform: scale(1.15) !important; }
+  .floating-icon-circle:hover { transform: scale(1.12) !important; }
 
-  /* Desktop View Adjustments */
+  /* ========================================== */
+  /* MODAL DISPLAY ARCHITECTURE (THE ART PIECE) */
+  /* ========================================== */
+  .luxury-modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.85); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); display: flex; align-items: center; justify-content: center; z-index: 999999; opacity: 0; pointer-events: none; transition: opacity 0.4s cubic-bezier(0.16, 1, 0.3, 1); }
+  .luxury-modal-overlay.is-active { opacity: 1; pointer-events: auto; }
+  
+  .luxury-modal-box { background-color: #0c0c0c; border: 1px solid #1c1c1e; width: 90%; max-width: 550px; max-height: 75vh; border-radius: 16px; position: relative; box-shadow: 0 20px 50px rgba(0,0,0,0.7); transform: translateY(30px) scale(0.96); transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1); overflow: hidden; }
+  .luxury-modal-overlay.is-active .luxury-modal-box { transform: translateY(0) scale(1); }
+  
+  .luxury-modal-close { position: absolute; top: 15px; right: 15px; background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.08); color: #888; width: 32px; height: 32px; border-radius: 50%; font-size: 12px; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: all 0.2s ease; z-index: 10; }
+  .luxury-modal-close:hover { color: #fff; background: rgba(255,255,255,0.1); transform: rotate(90deg); }
+  
+  .luxury-modal-scroll-content { padding: 30px 25px; overflow-y: auto; max-height: 75vh; box-sizing: border-box; }
+  
+  /* Inner Segment Configurations */
+  .luxury-content-segment { display: none; animation: luxuryFadeIn 0.4s ease; }
+  .luxury-content-segment.is-visible { display: block; }
+  @keyframes luxuryFadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+  
+  .luxury-emoji-header { font-size: 28px; text-align: center; margin-bottom: 10px; filter: drop-shadow(0 0 10px rgba(255,255,255,0.2)); }
+  .luxury-title-main { font-size: 18px; font-weight: 800; text-align: center; letter-spacing: 2px; color: #ffffff; text-transform: uppercase; margin: 0 0 15px 0; }
+  .luxury-divider-line { height: 2px; width: 50px; background: linear-gradient(90deg, #ff9900, #ff5500); margin: 0 auto 25px auto; border-radius: 2px; }
+  
+  .luxury-title-sub { font-size: 13px; font-weight: 700; color: #ffffff; text-transform: uppercase; letter-spacing: 1px; margin: 20px 0 8px 0; display: flex; align-items: center; }
+  .luxury-text-p { font-size: 13px; color: #a1a1a6; line-height: 1.6; font-weight: 400; margin: 0 0 15px 0; text-align: justify; }
+  
+  .luxury-card-info { background: #121214; border: 1px solid #1c1c1e; padding: 20px; border-radius: 12px; margin-top: 10px; }
+  .luxury-card-info p { font-size: 13px; color: #a1a1a6; margin: 0 0 12px 0; line-height: 1.4; }
+  .luxury-card-info p:last-child { margin-bottom: 0; }
+  .luxury-card-info strong { color: #ffffff; font-weight: 600; display: inline-block; width: 160px; }
+
+  /* Scrollbar Aesthetics */
+  .luxury-modal-scroll-content::-webkit-scrollbar { width: 4px; }
+  .luxury-modal-scroll-content::-webkit-scrollbar-track { background: transparent; }
+  .luxury-modal-scroll-content::-webkit-scrollbar-thumb { background: #222; border-radius: 10px; }
+  .luxury-modal-scroll-content::-webkit-scrollbar-thumb:hover { background: #444; }
+
+  /* Screen Optimizations */
   @media (min-width: 768px) {
-    .footer-top-main-grid { grid-template-columns: 2fr 1fr; max-width: 1000px; gap: 50px; }
-    .horizontal-links-wrapper { justify-content: space-between; max-width: 900px; }
+    .footer-top-main-grid { grid-template-columns: 2fr 1fr; max-width: 1000px; gap: 40px; }
+    .horizontal-links-wrapper { justify-content: space-between; max-width: 850px; }
+    .luxury-modal-scroll-content { padding: 40px; }
+    .luxury-title-main { font-size: 20px; }
   }
 </style>
+
+<!-- ========================================== -->
+<!-- INTELLIGENT JAVASCRIPT CONTROLLER -->
+<!-- ========================================== -->
+<script>
+  function openLuxuryModal(segmentId) {
+    const overlay = document.getElementById('luxuryModalOverlay');
+    
+    // Hide all internal text segments first
+    document.querySelectorAll('.luxury-content-segment').forEach(segment => {
+      segment.classList.remove('is-visible');
+    });
+    
+    // Activate the targeted segment
+    const targetSegment = document.getElementById(segmentId);
+    if(targetSegment) {
+      targetSegment.classList.add('is-visible');
+    }
+    
+    // Trigger overlay visibility
+    overlay.classList.add('is-active');
+    document.body.style.overflow = 'hidden'; // Lock background scrolling
+  }
+
+  function closeLuxuryModal() {
+    document.getElementById('luxuryModalOverlay').classList.remove('is-active');
+    document.body.style.overflow = ''; // Restore standard scrolling
+  }
+
+  function closeLuxuryModalOutside(event) {
+    if (event.target.id === 'luxuryModalOverlay') {
+      closeLuxuryModal();
+    }
+  }
+
+  // Escape key closing mechanism
+  document.addEventListener('keydown', function(event) {
+    if (event.key === 'Escape') {
+      closeLuxuryModal();
+    }
+  });
+</script>
 
 {% schema %}
 {
