@@ -1,261 +1,196 @@
-<!-- Premium Custom Product Page Section -->
-<div class="product-page-wrapper">
-  <div class="product-core-container">
+<!-- Advanced Premium Product Page Structure -->
+<div class="product-page-container" data-product-handle="{{ product.handle }}">
+  <div class="product-main-flex">
     
-    <!-- Left Column: Product Gallery -->
-    <div class="product-gallery-col">
-      <div class="main-image-viewport">
-        {% if product.featured_image %}
-          <img src="{{ product.featured_image | img_url: '800x' }}" alt="{{ product.title | escape }}">
-        {% else %}
-          <!-- Fallback image from Unsplash for setup -->
-          <img src="https://images.unsplash.com/photo-1618886614638-80e3c103d31a?auto=format&fit=crop&q=80&w=800" alt="Product Dummy">
+    <!-- 1. LEFT SIDE: Dynamic Product Gallery -->
+    <div class="product-gallery">
+      <div class="main-image-wrapper">
+        <img id="MainProductImage" src="{{ product.featured_image | img_url: '800x800' }}" alt="{{ product.title }}" class="zoom-image">
+      </div>
+      <!-- Thumbnail Images -->
+      <div class="product-thumbnails">
+        {% for image in product.images %}
+          <img src="{{ image | img_url: '150x150' }}" data-full-url="{{ image | img_url: '800x800' }}" class="thumb-img {% if forloop.first %}active-thumb{% endif %}">
+        {% endfor %}
+      </div>
+    </div>
+
+    <!-- 2. RIGHT SIDE: Product Details & Variant Swatches -->
+    <div class="product-details-info">
+      <h1 class="product-title-main">{{ product.title }}</h1>
+      <div class="product-price-box">
+        <span class="current-price">{{ product.price | money }}</span>
+        {% if product.compare_at_price > product.price %}
+          <span class="old-price">{{ product.compare_at_price | money }}</span>
         {% endif %}
       </div>
-    </div>
 
-    <!-- Right Column: Product Checkout Actions -->
-    <div class="product-details-col">
-      <span class="product-brand-vendor">{{ product.vendor | default: 'BRAND POINT' }}</span>
-      <h1 class="product-main-title">{{ product.title | default: 'Oversized Premium Heavyweight Tee' }}</h1>
-      
-      <div class="product-price-bracket">
-        <span class="current-price-tag">{{ product.price | money | default: '₹2,499' }}</span>
-        <span class="old-price-tag">₹3,499</span>
-        <span class="badge-saved-percentage">SAVE 28%</span>
-      </div>
+      <!-- Advanced Variant Selector -->
+      {% form 'product', product, id: "AddToCartForm" %}
+        <!-- Shopify Hidden Native Select -->
+        <select name="id" id="ProductSelectNative" style="display:none;">
+          {% for variant in product.variants %}
+            <option value="{{ variant.id }}" data-color="{{ variant.option1 | downcase }}" data-img="{{ variant.image.src | img_url: '800x800' }}" {% if variant == product.selected_or_first_available_variant %}selected="selected"{% endif %}>
+              {{ variant.title }}
+            </option>
+          {% endfor %}
+        </select>
 
-      <div class="product-meta-reviews">
-        <span class="rating-stars-yellow">★★★★★</span>
-        <span class="rating-numeric-count">(48 verified reviews)</span>
-      </div>
-
-      <hr class="divider-line">
-
-      <!-- Product Form for Variants -->
-      {% form 'product', product, id: 'AddToCartForm' %}
-        <!-- Size Selection Block -->
-        <div class="variant-selector-block">
-          <label class="variant-label">SELECT SIZE</label>
-          <div class="size-swatch-grid">
-            <div class="swatch-item">S</div>
-            <div class="swatch-item active">M</div>
-            <div class="swatch-item">L</div>
-            <div class="swatch-item">XL</div>
+        <!-- Dynamic Visual Color Swatches (Round Shape) -->
+        <div class="swatch-container color-swatches">
+          <label class="swatch-label">Color:</label>
+          <div class="swatch-flex">
+            {% assign dynamic_colors = "black,white,red,blue,green,grey,beige" | split: ',' %}
+            {% for variant in product.variants %}
+              {% assign v_color = variant.option1 | downcase %}
+              <div class="color-circle-wrapper" data-color-val="{{ v_color }}">
+                <span class="color-circle" style="background-color: {% if dynamic_colors contains v_color %}{{ v_color }}{% else %}#ccc{% endif %};"></span>
+              </div>
+            {% endfor %}
           </div>
         </div>
 
-        <!-- Quantity & Add Button Row -->
-        <div class="purchase-actions-row">
-          <div class="quantity-picker-box">
-            <button type="button" class="qty-btn">-</button>
-            <input type="number" id="Quantity" name="quantity" value="1" min="1" class="qty-input">
-            <button type="button" class="qty-btn">+</button>
+        <!-- Size Guide Trigger & Selector -->
+        <div class="swatch-container size-swatches">
+          <div class="size-header-flex">
+            <label class="swatch-label">Size:</label>
+            <span class="size-guide-trigger" onclick="toggleSizeModal(true)">Size Guide</span>
           </div>
-          
-          <button type="submit" name="add" id="AddToCartBtn" class="btn-primary-add-cart">
-            ADD TO CART
-          </button>
+          <div class="size-btn-flex">
+            {% for variant in product.variants %}
+              <button type="button" class="size-btn-opt" data-size-val="{{ variant.option2 }}">{{ variant.option2 }}</button>
+            {% endfor %}
+          </div>
         </div>
+
+        <!-- Add To Cart Button -->
+        <button type="submit" name="add" class="prime-add-btn">ADD TO BAG</button>
       {% endform %}
+    </div>
+  </div>
 
-      <!-- Minimal Collapse Toggles -->
-      <div class="product-accordion-box">
-        <div class="accordion-item">
-          <h3 class="accordion-title">DESCRIPTION <span class="icon">+</span></h3>
-          <p class="accordion-content">Crafted from 100% premium heavyweight terry cotton. Featuring dropped shoulders, a tight ribbed neck rib, and an ultra-soft feel designed for daily comfortable streetwear durability.</p>
-        </div>
-      </div>
+  <!-- 3. BOTTOM SECTION: Deep Tabs (Specification, FAQ, Reviews) -->
+  <div class="product-deep-tabs-section">
+    <div class="tabs-header">
+      <button class="tab-link active" onclick="openTab(event, 'Specs')">Specifications</button>
+      <button class="tab-link" onclick="openTab(event, 'FAQ')">FAQ</button>
+      <button class="tab-link" onclick="openTab(event, 'Reviews')">Reviews</button>
     </div>
 
+    <!-- Tab 1: Specs -->
+    <div id="Specs" class="tab-content default-tab">
+      <p>Premium streetwear tailoring featuring 100% heavy-weight loopback cotton. Pre-shrunk and silicone softened for an ultimate luxury hand-feel.</p>
+    </div>
+
+    <!-- Tab 2: FAQ -->
+    <div id="FAQ" class="tab-content" style="display:none;">
+      <div class="faq-item"><strong>Q: How do I wash this streetwear garment?</strong><p>A: Wash inside out in cold water, dry flat to maintain premium texture.</p></div>
+      <div class="faq-item"><strong>Q: Is the fit oversized?</strong><p>A: Yes, it features a signature dropped-shoulder aesthetic.</p></div>
+    </div>
+
+    <!-- Tab 3: Reviews -->
+    <div id="Reviews" class="tab-content" style="display:none;">
+      <div class="review-row">⭐ ⭐ ⭐ ⭐ ⭐ <strong>Keyur C.</strong> - "The luxury look and drop shoulder fit is insane! Totally worth it."</div>
+    </div>
+  </div>
+</div>
+
+<!-- Size Guide Modal Box -->
+<div id="SizeGuideModal" class="modal-overlay" style="display:none;">
+  <div class="modal-box-body">
+    <h3>Size Guide</h3>
+    <table class="size-table-ui">
+      <tr><th>Size</th><th>Chest (in)</th><th>Length (in)</th></tr>
+      <tr><td>S</td><td>42</td><td>27</td></tr>
+      <tr><td>M</td><td>44</td><td>28</td></tr>
+      <tr><td>L</td><td>46</td><td>29</td></tr>
+    </table>
+    <button class="close-modal-btn" onclick="toggleSizeModal(false)">Close</button>
   </div>
 </div>
 
 <style>
-  .product-page-wrapper {
-    background-color: #000000;
-    color: #ffffff;
-    padding: 40px 15px;
-    min-height: 80vh;
-  }
-  .product-core-container {
-    max-width: 1200px;
-    margin: 0 auto;
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: 30px;
-  }
-  .main-image-viewport {
-    width: 100%;
-    aspect-ratio: 3 / 4;
-    background-color: #111111;
-    border-radius: 6px;
-    overflow: hidden;
-  }
-  .main-image-viewport img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-  }
-  .product-brand-vendor {
-    font-size: 11px;
-    color: #666666;
-    letter-spacing: 2px;
-    text-transform: uppercase;
-    display: block;
-    margin-bottom: 8px;
-  }
-  .product-main-title {
-    font-size: 24px;
-    font-weight: 600;
-    margin: 0 0 15px 0;
-    letter-spacing: 0.5px;
-  }
-  .product-price-bracket {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    margin-bottom: 12px;
-  }
-  .current-price-tag {
-    font-size: 22px;
-    font-weight: 700;
-  }
-  .old-price-tag {
-    font-size: 14px;
-    color: #555555;
-    text-decoration: line-through;
-  }
-  .badge-saved-percentage {
-    background-color: #ffffff;
-    color: #000000;
-    font-size: 10px;
-    font-weight: 700;
-    padding: 2px 8px;
-    border-radius: 10px;
-  }
-  .rating-stars-yellow {
-    color: #ffcc00;
-    font-size: 12px;
-  }
-  .rating-numeric-count {
-    color: #666666;
-    font-size: 11px;
-    margin-left: 5px;
-  }
-  .divider-line {
-    border: 0;
-    border-top: 1px solid #111111;
-    margin: 25px 0;
-  }
-  .variant-label {
-    font-size: 11px;
-    font-weight: 600;
-    color: #888888;
-    letter-spacing: 1.5px;
-    display: block;
-    margin-bottom: 12px;
-  }
-  .size-swatch-grid {
-    display: flex;
-    gap: 10px;
-    margin-bottom: 30px;
-  }
-  .swatch-item {
-    border: 1px solid #333333;
-    padding: 10px 20px;
-    font-size: 12px;
-    font-weight: 600;
-    cursor: pointer;
-    transition: all 0.2s ease;
-  }
-  .swatch-item.active, .swatch-item:hover {
-    border-color: #ffffff;
-    background-color: #ffffff;
-    color: #000000;
-  }
-  .purchase-actions-row {
-    display: flex;
-    gap: 15px;
-    margin-bottom: 40px;
-  }
-  .quantity-picker-box {
-    display: flex;
-    border: 1px solid #333333;
-    align-items: center;
-  }
-  .qty-btn {
-    background: transparent;
-    border: 0;
-    color: #ffffff;
-    width: 35px;
-    height: 45px;
-    cursor: pointer;
-    font-size: 16px;
-  }
-  .qty-input {
-    background: transparent;
-    border: 0;
-    color: #ffffff;
-    width: 40px;
-    text-align: center;
-    font-size: 14px;
-    -moz-appearance: textfield;
-  }
-  .qty-input::-webkit-outer-spin-button, .qty-input::-webkit-inner-spin-button {
-    -webkit-appearance: none;
-  }
-  .btn-primary-add-cart {
-    flex: 1;
-    background-color: #ffffff;
-    color: #000000;
-    border: 1px solid #ffffff;
-    font-size: 12px;
-    font-weight: 700;
-    letter-spacing: 2px;
-    cursor: pointer;
-    transition: all 0.3s ease;
-  }
-  .btn-primary-add-cart:hover {
-    background-color: transparent;
-    color: #ffffff;
-  }
-  .product-accordion-box {
-    border-top: 1px solid #111111;
-  }
-  .accordion-item {
-    padding: 15px 0;
-  }
-  .accordion-title {
-    font-size: 12px;
-    font-weight: 600;
-    display: flex;
-    justify-content: space-between;
-    letter-spacing: 1px;
-    margin: 0 0 10px 0;
-  }
-  .accordion-content {
-    font-size: 13px;
-    color: #aaaaaa;
-    line-height: 1.6;
-    margin: 0;
+  .product-page-container { max-width: 1200px; margin: 0 auto; padding: 20px; font-family: sans-serif; }
+  .product-main-flex { display: flex; gap: 40px; flex-wrap: wrap; }
+  .product-gallery, .product-details-info { flex: 1; min-width: 300px; }
+  .main-image-wrapper img { width: 100%; border-radius: 8px; }
+  .product-thumbnails { display: flex; gap: 10px; margin-top: 15px; }
+  .thumb-img { width: 60px; height: 60px; object-fit: cover; border-radius: 4px; cursor: pointer; border: 2px solid transparent; }
+  .active-thumb { border-color: #000; }
+  
+  /* Round Color Swatches */
+  .swatch-container { margin: 20px 0; }
+  .swatch-label { font-weight: 700; display: block; margin-bottom: 8px; font-size: 14px; text-transform: uppercase; }
+  .swatch-flex { display: flex; gap: 12px; }
+  .color-circle-wrapper { width: 32px; height: 32px; border-radius: 50%; border: 2px solid #ddd; display: flex; align-items: center; justify-content: center; cursor: pointer; }
+  .color-circle-wrapper.selected-swatch { border-color: #000; }
+  .color-circle { width: 24px; height: 24px; border-radius: 50%; display: block; }
+  
+  /* Size Swatches & Guide */
+  .size-header-flex { display: flex; justify-content: space-between; }
+  .size-guide-trigger { font-size: 12px; text-decoration: underline; cursor: pointer; color: #555; }
+  .size-btn-flex { display: flex; gap: 10px; }
+  .size-btn-opt { padding: 10px 20px; border: 1px solid #ccc; background: #fff; cursor: pointer; font-weight: 600; }
+  .size-btn-opt.active-size { background: #000; color: #fff; border-color: #000; }
+
+  .prime-add-btn { width: 100%; background: #000; color: #fff; padding: 16px; border: none; font-weight: 700; letter-spacing: 1px; cursor: pointer; margin-top: 20px; }
+  
+  /* Deep Tabs Styling */
+  .product-deep-tabs-section { margin-top: 60px; border-top: 1px solid #eee; padding-top: 30px; }
+  .tabs-header { display: flex; gap: 20px; border-bottom: 1px solid #eee; }
+  .tab-link { background: none; border: none; padding: 10px 20px; font-size: 16px; font-weight: 600; cursor: pointer; color: #888; }
+  .tab-link.active { color: #000; border-bottom: 2px solid #000; }
+  .tab-content { padding: 20px 0; line-height: 1.6; }
+
+  /* Modal System */
+  .modal-overlay { position: fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.5); display:flex; align-items:center; justify-content:center; z-index:999; }
+  .modal-box-body { background:#fff; padding:30px; border-radius:8px; width:90%; max-width:400px; }
+  .size-table-ui { width:100%; margin:20px 0; border-collapse:collapse; }
+  .size-table-ui th, .size-table-ui td { border:1px solid #ddd; padding:10px; text-align:center; }
+  .close-modal-btn { background:#000; color:#fff; width:100%; padding:10px; border:none; cursor:pointer; }
+</style>
+
+<script>
+  // Dynamic Variant Swatch Logic
+  document.querySelectorAll('.color-circle-wrapper').forEach(wrapper => {
+    wrapper.addEventListener('click', function() {
+      document.querySelectorAll('.color-circle-wrapper').forEach(w => w.classList.remove('selected-swatch'));
+      this.classList.add('selected-swatch');
+      
+      const targetColor = this.getAttribute('data-color-val');
+      const nativeSelect = document.getElementById('ProductSelectNative');
+      
+      // Look for variant with matching color and update image
+      for (let option of nativeSelect.options) {
+        if (option.getAttribute('data-color') === targetColor) {
+          nativeSelect.value = option.value;
+          const newImgUrl = option.getAttribute('data-img');
+          if (newImgUrl) {
+            document.getElementById('MainProductImage').src = newImgUrl;
+          }
+          break;
+        }
+      }
+    });
+  });
+
+  // Tab Control System
+  function openTab(evt, tabName) {
+    document.querySelectorAll('.tab-content').forEach(content => content.style.display = 'none');
+    document.querySelectorAll('.tab-link').forEach(link => link.classList.remove('active'));
+    document.getElementById(tabName).style.display = 'block';
+    evt.currentTarget.classList.add('active');
   }
 
-  @media (min-width: 768px) {
-    .product-core-container {
-      grid-template-columns: 1.1fr 0.9fr;
-      gap: 50px;
-      padding: 20px 0;
-    }
-    .product-main-title {
-      font-size: 32px;
-    }
+  // Size Modal System
+  function toggleSizeModal(show) {
+    document.getElementById('SizeGuideModal').style.display = show ? 'flex' : 'none';
   }
-</style>
+</script>
 
 {% schema %}
 {
-  "name": "Main Product Details",
+  "name": "Main Product Premium",
   "settings": []
 }
 {% endschema %}
