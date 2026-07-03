@@ -1,29 +1,76 @@
-<div class="collection-page-wrapper">
-  <div class="collection-container">
+<div class="brand-collection-wrapper">
+  <div class="brand-collection-container">
     
-    <h1 class="collection-main-title">{{ collection.title | upcase }}</h1>
-    <p class="collection-product-count">{{ collection.products_count }} PRODUCTS AVAILABLE</p>
+    <div class="collection-intro-header">
+      <h1 class="main-collection-title">{{ collection.title | upcase }}</h1>
+      <p class="main-collection-subtitle">Premium Indian Streetwear & Luxury Casual Fashion</p>
+    </div>
 
-    <div class="collection-products-grid">
+    <div class="figma-utility-bar">
+      <div class="utility-search-box">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#666" stroke-width="2"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+        <input type="text" placeholder="Search products..." disabled>
+      </div>
+      <div class="utility-right-side">
+        <span class="product-counter-text">{{ collection.products_count }} Products</span>
+        <button class="utility-filter-btn">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="4" y1="21" x2="4" y2="14"></line><line x1="4" y1="10" x2="4" y2="3"></line><line x1="12" y1="21" x2="12" y2="12"></line><line x1="12" y1="8" x2="12" y2="3"></line><line x1="20" y1="21" x2="20" y2="16"></line><line x1="20" y1="12" x2="20" y2="3"></line><line x1="1" y1="14" x2="7" y2="14"></line><line x1="9" y1="8" x2="15" y2="8"></line><line x1="17" y1="16" x2="23" y2="16"></line></svg>
+          FILTERS
+        </button>
+        <button class="utility-sort-dropdown">
+          NATIVE SORT 
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"></polyline></svg>
+        </button>
+      </div>
+    </div>
+
+    <div class="brand-products-grid">
       {% for product in collection.products %}
-        <div class="collection-product-card">
-          <a href="{{ product.url }}" class="product-card-link">
-            <div class="product-img-holder">
+        <div class="brand-product-card">
+          <a href="{{ product.url }}" class="product-card-anchor">
+            
+            <div class="product-image-container-wrapper">
+              
+              <div class="badge-stack-container">
+                {% if product.compare_at_price > product.price %}
+                  {% assign savings = product.compare_at_price | minus: product.price | times: 100 | divided_by: product.compare_at_price %}
+                  <span class="badge-discount-tag">-{{ savings }}%</span>
+                {% endif %}
+                <span class="badge-new-tag">NEW</span>
+                {% if forloop.first %}
+                  <span class="badge-best-tag">BEST</span>
+                {% endif %}
+              </div>
+
               {% if product.featured_image %}
-                <img src="{{ product.featured_image | img_url: '400x500', crop: 'center' }}" alt="{{ product.title }}">
+                <img src="{{ product.featured_image | img_url: 'master' }}" alt="{{ product.title }}" class="main-grid-img">
               {% else %}
-                <img src="https://images.unsplash.com/photo-1618886614638-80e3c103d31a?auto=format&fit=crop&q=80&w=400" alt="Dummy">
+                <img src="https://images.unsplash.com/photo-1618886614638-80e3c103d31a?auto=format&fit=crop&q=80&w=600" alt="Placeholder" class="main-grid-img">
               {% endif %}
             </div>
-            <div class="product-info-holder">
-              <h3 class="product-grid-title">{{ product.title }}</h3>
-              <div class="product-grid-price">{{ product.price | money }}</div>
+
+            <div class="product-meta-details-block">
+              <span class="meta-category-subtitle">{{ collection.title | upcase }}</span>
+              <h3 class="meta-product-title">{{ product.title }}</h3>
+              
+              <div class="figma-stars-row">
+                <span class="gold-stars">★★★★☆</span>
+                <span class="reviews-count-text">(142)</span>
+              </div>
+
+              <div class="meta-price-row">
+                <span class="meta-price-active">{{ product.price | money }}</span>
+                {% if product.compare_at_price > product.price %}
+                  <span class="meta-price-old">{{ product.compare_at_price | money }}</span>
+                {% endif %}
+              </div>
             </div>
+
           </a>
         </div>
       {% else %}
-        <div class="no-products-notice">
-          <p>No products found in this category yet. Please add products and assign tags in Shopify Admin.</p>
+        <div class="empty-collection-fallback">
+          <p>No products found in this collection. Please assign tags or add items from Admin panel.</p>
         </div>
       {% endfor %}
     </div>
@@ -32,99 +79,70 @@
 </div>
 
 <style>
-  .collection-page-wrapper {
-    background-color: #000000;
-    color: #ffffff;
-    padding: 60px 15px;
-    min-height: 80vh;
-    font-family: -apple-system, BlinkMacSystemFont, sans-serif;
-  }
-  .collection-container {
-    max-width: 1200px;
-    margin: 0 auto;
-  }
-  .collection-main-title {
-    font-size: 28px;
-    font-weight: 700;
-    letter-spacing: 2px;
-    text-align: center;
-    margin: 0 0 5px 0;
-  }
-  .collection-product-count {
-    font-size: 11px;
-    color: #666666;
-    text-align: center;
-    letter-spacing: 1px;
-    margin-bottom: 40px;
-  }
-  .collection-products-grid {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 20px;
-  }
-  .collection-product-card {
-    background-color: #050505;
-    border: 1px solid #111111;
-    transition: transform 0.3s ease;
-  }
-  .product-card-link {
-    text-decoration: none;
-    color: inherit;
-  }
-  .product-img-holder {
-    width: 100%;
-    aspect-ratio: 3 / 4;
-    background-color: #111111;
-    overflow: hidden;
-  }
-  .product-img-holder img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    transition: transform 0.5s ease;
-  }
-  .collection-product-card:hover .product-img-holder img {
-    transform: scale(1.05);
-  }
-  .product-info-holder {
-    padding: 15px 10px;
-    text-align: center;
-  }
-  .product-grid-title {
-    font-size: 13px;
-    font-weight: 500;
-    margin: 0 0 5px 0;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-  }
-  .product-grid-price {
-    font-size: 14px;
-    font-weight: 700;
-    color: #ffffff;
-  }
-  .no-products-notice {
-    grid-column: 1 / -1;
-    text-align: center;
-    padding: 60px 0;
-    color: #555555;
-    font-size: 14px;
-  }
+  /* Base Scaffolding */
+  .brand-collection-wrapper { background-color: #000000; color: #ffffff; padding: 40px 15px; min-height: 100vh; font-family: -apple-system, BlinkMacSystemFont, sans-serif; }
+  .brand-collection-container { max-width: 1200px; margin: 0 auto; }
+  
+  /* Header Section */
+  .collection-intro-header { text-align: left; margin-bottom: 35px; border-bottom: 1px solid #111; padding-bottom: 20px; }
+  .main-collection-title { font-size: 32px; font-weight: 800; letter-spacing: 1px; margin: 0 0 5px 0; }
+  .main-collection-subtitle { color: #555555; font-size: 13px; margin: 0; letter-spacing: 0.5px; }
 
+  /* Figma Utility Filter Component */
+  .figma-utility-bar { display: flex; flex-direction: column; gap: 15px; justify-content: space-between; align-items: flex-start; margin-bottom: 30px; }
+  .utility-search-box { display: flex; align-items: center; gap: 10px; background-color: #0d0d0d; border: 1px solid #1a1a1a; padding: 10px 15px; border-radius: 25px; width: 100%; max-width: 320px; }
+  .utility-search-box input { background: none; border: none; color: #fff; font-size: 13px; width: 100%; outline: none; }
+  
+  .utility-right-side { display: flex; align-items: center; gap: 15px; width: 100%; justify-content: space-between; }
+  .product-counter-text { color: #555555; font-size: 13px; font-weight: 500; }
+  .utility-filter-btn, .utility-sort-dropdown { background-color: #0d0d0d; border: 1px solid #1a1a1a; color: #ffffff; font-size: 12px; font-weight: 700; padding: 10px 20px; border-radius: 25px; display: flex; align-items: center; gap: 8px; cursor: pointer; transition: 0.2s; }
+  .utility-filter-btn:hover, .utility-sort-dropdown:hover { border-color: #444; background-color: #111; }
+
+  /* Grid Architecture */
+  .brand-products-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 15px; }
+  .brand-product-card { background-color: transparent; position: relative; }
+  .product-card-anchor { text-decoration: none; color: inherit; display: block; }
+
+  /* Light Round Curved Corners (Figma Request) */
+  .product-image-container-wrapper { width: 100%; aspect-ratio: 3/4; border-radius: 12px; overflow: hidden; background-color: #0d0d0d; position: relative; border: 1px solid #111; }
+  .main-grid-img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94); }
+  .brand-product-card:hover .main-grid-img { transform: scale(1.04); }
+
+  /* Badges Stack Style */
+  .badge-stack-container { position: absolute; top: 12px; left: 12px; display: flex; flex-direction: column; gap: 6px; z-index: 3; }
+  .badge-discount-tag { background-color: #000000; color: #ffffff; font-size: 10px; font-weight: 700; padding: 4px 8px; border-radius: 20px; border: 1px solid #222; }
+  .badge-new-tag { background-color: #ffffff; color: #000000; font-size: 10px; font-weight: 800; padding: 4px 10px; border-radius: 20px; text-align: center; }
+  .badge-best-tag { background-color: #FFB800; color: #000000; font-size: 10px; font-weight: 800; padding: 4px 10px; border-radius: 20px; text-align: center; }
+
+  /* Typography Details Block */
+  .product-meta-details-block { padding: 12px 2px; }
+  .meta-category-subtitle { font-size: 10px; color: #444444; text-transform: uppercase; letter-spacing: 1px; display: block; margin-bottom: 4px; font-weight: 600; }
+  .meta-product-title { font-size: 14px; font-weight: 700; color: #ffffff; margin: 0 0 6px 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  
+  /* Star Ratings */
+  .figma-stars-row { display: flex; align-items: center; gap: 6px; margin-bottom: 8px; }
+  .gold-stars { color: #FFB800; font-size: 11px; letter-spacing: 1px; }
+  .reviews-count-text { color: #444444; font-size: 11px; font-weight: 500; }
+
+  /* Prices */
+  .meta-price-row { display: flex; align-items: center; gap: 10px; }
+  .meta-price-active { font-size: 15px; font-weight: 700; color: #ffffff; }
+  .meta-price-old { font-size: 12px; color: #444444; text-decoration: line-through; }
+  .empty-collection-fallback { grid-column: 1/-1; text-align: center; padding: 100px 0; color: #444; }
+
+  /* Desktop Responsiveness */
   @media (min-width: 768px) {
-    .collection-products-grid {
-      grid-template-columns: repeat(4, 1fr);
-      gap: 30px;
-    }
-    .collection-main-title {
-      font-size: 36px;
-    }
+    .brand-products-grid { grid-template-columns: repeat(4, 1fr); gap: 25px; }
+    .figma-utility-bar { flex-direction: row; align-items: center; }
+    .utility-right-side { width: auto; gap: 20px; }
+    .main-collection-title { font-size: 42px; }
+    .product-image-container-wrapper { border-radius: 16px; } /* Slightly more curve on desktops */
   }
 </style>
 
 {% schema %}
 {
-  "name": "Main Collection Grid",
+  "name": "Collection Grid Matrix",
   "settings": []
 }
 {% endschema %}
