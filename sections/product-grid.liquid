@@ -1,262 +1,240 @@
-<!-- Premium Product Grid Section -->
-<div class="product-grid-section">
-  <div class="section-header">
-    <h2 class="section-title">NEW ARRIVALS</h2>
-    <p class="section-subtitle">Latest drops from our collection</p>
+<!-- Brand Point Ultra-Luxury Automatic New Arrivals Grid -->
+<section class="luxury-new-arrivals-section">
+  <div class="arrivals-header-block">
+    <h2 class="arrivals-main-title">NEW ARRIVALS</h2>
+    <p class="arrivals-sub-title">The latest drops from the streets</p>
+    <div class="luxury-gold-line-accent"></div>
   </div>
 
-  <div class="main-products-grid">
-    <!-- Dummy Product 1 -->
-    <div class="product-card">
-      <div class="product-image-wrapper">
-        <span class="discount-badge">-31%</span>
-        <div class="product-image" style="background-image: url('https://images.unsplash.com/photo-1618886614638-80e3c103d31a?auto=format&fit=crop&q=80&w=500');"></div>
-      </div>
-      <div class="product-info">
-        <h3 class="product-item-title">Urban Combat Boots</h3>
-        <div class="product-price-box">
-          <span class="price-current">₹5,499</span>
-          <span class="price-old">₹7,999</span>
-        </div>
-        <div class="product-rating">
-          <span class="stars">★★★★★</span>
-          <span class="rating-count">(124)</span>
-        </div>
-      </div>
-    </div>
+  <!-- Dynamic Product Grid Loop -->
+  <div class="luxury-products-grid-container">
+    {%- assign arrival_collection = collections['new-arrivals'] -%}
+    
+    {%- if arrival_collection != blank and arrival_collection.products_count > 0 -%}
+      {%- for product in arrival_collection.products limit: 4 -%}
+        
+        <!-- Individual Product Card -->
+        <div class="luxury-product-card-item">
+          <a href="{{ product.url }}" class="luxury-card-image-link">
+            <div class="luxury-card-image-wrapper">
+              <img 
+                src="{{ product.featured_image | img_url: '600x750', crop: 'center' }}" 
+                alt="{{ product.title | escape }}" 
+                class="luxury-card-main-img"
+                loading="lazy"
+              >
+              <!-- Hidden or hover secondary image if exists for elite brand feel -->
+              {%- if product.images[1] != blank -%}
+                <img src="{{ product.images[1] | img_url: '600x750', crop: 'center' }}" class="luxury-card-hover-img" loading="lazy">
+              {%- endif -%}
+              
+              <div class="luxury-card-overlay-glow"></div>
+            </div>
+          </a>
 
-    <!-- Dummy Product 2 -->
-    <div class="product-card">
-      <div class="product-image-wrapper">
-        <span class="discount-badge">-33%</span>
-        <div class="product-image" style="background-image: url('https://images.unsplash.com/photo-1503342217505-b0a15ec3261c?auto=format&fit=crop&q=80&w=500');"></div>
-      </div>
-      <div class="product-info">
-        <h3 class="product-item-title">Relaxed Fit Shirt</h3>
-        <div class="product-price-box">
-          <span class="price-current">₹2,899</span>
-          <span class="price-old">₹4,499</span>
+          <!-- Info Details -->
+          <div class="luxury-card-info-box">
+            <span class="luxury-card-vendor">{{ product.vendor | uppercase }}</span>
+            <h3 class="luxury-card-title"><a href="{{ product.url }}">{{ product.title }}</a></h3>
+            
+            <div class="luxury-card-price-row">
+              <span class="luxury-card-price">{{ product.price | money }}</span>
+              <span class="luxury-card-stars">★★★★★</span>
+            </div>
+          </div>
         </div>
-        <div class="product-rating">
-          <span class="stars">★★★★★</span>
-          <span class="rating-count">(124)</span>
-        </div>
-      </div>
-    </div>
 
-    <!-- Dummy Product 3 -->
-    <div class="product-card">
-      <div class="product-image-wrapper">
-        <span class="discount-badge">-38%</span>
-        <div class="product-image" style="background-image: url('https://images.unsplash.com/photo-1556905055-8f358a7a47b2?auto=format&fit=crop&q=80&w=500');"></div>
-      </div>
-      <div class="product-info">
-        <h3 class="product-item-title">Designer Tracksuit</h3>
-        <div class="product-price-box">
-          <span class="price-current">₹7,999</span>
-          <span class="price-old">₹12,599</span>
+      {%- endfor -%}
+    {%- else -%}
+      <!-- Fallback Placeholder: अगर कलेक्शन खाली है -->
+      {%- for i in (1..4) -%}
+        <div class="luxury-product-card-item placeholder-state">
+          <div class="luxury-card-image-wrapper" style="background: #111; height: 320px;"></div>
+          <p style="color: #444; font-size: 11px; margin-top: 10px; letter-spacing: 1px;">TAG A PRODUCT WITH 'NEW-ARRIVAL'</p>
         </div>
-        <div class="product-rating">
-          <span class="stars">★★★★★</span>
-          <span class="rating-count">(124)</span>
-        </div>
-      </div>
-    </div>
-
-    <!-- Dummy Product 4 -->
-    <div class="product-card">
-      <div class="product-image-wrapper">
-        <span class="discount-badge">-25%</span>
-        <div class="product-image" style="background-image: url('https://images.unsplash.com/photo-1549298916-b41d501d3772?auto=format&fit=crop&q=80&w=500');"></div>
-      </div>
-      <div class="product-info">
-        <h3 class="product-item-title">Minimal Sneakers</h3>
-        <div class="product-price-box">
-          <span class="price-current">₹4,499</span>
-          <span class="price-old">₹5,999</span>
-        </div>
-        <div class="product-rating">
-          <span class="stars">★★★★★</span>
-          <span class="rating-count">(124)</span>
-        </div>
-      </div>
-    </div>
+      {%- endfor -%}
+    {%- endif -%}
   </div>
+</section>
 
-  <!-- Center Action Button -->
-  <div class="view-all-container">
-    <a href="/collections/all" class="btn-view-all">VIEW ALL PRODUCTS</a>
-  </div>
-</div>
-
+<!-- ========================================== -->
+<!-- HIGH-END LUXURY CODE STYLING ARCHITECTURE -->
+<!-- ========================================== -->
 <style>
-  .product-grid-section {
+  .luxury-new-arrivals-section {
     background-color: #000000;
-    padding: 50px 15px;
-  }
-
-  .section-header {
-    text-align: center;
-    margin-bottom: 35px;
-  }
-
-  .section-title {
-    font-size: 26px;
-    font-weight: 500;
     color: #ffffff;
-    letter-spacing: 3px;
-    margin: 0 0 8px 0;
-    text-transform: uppercase;
+    padding: 80px 24px;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
   }
 
-  .section-subtitle {
-    font-size: 11px;
-    color: #777777;
-    letter-spacing: 1px;
-    margin: 0;
+  .arrivals-header-block {
+    text-align: center;
+    margin-bottom: 45px;
   }
 
-  /* Matching your mobile layout perfectly: 2 Columns */
-  .main-products-grid {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 20px 12px;
-    max-width: 1400px;
+  .arrivals-main-title {
+    font-size: 26px;
+    font-weight: 800;
+    letter-spacing: 5px;
+    margin: 0 0 10px 0;
+  }
+
+  .arrivals-sub-title {
+    font-size: 12px;
+    color: #666666;
+    letter-spacing: 1.5px;
+    margin: 0 0 18px 0;
+  }
+
+  .luxury-gold-line-accent {
+    height: 1px;
+    width: 50px;
+    background: #D4AF37;
     margin: 0 auto;
   }
 
-  .product-card {
-    background-color: transparent;
+  /* Highly Responsive Luxury Grid Layout */
+  .luxury-products-grid-container {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr); /* Mobile layout: perfectly split 2-columns */
+    gap: 30px 20px;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  @media (min-width: 769px) {
+    .luxury-products-grid-container {
+      grid-template-columns: repeat(4, 1fr); /* Desktop layout: 4-columns inline */
+    }
+  }
+
+  /* Card Architecture */
+  .luxury-product-card-item {
     display: flex;
     flex-direction: column;
+    gap: 15px;
   }
 
-  .product-image-wrapper {
+  .luxury-card-image-link {
+    display: block;
+    width: 100%;
+    overflow: hidden;
+    text-decoration: none;
+    border: 1px solid rgba(255, 255, 255, 0.03);
+  }
+
+  .luxury-card-image-wrapper {
     position: relative;
     width: 100%;
-    aspect-ratio: 3 / 4;
-    background-color: #111111;
+    padding-bottom: 130%; /* 4:5.2 Streetwear Premium Aspect Ratio */
+    background-color: #111;
     overflow: hidden;
-    border-radius: 4px;
   }
 
-  .product-image {
+  .luxury-card-main-img, .luxury-card-hover-img {
+    position: absolute;
+    top: 0;
+    left: 0;
     width: 100%;
     height: 100%;
-    background-size: cover;
-    background-position: center;
+    object-fit: cover;
+    transition: transform 0.8s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.5s ease;
   }
 
-  /* Discount Badge Style */
-  .discount-badge {
+  .luxury-card-hover-img {
+    opacity: 0;
+  }
+
+  /* Elite Image Swap Effect on Hover */
+  .luxury-product-card-item:hover .luxury-card-main-img {
+    transform: scale(1.03);
+  }
+  
+  @media (min-width: 769px) {
+    .luxury-product-card-item:hover .luxury-card-hover-img {
+      opacity: 1;
+      transform: scale(1.03);
+    }
+  }
+
+  .luxury-card-overlay-glow {
     position: absolute;
-    top: 10px;
-    right: 10px;
-    background-color: #000000;
-    color: #ffffff;
-    font-size: 9px;
-    font-weight: 700;
-    padding: 3px 8px;
-    border-radius: 12px;
-    z-index: 2;
-    border: 1px solid rgba(255,255,255,0.2);
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(180deg, transparent 80%, rgba(0,0,0,0.1) 100%);
+    pointer-events: none;
   }
 
-  .product-info {
-    padding: 12px 2px 0 2px;
-  }
-
-  .product-item-title {
-    font-size: 13px;
-    font-weight: 500;
-    color: #ffffff;
-    margin: 0 0 6px 0;
-    letter-spacing: 0.5px;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-  }
-
-  .product-price-box {
+  /* Details Card */
+  .luxury-card-info-box {
     display: flex;
-    align-items: center;
-    gap: 8px;
-    margin-bottom: 6px;
+    flex-direction: column;
+    gap: 5px;
+    text-align: left;
+    padding: 0 4px;
   }
 
-  .price-current {
+  .luxury-card-vendor {
+    font-size: 10px;
+    color: #555555;
+    letter-spacing: 1.5px;
+    font-weight: 600;
+  }
+
+  .luxury-card-title {
     font-size: 14px;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    margin: 0;
+    line-height: 1.4;
+  }
+
+  .luxury-card-title a {
+    color: #ffffff;
+    text-decoration: none;
+    transition: color 0.3s ease;
+  }
+
+  .luxury-card-title a:hover {
+    color: #D4AF37;
+  }
+
+  .luxury-card-price-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 2px;
+  }
+
+  .luxury-card-price {
+    font-size: 13px;
     font-weight: 700;
     color: #ffffff;
   }
 
-  .price-old {
-    font-size: 11px;
-    color: #666666;
-    text-decoration: line-through;
-  }
-
-  /* Star Ratings */
-  .product-rating {
-    display: flex;
-    align-items: center;
-    gap: 4px;
-  }
-
-  .stars {
-    color: #ffcc00; /* Beautiful Yellow Stars */
-    font-size: 11px;
+  .luxury-card-stars {
+    color: #D4AF37;
+    font-size: 9px;
     letter-spacing: 1px;
   }
 
-  .rating-count {
-    color: #666666;
-    font-size: 10px;
-  }
-
-  /* View All Button */
-  .view-all-container {
-    text-align: center;
-    margin-top: 40px;
-  }
-
-  .btn-view-all {
-    display: inline-block;
-    border: 1px solid #ffffff;
-    color: #ffffff;
-    background: transparent;
-    padding: 12px 35px;
-    font-size: 11px;
-    font-weight: 600;
-    letter-spacing: 2px;
-    text-decoration: none;
-    text-transform: uppercase;
-    transition: all 0.3s ease;
-  }
-
-  .btn-view-all:hover {
-    background-color: #ffffff;
-    color: #000000;
-  }
-
-  /* Desktop View Grid Expansion */
-  @media (min-width: 992px) {
-    .main-products-grid {
-      grid-template-columns: repeat(4, 1fr); /* 4 Columns on Desktop */
-      gap: 30px 20px;
-    }
-    .product-item-title {
-      font-size: 14px;
-    }
-    .price-current {
-      font-size: 16px;
-    }
+  @media (max-width: 480px) {
+    .arrivals-main-title { font-size: 22px; letter-spacing: 4px; }
+    .luxury-card-title { font-size: 13px; }
   }
 </style>
 
 {% schema %}
 {
-  "name": "Product Grid",
-  "settings": []
+  "name": "Luxury Auto Arrivals",
+  "settings": [],
+  "presets": [
+    {
+      "name": "Luxury Auto Arrivals"
+    }
+  ]
 }
 {% endschema %}
