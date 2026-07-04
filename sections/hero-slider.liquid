@@ -1,38 +1,75 @@
-<!-- Brand Point Android Optimized Luxury Banner -->
-<section class="elite-hero-slider-fixed">
-  {%- for block in section.blocks -%}
-    <div class="elite-slide-item active">
-      
-      <!-- Background Image with Fixed Premium Height Wrapper -->
-      <div class="elite-hero-bg-wrapper-fixed">
-        {%- if block.settings.image != blank -%}
-          <img src="{{ block.settings.image | img_url: '1200x' }}" alt="Brand Point Drop" class="elite-hero-img-fixed" loading="eager">
-        {%- endif -%}
-        <div class="elite-hero-vignette-overlay-fixed"></div>
-      </div>
+<!-- Brand Point Android Optimized Luxury Multi-Slider -->
+<section class="elite-hero-slider-fixed" id="bp-hero-slider">
+  <div class="elite-slider-track" id="bp-slider-track">
+    {%- for block in section.blocks -%}
+      <div class="elite-slide-item {% if forloop.first %}active{% endif %}" data-index="{{ forloop.index0 }}" {{ block.shopify_attributes }}>
+        
+        <!-- Background Image Wrapper -->
+        <div class="elite-hero-bg-wrapper-fixed">
+          {%- if block.settings.image != blank -%}
+            <img src="{{ block.settings.image | img_url: '1200x' }}" alt="Brand Point Drop" class="elite-hero-img-fixed" loading="{% if forloop.first %}eager{% else %}lazy{% endif %}">
+          {%- else -%}
+            <!-- Placeholder for new empty slides -->
+            <div class="elite-hero-placeholder" style="background: #111; width: 100%; height: 100%;"></div>
+          {%- endif -%}
+          <div class="elite-hero-vignette-overlay-fixed"></div>
+        </div>
 
-      <!-- Action Container - Only Single Fancy Button -->
-      <div class="elite-hero-action-container-fixed">
-        <a href="{{ block.settings.button_link | default: '/collections/all' }}" class="elite-fancy-boutique-btn">
-          {{ block.settings.button_label | default: "SHOP NOW" }}
-        </a>
-      </div>
+        <!-- Single Fancy Transparent Button Only -->
+        <div class="elite-hero-action-container-fixed">
+          <a href="{{ block.settings.button_link | default: '/collections/all' }}" class="elite-fancy-boutique-btn">
+            {{ block.settings.button_label | default: "SHOP NOW" }}
+          </a>
+        </div>
 
+      </div>
+    {%- endfor -%}
+  </div>
+
+  <!-- Subtle Minimalist Dots Indicator (Only if more than 1 slide) -->
+  {%- if section.blocks.size > 1 -%}
+    <div class="elite-slider-dots">
+      {%- for block in section.blocks -%}
+        <span class="elite-dot {% if forloop.first %}active{% endif %}" data-slide="{{ forloop.index0 }}"></span>
+      {%- endfor -%}
     </div>
-  {%- endfor -%}
+  {%- endif -%}
 </section>
 
 <!-- ========================================== -->
-<!--       PRESTIGE MOBILE ARCHITECTURE CSS     -->
+<!--       PRESTIGE MULTI-SLIDER STYLE (CSS)    -->
 <!-- ========================================== -->
 <style>
-  /* Base Desktop View (Keeps it clean) */
   .elite-hero-slider-fixed {
     position: relative;
     width: 100%;
-    height: 70vh; /* Perfectly proportional height for desktops */
+    height: 70vh;
     overflow: hidden;
     background-color: #000000;
+  }
+
+  .elite-slider-track {
+    position: relative;
+    width: 100%;
+    height: 100%;
+  }
+
+  .elite-slide-item {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.6s cubic-bezier(0.25, 1, 0.5, 1), visibility 0.6s;
+    z-index: 1;
+  }
+
+  .elite-slide-item.active {
+    opacity: 1;
+    visibility: visible;
+    z-index: 2;
   }
 
   .elite-hero-bg-wrapper-fixed {
@@ -47,7 +84,7 @@
     width: 100%;
     height: 100%;
     object-fit: cover;
-    object-position: center top; /* Keeps the upper focus points safe */
+    object-position: center top;
   }
 
   .elite-hero-vignette-overlay-fixed {
@@ -59,7 +96,6 @@
     background: linear-gradient(180deg, rgba(0,0,0,0.2) 0%, rgba(0,0,0,0) 60%, rgba(0,0,0,0.5) 100%);
   }
 
-  /* Bottom-Centered Action Panel */
   .elite-hero-action-container-fixed {
     position: absolute;
     bottom: 40px;
@@ -72,10 +108,9 @@
     align-items: center;
   }
 
-  /* Ultra-Premium Fancy Thin Button Structure (No Thick White Block) */
   .elite-fancy-boutique-btn {
     display: inline-block;
-    background: rgba(0, 0, 0, 0.4); /* Transparent glass effect */
+    background: rgba(0, 0, 0, 0.4);
     color: #ffffff;
     padding: 12px 35px;
     font-size: 12px;
@@ -83,7 +118,7 @@
     letter-spacing: 3px;
     text-transform: uppercase;
     text-decoration: none;
-    border: 1px solid rgba(255, 255, 255, 0.6); /* Sleek luxury border */
+    border: 1px solid rgba(255, 255, 255, 0.6);
     backdrop-filter: blur(5px);
     -webkit-backdrop-filter: blur(5px);
     transition: all 0.3s cubic-bezier(0.25, 1, 0.5, 1);
@@ -93,34 +128,141 @@
     background: #ffffff;
     color: #000000;
     border-color: #ffffff;
-    transform: translateY(-1px);
   }
 
-  /* ========================================== */
-  /*  CRITICAL FIX: ANDROID & IPHONE SCREEN LOCK */
-  /* ========================================== */
+  /* Ultra-Premium Minimalist Slider Dots */
+  .elite-slider-dots {
+    position: absolute;
+    bottom: 15px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 15;
+    display: flex;
+    gap: 8px;
+  }
+
+  .elite-dot {
+    width: 16px;
+    height: 2px;
+    background: rgba(255, 255, 255, 0.25);
+    cursor: pointer;
+    transition: background 0.3s ease;
+  }
+
+  .elite-dot.active {
+    background: #ffffff;
+  }
+
   @media (max-width: 768px) {
     .elite-hero-slider-fixed {
-      height: 58vh !important; /* Forces the image height to crop exactly where the button was in your screenshot */
+      height: 58vh !important;
     }
-
     .elite-hero-action-container-fixed {
-      bottom: 25px; /* Safely floats just above the bottom screen cut */
+      bottom: 30px;
     }
-
     .elite-fancy-boutique-btn {
       padding: 11px 30px;
       font-size: 11px;
       letter-spacing: 2.5px;
-      width: auto; /* Fits beautifully without eating up screen space */
-      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.25);
+    }
+    .elite-slider-dots {
+      bottom: 10px;
     }
   }
 </style>
 
+<!-- ========================================== -->
+<!--     SMOOTH AUTOPLAY & SWIPE ENGINE (JS)    -->
+<!-- ========================================== -->
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+  const slider = document.getElementById("bp-hero-slider");
+  if (!slider) return;
+
+  const slides = slider.querySelectorAll(".elite-slide-item");
+  const dots = slider.querySelectorAll(".elite-dot");
+  let currentSlide = 0;
+  const slideInterval = 4000; // 4 सेकंड में ऑटोमैटिक स्लाइड बदलेगा
+  let intervalTimer;
+
+  function showSlide(index) {
+    if (slides.length === 0) return;
+    slides[currentSlide].classList.remove("active");
+    if(dots.length > 0) dots[currentSlide].classList.remove("active");
+    
+    currentSlide = (index + slides.length) % slides.length;
+    
+    slides[currentSlide].classList.add("active");
+    if(dots.length > 0) dots[currentSlide].classList.add("active");
+  }
+
+  function startAutoplay() {
+    if (slides.length <= 1) return;
+    intervalTimer = setInterval(() => {
+      showSlide(currentSlide + 1);
+    }, slideInterval);
+  }
+
+  function resetAutoplay() {
+    clearInterval(intervalTimer);
+    startAutoplay();
+  }
+
+  // Dots click feature
+  dots.forEach(dot => {
+    dot.addEventListener("click", function() {
+      const targetIndex = parseInt(this.getAttribute("data-slide"));
+      showSlide(targetIndex);
+      resetAutoplay();
+    });
+  });
+
+  // Basic Mobile Swipe Support
+  let touchStartX = 0;
+  let touchEndX = 0;
+
+  slider.addEventListener("touchstart", e => {
+    touchStartX = e.changedTouches[0].screenX;
+  }, {passive: true});
+
+  slider.addEventListener("touchend", e => {
+    touchEndX = e.changedTouches[0].screenX;
+    handleSwipe();
+  }, {passive: true});
+
+  function handleSwipe() {
+    if (slides.length <= 1) return;
+    if (touchStartX - touchEndX > 50) {
+      showSlide(currentSlide + 1); // Swipe Left -> Next
+      resetAutoplay();
+    }
+    if (touchEndX - touchStartX > 50) {
+      showSlide(currentSlide - 1); // Swipe Right -> Prev
+      resetAutoplay();
+    }
+  }
+
+  startAutoplay();
+
+  // Theme Customizer Integration (Instant preview when adding slides in Shopify dashboard)
+  document.addEventListener("shopify:block:select", function(e) {
+    const slideItem = e.target;
+    if (slideItem && slideItem.classList.contains("elite-slide-item")) {
+      clearInterval(intervalTimer);
+      const index = parseInt(slideItem.getAttribute("data-index"));
+      showSlide(index);
+    }
+  });
+
+  document.addEventListener("shopify:block:deselect", function() {
+    startAutoplay();
+  });
+});
+</script>
+
 {% schema %}
 {
-  "name": "Elite Compressed Slider",
+  "name": "Elite Multi-Slider",
   "settings": [],
   "blocks": [
     {
@@ -135,11 +277,15 @@
   ],
   "presets": [
     {
-      "name": "Elite Compressed Slider",
-      "blocks": [ { "type": "slide" } ]
+      "name": "Elite Multi-Slider",
+      "blocks": [ 
+        { "type": "slide" },
+        { "type": "slide" }
+      ]
     }
   ]
 }
 {% endschema %}
+
 
 
