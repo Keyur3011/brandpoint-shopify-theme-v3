@@ -21,20 +21,19 @@
       "hero-slider": {
         "type": "hero-slider",
         "blocks": {
-          "slide_BxBcCw": {
+          "slide_x4TyGB": {
             "type": "slide",
             "settings": {
-              "image": "shopify://shop_images/IMG-20260701-WA0059.jpg",
+              "image": "shopify://shop_images/1000548968.jpg",
               "title": "SHOP OUR TOP PICKS",
               "subtext": "",
               "button_label": "SHOP NOW",
               "button_link": ""
             }
           },
-          "slide_x4TyGB": {
+          "slide_LTdBed": {
             "type": "slide",
             "settings": {
-              "image": "shopify://shop_images/IMG-20260616-WA0316.jpg",
               "title": "SHOP OUR TOP PICKS",
               "subtext": "",
               "button_label": "SHOP NOW",
@@ -43,8 +42,8 @@
           }
         },
         "block_order": [
-          "slide_BxBcCw",
-          "slide_x4TyGB"
+          "slide_x4TyGB",
+          "slide_LTdBed"
         ],
         "settings": {}
       },
