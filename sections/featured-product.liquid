@@ -1,188 +1,419 @@
-<!-- Premium Featured Product Section -->
-<div class="featured-product-section">
-  <div class="section-header">
-    <h2 class="section-title">FEATURED</h2>
-    <p class="section-subtitle">Editor's picks from the latest collection</p>
+<!-- Brand Point Ultra-Luxury Swipeable Featured Showcase -->
+<section class="luxury-featured-product-section" id="LuxuryFeatured-{{ section.id }}">
+  
+  <div class="featured-header-block">
+    <h2 class="featured-main-title">{{ section.settings.heading_text | uppercase }}</h2>
+    <p class="featured-sub-title">{{ section.settings.sub_heading_text }}</p>
+    <div class="luxury-gold-accent-line"></div>
   </div>
 
-  <div class="featured-product-container">
-    <!-- Big Product Image Box -->
-    <div class="featured-image-wrapper">
-      <div class="featured-image" style="background-image: url('https://images.unsplash.com/photo-1552374196-1ab2a1c593e8?auto=format&fit=crop&q=80&w=800');"></div>
-    </div>
+  <!-- Swipeable Container Box -->
+  <div class="luxury-swipe-slider-container">
+    <div class="luxury-swipe-slider-track">
+      
+      {%- for block in section.blocks -%}
+        {%- assign main_product = all_products[block.settings.featured_product_handle] -%}
+        
+        <div class="luxury-swipe-slide-item" {{ block.shopify_attributes }}>
+          <div class="luxury-single-product-wrapper">
+            {%- if main_product != blank -%}
+              
+              <!-- Clickable Product Image -->
+              <a href="{{ main_product.url }}" class="luxury-product-image-link" aria-label="View {{ main_product.title }}">
+                <div class="luxury-image-hover-engine">
+                  <img 
+                    src="{{ main_product.featured_image | img_url: '800x1000', crop: 'center' }}" 
+                    alt="{{ main_product.title | escape }}" 
+                    class="luxury-main-display-img"
+                    loading="lazy"
+                  >
+                  <div class="luxury-image-overlay-glow"></div>
+                </div>
+              </a>
 
-    <!-- Product Details Content -->
-    <div class="featured-product-info">
-      <span class="featured-vendor">BOTTOMS</span>
-      <h3 class="featured-item-title">Streetwear Track Pants</h3>
-      
-      <div class="featured-price-rating">
-        <span class="featured-price">₹3,999</span>
-        <span class="featured-stars">★★★★★</span>
-      </div>
-      
-      <p class="featured-description">
-        Premium quality crafted with attention to detail. Perfect for the modern wardrobe.
-      </p>
-      
-      <div class="featured-action-box">
-        <a href="/products/streetwear-track-pants" class="btn-featured-view">VIEW PRODUCT</a>
-      </div>
+              <!-- Product Info -->
+              <div class="luxury-product-info-block">
+                <span class="luxury-product-vendor">{{ main_product.vendor | uppercase }}</span>
+                <h3 class="luxury-product-title-text">
+                  <a href="{{ main_product.url }}">{{ main_product.title }}</a>
+                </h3>
+                
+                <div class="luxury-price-rating-row">
+                  <span class="luxury-product-price-tag">{{ main_product.price | money }}</span>
+                  <div class="luxury-gold-stars-stars">★★★★★</div>
+                </div>
+
+                <p class="luxury-product-description-snippet">
+                  {%- if main_product.description != blank -%}
+                    {{ main_product.description | strip_html | truncatewords: 22 }}
+                  {%- else -%}
+                    Premium quality crafted with attention to detail. Perfect for the modern wardrobe.
+                  {%- endif -%}
+                </p>
+
+                <!-- Action Button -->
+                <div class="luxury-action-btn-container">
+                  <a href="{{ main_product.url }}" class="luxury-view-product-button-element">
+                    VIEW PRODUCT
+                    <span class="btn-arrow-effect">→</span>
+                  </a>
+                </div>
+              </div>
+
+            {%- else -%}
+              <!-- Blank State Inside Slide -->
+              <div class="luxury-product-placeholder-card">
+                <p style="color: #666; font-size: 12px; letter-spacing: 2px; text-align:center; padding: 20px;">
+                  SELECT PRODUCT {{ forloop.index }} IN CUSTOMIZER
+                </p>
+              </div>
+            {%- endif -%}
+          </div>
+        </div>
+      {%- endfor -%}
+
     </div>
   </div>
-</div>
 
+  <!-- Subtle Bottom Swipe Indicator Dots -->
+  <div class="luxury-slider-dots-indicator">
+    {%- for block in section.blocks -%}
+      <div class="luxury-dot-node {% if forloop.first %}active-dot{% endif %}"></div>
+    {%- endfor -%}
+  </div>
+
+</section>
+
+<!-- ========================================== -->
+<!-- HIGH-END LUXURY CODE STYLING ARCHITECTURE -->
+<!-- ========================================== -->
 <style>
-  .featured-product-section {
+  .luxury-featured-product-section {
     background-color: #000000;
-    padding: 50px 15px;
-    border-top: 1px solid var(--border-color);
-  }
-
-  .section-header {
-    text-align: center;
-    margin-bottom: 30px;
-  }
-
-  .section-title {
-    font-size: 26px;
-    font-weight: 500;
     color: #ffffff;
-    letter-spacing: 3px;
-    margin: 0 0 8px 0;
-    text-transform: uppercase;
-  }
-
-  .section-subtitle {
-    font-size: 11px;
-    color: #777777;
-    letter-spacing: 1px;
-    margin: 0;
-  }
-
-  .featured-product-container {
-    max-width: 800px; /* Kept focused and structured like mobile figma */
-    margin: 0 auto;
-    background-color: transparent;
-  }
-
-  /* Big elegant vertical photo frame */
-  .featured-image-wrapper {
-    width: 100%;
-    aspect-ratio: 3 / 4;
-    background-color: #111111;
+    padding: 80px 0;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
     overflow: hidden;
-    border-radius: 8px; /* Slightly soft modern corners as seen in screenshot */
-    margin-bottom: 20px;
+  }
+
+  .featured-header-block {
+    text-align: center;
+    margin-bottom: 45px;
+    padding: 0 24px;
+  }
+
+  .featured-main-title {
+    font-size: 26px;
+    font-weight: 800;
+    letter-spacing: 5px;
+    color: #ffffff;
+    margin: 0 0 10px 0;
+  }
+
+  .featured-sub-title {
+    font-size: 12px;
+    color: #666666;
+    letter-spacing: 1.5px;
+    margin: 0 0 18px 0;
+  }
+
+  .luxury-gold-accent-line {
+    height: 1px;
+    width: 50px;
+    background: #D4AF37;
+    margin: 0 auto;
+  }
+
+  /* Core Hardware Accelerated Swipe Engine */
+  .luxury-swipe-slider-container {
+    width: 100%;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    scroll-behavior: smooth;
+    -webkit-overflow-scrolling: touch;
+    padding-bottom: 15px;
+  }
+
+  /* Hide raw scrollbars across all modern engines */
+  .luxury-swipe-slider-container::-webkit-scrollbar {
+    display: none;
+  }
+  .luxury-swipe-slider-container {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+
+  .luxury-swipe-slider-track {
+    display: flex;
+    padding: 0 24px;
+    gap: 30px;
+  }
+
+  .luxury-swipe-slide-item {
+    flex: 0 0 calc(100% - 48px); /* Perfectly sizes one card per view matching screen edge */
+    max-width: 500px;
+    scroll-snap-align: center;
+    box-sizing: border-box;
+  }
+
+  /* Match Screen Center balance on desktop viewports */
+  @media (min-width: 769px) {
+    .luxury-swipe-slider-track {
+      justify-content: center;
+      padding: 0;
+    }
+    .luxury-swipe-slide-item {
+      flex: 0 0 380px;
+    }
+    .luxury-slider-dots-indicator {
+      display: none !important;
+    }
+  }
+
+  .luxury-single-product-wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 22px;
+    width: 100%;
+  }
+
+  /* Image Engine Styles */
+  .luxury-product-image-link {
+    display: block;
+    width: 100%;
+    overflow: hidden;
+    text-decoration: none;
     border: 1px solid rgba(255, 255, 255, 0.05);
   }
 
-  .featured-image {
+  .luxury-image-hover-engine {
+    position: relative;
+    width: 100%;
+    padding-bottom: 125%; /* 4:5 Premium Aspect Ratio */
+    background-color: #111;
+    overflow: hidden;
+  }
+
+  .luxury-main-display-img {
+    position: absolute;
+    top: 0;
+    left: 0;
     width: 100%;
     height: 100%;
-    background-size: cover;
-    background-position: center;
-    transition: transform 0.6s ease;
+    object-fit: cover;
+    transition: transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
   }
 
-  .featured-product-container:hover .featured-image {
-    transform: scale(1.03);
+  .luxury-product-image-link:hover .luxury-main-display-img {
+    transform: scale(1.04);
   }
 
-  /* Typography & Details matching your exact figma layout */
-  .featured-product-info {
-    padding: 0 5px;
+  .luxury-image-overlay-glow {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(180deg, transparent 70%, rgba(0,0,0,0.2) 100%);
+    pointer-events: none;
+  }
+
+  /* Info Details Styling */
+  .luxury-product-info-block {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
     text-align: left;
+    padding: 0 4px;
   }
 
-  .featured-vendor {
-    display: block;
-    font-size: 10px;
+  .luxury-product-vendor {
+    font-size: 11px;
     color: #666666;
-    letter-spacing: 1.5px;
-    text-transform: uppercase;
-    margin-bottom: 6px;
-    font-weight: 500;
+    letter-spacing: 2px;
+    font-weight: 600;
   }
 
-  .featured-item-title {
-    font-size: 22px;
-    font-weight: 500;
-    color: #ffffff;
-    margin: 0 0 10px 0;
+  .luxury-product-title-text {
+    font-size: 21px;
+    font-weight: 700;
     letter-spacing: 0.5px;
+    margin: 0;
   }
 
-  .featured-price-rating {
+  .luxury-product-title-text a {
+    color: #ffffff;
+    text-decoration: none;
+    transition: color 0.3s ease;
+  }
+
+  .luxury-product-title-text a:hover {
+    color: #D4AF37;
+  }
+
+  .luxury-price-rating-row {
     display: flex;
     align-items: center;
     gap: 15px;
-    margin-bottom: 15px;
   }
 
-  .featured-price {
-    font-size: 18px;
-    font-weight: 700;
+  .luxury-product-price-tag {
+    font-size: 16px;
+    font-weight: 600;
     color: #ffffff;
+    letter-spacing: 0.5px;
   }
 
-  .featured-stars {
-    color: #ffcc00;
-    font-size: 12px;
-    letter-spacing: 1px;
+  .luxury-gold-stars-stars {
+    color: #D4AF37;
+    font-size: 11px;
+    letter-spacing: 2px;
   }
 
-  .featured-description {
-    font-size: 12px;
+  .luxury-product-description-snippet {
+    font-size: 13px;
     color: #aaaaaa;
     line-height: 1.6;
-    margin: 0 0 25px 0;
-    font-weight: 300;
-    max-width: 500px;
+    margin: 4px 0 10px 0;
   }
 
-  /* Solid Sharp Black Button on White Text or White Outline style */
-  .btn-featured-view {
-    display: inline-block;
+  /* Solid Action Button Styling */
+  .luxury-action-btn-container {
+    width: 100%;
+  }
+
+  .luxury-view-product-button-element {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    width: 100%;
     background-color: #ffffff;
     color: #000000;
-    padding: 14px 45px;
-    font-size: 11px;
-    font-weight: 600;
-    letter-spacing: 2px;
+    padding: 16px;
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 3px;
     text-decoration: none;
     text-transform: uppercase;
-    transition: all 0.3s ease;
+    transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
     border: 1px solid #ffffff;
   }
 
-  .btn-featured-view:hover {
-    background-color: transparent;
-    color: #ffffff;
+  .btn-arrow-effect {
+    transition: transform 0.3s ease;
   }
 
-  /* Desktop Optimization to keep it looking clean */
-  @media (min-width: 768px) {
-    .featured-product-container {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      align-items: center;
-      gap: 40px;
-      max-width: 1100px;
-      padding: 20px 0;
-    }
-    .featured-image-wrapper {
-      margin-bottom: 0;
-    }
-    .featured-item-title {
-      font-size: 28px;
-    }
+  .luxury-view-product-button-element:hover {
+    background-color: #000000;
+    color: #ffffff;
+    border-color: #ffffff;
+  }
+
+  .luxury-view-product-button-element:hover .btn-arrow-effect {
+    transform: translateX(5px);
+  }
+
+  .luxury-product-placeholder-card {
+    width: 100%;
+    height: 380px;
+    border: 1px dashed #222;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  /* Micro Indicators Setup */
+  .luxury-slider-dots-indicator {
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+    margin-top: 25px;
+  }
+
+  .luxury-dot-node {
+    width: 18px;
+    height: 2px;
+    background-color: #333333;
+    transition: background-color 0.3s ease;
+  }
+
+  .luxury-dot-node.active-dot {
+    background-color: #ffffff;
+  }
+
+  @media (max-width: 480px) {
+    .featured-main-title { font-size: 22px; letter-spacing: 4px; }
+    .luxury-product-title-text { font-size: 19px; }
+    .luxury-view-product-button-element { padding: 14px; font-size: 12px; }
   }
 </style>
 
+<!-- Micro Script to handle Dot Toggle on Touch/Swipe -->
+<script>
+  document.addEventListener("DOMContentLoaded", function() {
+    const scroller = document.querySelector('.luxury-swipe-slider-container');
+    const dots = document.querySelectorAll('.luxury-dot-node');
+    const slides = document.querySelectorAll('.luxury-swipe-slide-item');
+    
+    if(scroller && dots.length > 0) {
+      scroller.addEventListener('scroll', () => {
+        let scrollerWidth = scroller.clientWidth;
+        let scrollLeft = scroller.scrollLeft;
+        
+        slides.forEach((slide, index) => {
+          let slideLeft = slide.offsetLeft - scroller.offsetLeft;
+          if (Math.abs(slideLeft - scrollLeft) < (scrollerWidth / 2)) {
+            dots.forEach(d => d.classList.remove('active-dot'));
+            if(dots[index]) dots[index].classList.add('active-dot');
+          }
+        });
+      });
+    }
+  });
+</script>
+
 {% schema %}
 {
-  "name": "Featured Product",
-  "settings": []
+  "name": "Luxury Featured Swipe",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading_text",
+      "label": "Section Heading",
+      "default": "Featured"
+    },
+    {
+      "type": "text",
+      "id": "sub_heading_text",
+      "label": "Sub Heading",
+      "default": "Editor's picks from the latest collection"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "product_block",
+      "name": "Product Slide",
+      "limit": 5,
+      "settings": [
+        {
+          "type": "product",
+          "id": "featured_product_handle",
+          "label": "Select Product"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Luxury Featured Swipe",
+      "blocks": [
+        { "type": "product_block" },
+        { "type": "product_block" },
+        { "type": "product_block" }
+      ]
+    }
+  ]
 }
 {% endschema %}
+
