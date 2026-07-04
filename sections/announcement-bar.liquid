@@ -1,66 +1,46 @@
-<!-- Brand Point Premium Moving Announcement Bar (Single Ticker) -->
-<div class="brand-point-announcement-bar">
-  <div class="bp-ticker-wrapper">
-    <div class="bp-ticker-content">
-      <span>THE NEW ERA OF STREETWEAR &nbsp;&nbsp;•&nbsp;&nbsp; WELCOME TO BRAND POINT FASHION &nbsp;&nbsp;•&nbsp;&nbsp; </span>
-      <span>THE NEW ERA OF STREETWEAR &nbsp;&nbsp;•&nbsp;&nbsp; WELCOME TO BRAND POINT FASHION &nbsp;&nbsp;•&nbsp;&nbsp; </span>
-      <span>THE NEW ERA OF STREETWEAR &nbsp;&nbsp;•&nbsp;&nbsp; WELCOME TO BRAND POINT FASHION &nbsp;&nbsp;•&nbsp;&nbsp; </span>
-      <span>THE NEW ERA OF STREETWEAR &nbsp;&nbsp;•&nbsp;&nbsp; WELCOME TO BRAND POINT FASHION &nbsp;&nbsp;•&nbsp;&nbsp; </span>
-    </div>
+<!-- Brand Point Elite Announcement Bar - Single Row Only -->
+<div class="elite-announcement-bar-wrapper">
+  <div class="elite-announcement-container">
+    <p class="elite-announcement-text">
+      WELCOME TO BRAND POINT FASHION
+    </p>
   </div>
 </div>
 
+<!-- ========================================== -->
+<!--          LUXURY BAR ARCHITECTURE           -->
+<!-- ========================================== -->
 <style>
-  /* Fresh and Clean Layout for Top Bar */
-  .brand-point-announcement-bar {
-    background-color: #ffffff;
-    border-bottom: 1px solid #eeeeee;
-    padding: 12px 0;
-    overflow: hidden;
+  .elite-announcement-bar-wrapper {
+    background-color: #ffffff; /* Pure luxury white background */
+    color: #000000; /* Sharp black text */
+    border-bottom: 1px solid #e5e5e5;
+    padding: 10px 0;
+    text-align: center;
     width: 100%;
-    position: relative;
-    z-index: 99999;
-  }
-  
-  .bp-ticker-wrapper {
-    display: flex;
-    overflow: hidden;
-    white-space: nowrap;
-    width: 100%;
-  }
-
-  .bp-ticker-content {
-    display: inline-block;
-    padding-left: 100%;
-    animation: bpMarqueeAnimation 30s linear infinite;
-  }
-
-  .bp-ticker-content span {
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-    font-size: 11px;
-    font-weight: 800;
-    color: #000000;
     letter-spacing: 2px;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  }
+
+  .elite-announcement-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+  }
+
+  .elite-announcement-text {
+    font-size: 11px;
+    font-weight: 700;
     text-transform: uppercase;
+    margin: 0;
     display: inline-block;
   }
 
-  /* Infinite Scrolling Logic */
-  @keyframes bpMarqueeAnimation {
-    0% {
-      transform: translate3d(0, 0, 0);
+  @media (max-width: 768px) {
+    .elite-announcement-bar-wrapper {
+      padding: 8px 0;
     }
-    100% {
-      transform: translate3d(-100%, 0, 0);
-    }
-  }
-
-  /* Mobile Tweaks */
-  @media (max-width: 749px) {
-    .brand-point-announcement-bar {
-      padding: 10px 0;
-    }
-    .bp-ticker-content span {
+    .elite-announcement-text {
       font-size: 10px;
       letter-spacing: 1.5px;
     }
@@ -78,3 +58,4 @@
   ]
 }
 {% endschema %}
+
