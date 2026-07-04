@@ -1,51 +1,46 @@
-<!-- Hero Slider Section -->
-<div class="hero-slider">
-  <div class="slide active">
-    <!-- Overlay for better text readability -->
-    <div class="slide-overlay"></div>
-    
-    <!-- Background Image (Placeholder text/styling included in CSS) -->
-    <div class="slide-bg-image"></div>
-
-    <div class="slide-content">
-      <span class="slide-badge">BEST SELLERS 2026</span>
-      <h1 class="slide-title">SHOP OUR<br>TOP PICKS</h1>
-      <p class="slide-subtitle">Our most-loved pieces, handpicked by thousands of Brand Point customers across India.</p>
+<section class="elite-hero-slider">
+  {%- for block in section.blocks -%}
+    <div class="elite-slide-item {% if forloop.first %}active{% endif %}">
       
-      <div class="slide-buttons">
-        <a href="/collections/all" class="btn btn--primary">SHOP NOW &rarr;</a>
-        <a href="/collections" class="btn btn--secondary">VIEW COLLECTION</a>
+      <div class="elite-hero-bg-wrapper">
+        {%- if block.settings.image != blank -%}
+          <img src="{{ block.settings.image | img_url: '1800x' }}" alt="Brand Point Luxury Drops" class="elite-hero-img" loading="eager">
+        {%- else -%}
+          <div class="elite-hero-placeholder" style="background: #0a0a0a; height: 100vh;"></div>
+        {%- endif -%}
+        <div class="elite-hero-vignette-overlay"></div>
       </div>
+
+      <div class="elite-hero-text-container">
+        <h1 class="elite-hero-main-title">
+          {{ block.settings.title | default: "SHOP OUR TOP PICKS" }}
+        </h1>
+        
+        {%- if block.settings.subtext != blank -%}
+          <p class="elite-hero-description">{{ block.settings.subtext }}</p>
+        {%- endif -%}
+
+        <div class="elite-hero-action-row">
+          <a href="{{ block.settings.button_link | default: '/collections/all' }}" class="elite-single-hero-btn">
+            {{ block.settings.button_label | default: "SHOP NOW →" }}
+          </a>
+        </div>
+      </div>
+
     </div>
-  </div>
-
-  <!-- Slider Navigation Arrows -->
-  <button class="slider-arrow arrow-left" aria-label="Previous Slide">
-    <svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" stroke-width="1.5" fill="none"><polyline points="15 18 9 12 15 6"></polyline></svg>
-  </button>
-  <button class="slider-arrow arrow-right" aria-label="Next Slide">
-    <svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" stroke-width="1.5" fill="none"><polyline points="9 18 15 12 9 6"></polyline></svg>
-  </button>
-
-  <!-- Slider Dots -->
-  <div class="slider-dots">
-    <span class="dot active"></span>
-    <span class="dot"></span>
-    <span class="dot"></span>
-  </div>
-</div>
+  {%- endfor -%}
+</section>
 
 <style>
-  .hero-slider {
+  .elite-hero-slider {
     position: relative;
     width: 100%;
-    height: 80vh; /* Adjusts beautifully on mobile and desktop */
-    min-height: 500px;
-    background-color: #111;
+    height: 100vh;
     overflow: hidden;
+    background-color: #000000;
   }
 
-  .slide {
+  .elite-slide-item {
     position: absolute;
     top: 0;
     left: 0;
@@ -53,191 +48,147 @@
     height: 100%;
     display: flex;
     align-items: center;
-    padding: 0 20px;
-    box-sizing: border-box;
-  }
-
-  /* Temporary dark stylish background setup till images are uploaded via Shopify Admin */
-  .slide-bg-image {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-image: url('https://images.unsplash.com/photo-1617137968427-85924c800a22?auto=format&fit=crop&q=80&w=1000'); /* High-end apparel placeholder */
-    background-size: cover;
-    background-position: center;
+    justify-content: center;
+    opacity: 0;
+    transition: opacity 0.8s cubic-bezier(0.25, 1, 0.5, 1);
     z-index: 1;
   }
 
-  .slide-overlay {
+  .elite-slide-item.active {
+    opacity: 1;
+    z-index: 2;
+  }
+
+  .elite-hero-bg-wrapper {
     position: absolute;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    background: linear-gradient(to right, rgba(0,0,0,0.85) 30%, rgba(0,0,0,0.4) 100%);
-    z-index: 2;
   }
 
-  .slide-content {
+  .elite-hero-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+  }
+
+  /* High-end vignette to blend into dark phone UI and premium aesthetics */
+  .elite-hero-vignette-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(180deg, rgba(0,0,0,0.4) 0%, rgba(0,0,0,0.1) 50%, rgba(0,0,0,0.6) 100%);
+  }
+
+  /* Central Text Blocks - Zero Line Accents */
+  .elite-hero-text-container {
     position: relative;
-    z-index: 3;
-    max-width: 600px;
-    margin-left: 5%;
-  }
-
-  .slide-badge {
-    display: inline-block;
-    background-color: rgba(255, 255, 255, 0.15);
-    backdrop-filter: blur(5px);
-    color: #cccccc;
-    font-size: 10px;
-    font-weight: 600;
-    letter-spacing: 2px;
-    padding: 6px 14px;
-    border-radius: 20px;
-    margin-bottom: 15px;
-    text-transform: uppercase;
-  }
-
-  .slide-title {
-    font-size: 42px;
-    font-weight: 700;
-    line-height: 1.1;
+    z-index: 10;
+    text-align: center;
     color: #ffffff;
+    max-width: 650px;
+    padding: 0 24px;
+    margin-top: 15vh; /* Shifts text gracefully downwards toward model waist-line */
+  }
+
+  .elite-hero-main-title {
+    font-size: 42px;
+    font-weight: 900;
+    letter-spacing: 4px;
+    text-transform: uppercase;
     margin: 0 0 15px 0;
-    letter-spacing: 2px;
+    line-height: 1.2;
+    text-shadow: 0px 4px 15px rgba(0, 0, 0, 0.4);
   }
 
-  .slide-subtitle {
-    font-size: 14px;
+  .elite-hero-description {
+    font-size: 13px;
+    font-weight: 400;
     color: #cccccc;
+    letter-spacing: 1.2px;
     line-height: 1.6;
-    margin-bottom: 30px;
-    font-weight: 300;
+    margin: 0 0 35px 0;
+    text-shadow: 0px 2px 8px rgba(0, 0, 0, 0.5);
   }
 
-  /* Buttons */
-  .slide-buttons {
+  /* Structural Single Button Blueprint */
+  .elite-hero-action-row {
     display: flex;
-    gap: 15px;
-    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
   }
 
-  .btn {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    padding: 14px 28px;
-    font-size: 11px;
-    font-weight: 600;
-    letter-spacing: 1.5px;
+  .elite-single-hero-btn {
+    display: inline-block;
+    background-color: #ffffff;
+    color: #000000;
+    padding: 16px 45px;
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 3px;
     text-transform: uppercase;
     text-decoration: none;
-    border-radius: 0; /* Boxy sharp modern corners */
-    transition: all 0.3s ease;
+    border: 1px solid #ffffff;
+    transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
   }
 
-  .btn--primary {
-    background-color: #ffffff;
-    color: #000000;
-  }
-
-  .btn--primary:hover {
-    background-color: #e5e5e5;
-  }
-
-  .btn--secondary {
+  /* Premium Hover Transform Feel */
+  .elite-single-hero-btn:hover {
     background-color: transparent;
     color: #ffffff;
-    border: 1px solid #ffffff;
+    transform: translateY(-2px);
+    box-shadow: 0 10px 20px rgba(255, 255, 255, 0.05);
   }
 
-  .btn--secondary:hover {
-    background-color: #ffffff;
-    color: #000000;
-  }
-
-  /* Navigation Arrows */
-  .slider-arrow {
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
-    background: rgba(255, 255, 255, 0.05);
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    color: #ffffff;
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-    z-index: 4;
-    transition: background 0.2s;
-  }
-  .slider-arrow:hover {
-    background: rgba(255, 255, 255, 0.2);
-  }
-  .arrow-left { left: 20px; }
-  .arrow-right { right: 20px; }
-
-  /* Dots Navigation */
-  .slider-dots {
-    position: absolute;
-    bottom: 25px;
-    left: 50%;
-    transform: translateX(-50%);
-    display: flex;
-    gap: 10px;
-    z-index: 4;
-  }
-
-  .dot {
-    width: 18px;
-    height: 3px;
-    background-color: rgba(255, 255, 255, 0.3);
-    cursor: pointer;
-    transition: background-color 0.3s;
-  }
-
-  .dot.active {
-    background-color: #ffffff;
-  }
-
-  /* Mobile Responsive Optimization */
+  /* Perfectly Built Mobile Fine-Tuning */
   @media (max-width: 768px) {
-    .hero-slider {
-      height: 70vh;
-    }
-    .slide-content {
-      margin-left: 0;
-      text-align: left;
-    }
-    .slide-title {
+    .elite-hero-main-title {
       font-size: 32px;
+      letter-spacing: 3px;
     }
-    .slide-subtitle {
+    
+    .elite-hero-description {
+      font-size: 11px;
+      padding: 0 10px;
+      margin-bottom: 25px;
+    }
+
+    .elite-single-hero-btn {
+      padding: 14px 38px;
       font-size: 12px;
-    }
-    .slider-arrow {
-      display: none; /* Hide arrows on mobile for cleaner touch look */
-    }
-    .btn {
-      padding: 12px 22px;
-      width: 100%; /* Full width buttons on mobile look clean */
-    }
-    .slide-buttons {
-      flex-direction: column;
-      gap: 10px;
+      letter-spacing: 2px;
+      width: 85%; /* Fits perfectly on mobile view width */
     }
   }
 </style>
 
 {% schema %}
 {
-  "name": "Hero Slider",
-  "settings": []
+  "name": "Elite Luxury Slider",
+  "settings": [],
+  "blocks": [
+    {
+      "type": "slide",
+      "name": "Slide Item",
+      "settings": [
+        { "type": "image_picker", "id": "image", "label": "Slide Background" },
+        { "type": "text", "id": "title", "label": "Main Title", "default": "SHOP OUR TOP PICKS" },
+        { "type": "text", "id": "subtext", "label": "Sub Description" },
+        { "type": "text", "id": "button_label", "label": "Button Text", "default": "SHOP NOW" },
+        { "type": "url", "id": "button_link", "label": "Button URL" }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Elite Luxury Slider",
+      "blocks": [ { "type": "slide" } ]
+    }
+  ]
 }
 {% endschema %}
+
