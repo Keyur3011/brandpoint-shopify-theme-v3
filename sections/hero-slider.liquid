@@ -1,65 +1,41 @@
-<section class="elite-hero-slider">
+<!-- Brand Point Android Optimized Luxury Banner -->
+<section class="elite-hero-slider-fixed">
   {%- for block in section.blocks -%}
-    <div class="elite-slide-item {% if forloop.first %}active{% endif %}">
+    <div class="elite-slide-item active">
       
-      <div class="elite-hero-bg-wrapper">
+      <!-- Background Image with Fixed Premium Height Wrapper -->
+      <div class="elite-hero-bg-wrapper-fixed">
         {%- if block.settings.image != blank -%}
-          <img src="{{ block.settings.image | img_url: '1800x' }}" alt="Brand Point Luxury Drops" class="elite-hero-img" loading="eager">
-        {%- else -%}
-          <div class="elite-hero-placeholder" style="background: #0a0a0a; height: 100vh;"></div>
+          <img src="{{ block.settings.image | img_url: '1200x' }}" alt="Brand Point Drop" class="elite-hero-img-fixed" loading="eager">
         {%- endif -%}
-        <div class="elite-hero-vignette-overlay"></div>
+        <div class="elite-hero-vignette-overlay-fixed"></div>
       </div>
 
-      <div class="elite-hero-text-container">
-        <h1 class="elite-hero-main-title">
-          {{ block.settings.title | default: "SHOP OUR TOP PICKS" }}
-        </h1>
-        
-        {%- if block.settings.subtext != blank -%}
-          <p class="elite-hero-description">{{ block.settings.subtext }}</p>
-        {%- endif -%}
-
-        <div class="elite-hero-action-row">
-          <a href="{{ block.settings.button_link | default: '/collections/all' }}" class="elite-single-hero-btn">
-            {{ block.settings.button_label | default: "SHOP NOW →" }}
-          </a>
-        </div>
+      <!-- Action Container - Only Single Fancy Button -->
+      <div class="elite-hero-action-container-fixed">
+        <a href="{{ block.settings.button_link | default: '/collections/all' }}" class="elite-fancy-boutique-btn">
+          {{ block.settings.button_label | default: "SHOP NOW" }}
+        </a>
       </div>
 
     </div>
   {%- endfor -%}
 </section>
 
+<!-- ========================================== -->
+<!--       PRESTIGE MOBILE ARCHITECTURE CSS     -->
+<!-- ========================================== -->
 <style>
-  .elite-hero-slider {
+  /* Base Desktop View (Keeps it clean) */
+  .elite-hero-slider-fixed {
     position: relative;
     width: 100%;
-    height: 100vh;
+    height: 70vh; /* Perfectly proportional height for desktops */
     overflow: hidden;
     background-color: #000000;
   }
 
-  .elite-slide-item {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    opacity: 0;
-    transition: opacity 0.8s cubic-bezier(0.25, 1, 0.5, 1);
-    z-index: 1;
-  }
-
-  .elite-slide-item.active {
-    opacity: 1;
-    z-index: 2;
-  }
-
-  .elite-hero-bg-wrapper {
+  .elite-hero-bg-wrapper-fixed {
     position: absolute;
     top: 0;
     left: 0;
@@ -67,108 +43,84 @@
     height: 100%;
   }
 
-  .elite-hero-img {
+  .elite-hero-img-fixed {
     width: 100%;
     height: 100%;
     object-fit: cover;
-    object-position: center;
+    object-position: center top; /* Keeps the upper focus points safe */
   }
 
-  /* High-end vignette to blend into dark phone UI and premium aesthetics */
-  .elite-hero-vignette-overlay {
+  .elite-hero-vignette-overlay-fixed {
     position: absolute;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    background: linear-gradient(180deg, rgba(0,0,0,0.4) 0%, rgba(0,0,0,0.1) 50%, rgba(0,0,0,0.6) 100%);
+    background: linear-gradient(180deg, rgba(0,0,0,0.2) 0%, rgba(0,0,0,0) 60%, rgba(0,0,0,0.5) 100%);
   }
 
-  /* Central Text Blocks - Zero Line Accents */
-  .elite-hero-text-container {
-    position: relative;
+  /* Bottom-Centered Action Panel */
+  .elite-hero-action-container-fixed {
+    position: absolute;
+    bottom: 40px;
+    left: 50%;
+    transform: translateX(-50%);
     z-index: 10;
-    text-align: center;
-    color: #ffffff;
-    max-width: 650px;
-    padding: 0 24px;
-    margin-top: 15vh; /* Shifts text gracefully downwards toward model waist-line */
-  }
-
-  .elite-hero-main-title {
-    font-size: 42px;
-    font-weight: 900;
-    letter-spacing: 4px;
-    text-transform: uppercase;
-    margin: 0 0 15px 0;
-    line-height: 1.2;
-    text-shadow: 0px 4px 15px rgba(0, 0, 0, 0.4);
-  }
-
-  .elite-hero-description {
-    font-size: 13px;
-    font-weight: 400;
-    color: #cccccc;
-    letter-spacing: 1.2px;
-    line-height: 1.6;
-    margin: 0 0 35px 0;
-    text-shadow: 0px 2px 8px rgba(0, 0, 0, 0.5);
-  }
-
-  /* Structural Single Button Blueprint */
-  .elite-hero-action-row {
+    width: 100%;
     display: flex;
     justify-content: center;
     align-items: center;
   }
 
-  .elite-single-hero-btn {
+  /* Ultra-Premium Fancy Thin Button Structure (No Thick White Block) */
+  .elite-fancy-boutique-btn {
     display: inline-block;
-    background-color: #ffffff;
-    color: #000000;
-    padding: 16px 45px;
-    font-size: 13px;
-    font-weight: 700;
+    background: rgba(0, 0, 0, 0.4); /* Transparent glass effect */
+    color: #ffffff;
+    padding: 12px 35px;
+    font-size: 12px;
+    font-weight: 600;
     letter-spacing: 3px;
     text-transform: uppercase;
     text-decoration: none;
-    border: 1px solid #ffffff;
-    transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    border: 1px solid rgba(255, 255, 255, 0.6); /* Sleek luxury border */
+    backdrop-filter: blur(5px);
+    -webkit-backdrop-filter: blur(5px);
+    transition: all 0.3s cubic-bezier(0.25, 1, 0.5, 1);
   }
 
-  /* Premium Hover Transform Feel */
-  .elite-single-hero-btn:hover {
-    background-color: transparent;
-    color: #ffffff;
-    transform: translateY(-2px);
-    box-shadow: 0 10px 20px rgba(255, 255, 255, 0.05);
+  .elite-fancy-boutique-btn:hover {
+    background: #ffffff;
+    color: #000000;
+    border-color: #ffffff;
+    transform: translateY(-1px);
   }
 
-  /* Perfectly Built Mobile Fine-Tuning */
+  /* ========================================== */
+  /*  CRITICAL FIX: ANDROID & IPHONE SCREEN LOCK */
+  /* ========================================== */
   @media (max-width: 768px) {
-    .elite-hero-main-title {
-      font-size: 32px;
-      letter-spacing: 3px;
-    }
-    
-    .elite-hero-description {
-      font-size: 11px;
-      padding: 0 10px;
-      margin-bottom: 25px;
+    .elite-hero-slider-fixed {
+      height: 58vh !important; /* Forces the image height to crop exactly where the button was in your screenshot */
     }
 
-    .elite-single-hero-btn {
-      padding: 14px 38px;
-      font-size: 12px;
-      letter-spacing: 2px;
-      width: 85%; /* Fits perfectly on mobile view width */
+    .elite-hero-action-container-fixed {
+      bottom: 25px; /* Safely floats just above the bottom screen cut */
+    }
+
+    .elite-fancy-boutique-btn {
+      padding: 11px 30px;
+      font-size: 11px;
+      letter-spacing: 2.5px;
+      width: auto; /* Fits beautifully without eating up screen space */
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.25);
     }
   }
 </style>
 
 {% schema %}
 {
-  "name": "Elite Luxury Slider",
+  "name": "Elite Compressed Slider",
   "settings": [],
   "blocks": [
     {
@@ -176,8 +128,6 @@
       "name": "Slide Item",
       "settings": [
         { "type": "image_picker", "id": "image", "label": "Slide Background" },
-        { "type": "text", "id": "title", "label": "Main Title", "default": "SHOP OUR TOP PICKS" },
-        { "type": "text", "id": "subtext", "label": "Sub Description" },
         { "type": "text", "id": "button_label", "label": "Button Text", "default": "SHOP NOW" },
         { "type": "url", "id": "button_link", "label": "Button URL" }
       ]
@@ -185,10 +135,11 @@
   ],
   "presets": [
     {
-      "name": "Elite Luxury Slider",
+      "name": "Elite Compressed Slider",
       "blocks": [ { "type": "slide" } ]
     }
   ]
 }
 {% endschema %}
+
 
