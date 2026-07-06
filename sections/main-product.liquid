@@ -207,3 +207,40 @@
   "settings": []
 }
 {% endschema %}
+<!-- LUXURY MINIMALIST REVIEW MODULE -->
+<div style="border-top: 1px solid #161616; padding-top: 30px; margin-top: 40px; font-family: sans-serif;">
+  <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+    <h4 style="color: #fff; font-size: 12px; letter-spacing: 2px; text-transform: uppercase; font-weight: 600; margin: 0;">Verified Reviews</h4>
+    
+    <!-- साफ इन-लाइन ट्रिगर बटन -->
+    <button onclick="var f=document.getElementById('brandReviewForm'); f.style.display=(f.style.display==='none'?'block':'none')" style="background: none; color: #888; border: none; border-bottom: 1px solid #444; padding: 2px 0; font-size: 11px; letter-spacing: 1px; cursor: pointer; text-transform: uppercase;">
+      + Write A Review
+    </button>
+  </div>
+
+  <!-- हिडन स्लीक फॉर्म -->
+  <div id="brandReviewForm" style="display: none; background: #090909; border: 1px solid #161616; padding: 20px; margin-top: 15px; border-radius: 2px;">
+    <div style="margin-bottom: 15px;">
+      <label style="color: #666; display: block; font-size: 10px; letter-spacing: 1px; text-transform: uppercase; margin-bottom: 5px;">Rating</label>
+      <select style="width: 100%; padding: 12px; background: #000; color: #fff; border: 1px solid #222; font-size: 12px; border-radius: 0;">
+        <option>5 / 5 — Excellent Fit</option>
+        <option>4 / 5 — Premium Quality</option>
+      </select>
+    </div>
+
+    <div style="margin-bottom: 15px;">
+      <label style="color: #666; display: block; font-size: 10px; letter-spacing: 1px; text-transform: uppercase; margin-bottom: 5px;">Your Name</label>
+      <input type="text" placeholder="e.g., Keyur" style="width: 100%; padding: 12px; background: #000; color: #fff; border: 1px solid #222; font-size: 12px; border-radius: 0; box-sizing: border-box;">
+    </div>
+
+    <div style="margin-bottom: 15px;">
+      <label style="color: #666; display: block; font-size: 10px; letter-spacing: 1px; text-transform: uppercase; margin-bottom: 5px;">Review Details</label>
+      <textarea rows="3" placeholder="Describe fabric texture and fitting..." style="width: 100%; padding: 12px; background: #000; color: #fff; border: 1px solid #222; font-size: 12px; border-radius: 0; box-sizing: border-box; resize: none;"></textarea>
+    </div>
+
+    <button type="submit" style="background: #fff; color: #000; border: none; width: 100%; padding: 12px; font-size: 11px; letter-spacing: 2px; font-weight: 700; text-transform: uppercase; cursor: pointer;">
+      Submit Experience
+    </button>
+  </div>
+</div>
+
