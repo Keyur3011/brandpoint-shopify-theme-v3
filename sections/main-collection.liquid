@@ -20,7 +20,7 @@
         </button>
 
         <button class="utility-sort-dropdown" onclick="document.getElementById('fancySortDrawer').style.transform='translateX(0)'">
-          NATIVE SORT 
+          SORT BY
           <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"></polyline></svg>
         </button>
       </div>
@@ -30,36 +30,27 @@
       {% for product in collection.products %}
         <div class="brand-product-card">
           <a href="{{ product.url }}" class="product-card-anchor">
-            
             <div class="product-image-container-wrapper">
-              
               <div class="badge-stack-container">
                 {% if product.compare_at_price > product.price %}
                   {% assign savings = product.compare_at_price | minus: product.price | times: 100 | divided_by: product.compare_at_price %}
                   <span class="badge-discount-tag">-{{ savings }}%</span>
                 {% endif %}
                 <span class="badge-new-tag">NEW</span>
-                {% if forloop.first %}
-                  <span class="badge-best-tag">BEST</span>
-                {% endif %}
               </div>
-
               {% if product.featured_image %}
                 <img src="{{ product.featured_image | img_url: 'master' }}" alt="{{ product.title }}" class="main-grid-img">
               {% else %}
                 <img src="https://images.unsplash.com/photo-1618886614638-80e3c103d31a?auto=format&fit=crop&q=80&w=600" alt="Placeholder" class="main-grid-img">
               {% endif %}
             </div>
-
             <div class="product-meta-details-block">
               <span class="meta-category-subtitle">{{ collection.title | upcase }}</span>
               <h3 class="meta-product-title">{{ product.title }}</h3>
-              
               <div class="figma-stars-row">
                 <span class="gold-stars">★★★★☆</span>
                 <span class="reviews-count-text">(142)</span>
               </div>
-
               <div class="meta-price-row">
                 <span class="meta-price-active">{{ product.price | money }}</span>
                 {% if product.compare_at_price > product.price %}
@@ -67,12 +58,7 @@
                 {% endif %}
               </div>
             </div>
-
           </a>
-        </div>
-      {% else %}
-        <div class="empty-collection-fallback">
-          <p>No products found in this collection. Please assign tags or add items from Admin panel.</p>
         </div>
       {% endfor %}
     </div>
@@ -82,125 +68,119 @@
 
 <div id="fancyFilterDrawer" style="position: fixed; top: 0; right: 0; width: 85%; max-width: 400px; height: 100vh; background: #0d0d0d; border-left: 1px solid #1a1a1a; z-index: 99999; transform: translateX(100%); transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1); padding: 30px; box-sizing: border-box; color: #fff; overflow-y: auto; font-family: -apple-system, BlinkMacSystemFont, sans-serif;">
   <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #1a1a1a; padding-bottom: 15px; margin-bottom: 25px;">
-    <h2 style="font-size: 16px; font-weight: 700; letter-spacing: 2px; margin: 0; text-transform: uppercase;">Filter Engine</h2>
+    <h2 style="font-size: 16px; font-weight: 700; letter-spacing: 2px; margin: 0; text-transform: uppercase;">Filters</h2>
     <span onclick="document.getElementById('fancyFilterDrawer').style.transform='translateX(100%)'" style="cursor: pointer; font-size: 20px; color: #666;">✕</span>
   </div>
 
   <form id="ShopifyFilterForm">
+    
     {%- for filter in collection.filters -%}
-      <div style="margin-bottom: 30px; border-bottom: 1px solid #111; padding-bottom: 20px;">
-        <h3 style="font-size: 11px; letter-spacing: 1.5px; text-transform: uppercase; color: #555; margin-bottom: 15px; font-weight: 700;">{{ filter.label }}</h3>
-        
-        {%- case filter.type -%}
-          {%- when 'list' or 'boolean' -%}
-            <div style="display: flex; flex-direction: column; gap: 12px;">
-              {%- for value in filter.values -%}
-                <label style="display: flex; align-items: center; gap: 10px; font-size: 13px; cursor: pointer; color: {% if value.active %}#ffffff{% else %}#aaa{% endif %};">
-                  <input type="checkbox" name="{{ value.param_name }}" value="{{ value.value }}" {% if value.active %}checked{% endif %} onchange="document.getElementById('ShopifyFilterForm').submit();" style="accent-color: #fff; cursor: pointer;">
-                  {{ value.label }} ({{ value.count }})
-                </label>
-              {%- endfor -%}
-            </div>
-
-          {%- when 'price_range' -%}
-            <div style="display: flex; align-items: center; gap: 10px;">
-              <input type="number" name="{{ filter.min_value.param_name }}" id="Filter-{{ filter.label }}-GTE"
-                {%- if filter.min_value.value -%}value="{{ filter.min_value.value | divided_by: 100 }}"{%- endif -%}
-                placeholder="₹ Min" style="width: 100%; background: #000; border: 1px solid #1a1a1a; padding: 12px; color: #fff; font-size: 12px; text-align: center; border-radius: 20px;">
-              
-              <span style="color: #444; font-size: 12px;">to</span>
-              
-              <input type="number" name="{{ filter.max_value.param_name }}" id="Filter-{{ filter.label }}-LTE"
-                {%- if filter.max_value.value -%}value="{{ filter.max_value.value | divided_by: 100 }}"{%- endif -%}
-                placeholder="₹ Max" style="width: 100%; background: #000; border: 1px solid #1a1a1a; padding: 12px; color: #fff; font-size: 12px; text-align: center; border-radius: 20px;">
-            </div>
-            <button type="submit" style="margin-top: 15px; width: 100%; background: #222; color: #fff; border: 1px solid #333; padding: 8px; font-size: 11px; border-radius: 20px; cursor: pointer;">Apply Price</button>
-        {%- endcase -%}
-      </div>
+      {%- if filter.label != 'Color' and filter.label != 'Size' -%}
+        <div style="margin-bottom: 30px; border-bottom: 1px solid #111; padding-bottom: 20px;">
+          <h3 style="font-size: 12px; letter-spacing: 1.5px; text-transform: uppercase; color: #666; margin-bottom: 15px; font-weight: 700;">{{ filter.label }}</h3>
+          {%- case filter.type -%}
+            {%- when 'price_range' -%}
+              <div style="display: flex; align-items: center; gap: 10px;">
+                <input type="number" name="{{ filter.min_value.param_name }}" {% if filter.min_value.value %}value="{{ filter.min_value.value | divided_by: 100 }}"{% endif %} placeholder="₹ Min" style="width: 100%; background: #000; border: 1px solid #1a1a1a; padding: 10px; color: #fff; font-size: 12px; text-align: center; border-radius: 20px;">
+                <span style="color: #444;">to</span>
+                <input type="number" name="{{ filter.max_value.param_name }}" {% if filter.max_value.value %}value="{{ filter.max_value.value | divided_by: 100 }}"{% endif %} placeholder="₹ Max" style="width: 100%; background: #000; border: 1px solid #1a1a1a; padding: 10px; color: #fff; font-size: 12px; text-align: center; border-radius: 20px;">
+              </div>
+              <button type="submit" style="margin-top: 10px; width: 100%; background: #222; color: #fff; border: none; padding: 8px; font-size: 11px; border-radius: 20px; cursor: pointer;">Apply Price</button>
+          {%- endcase -%}
+        </div>
+      {%- endif -%}
     {%- endfor -%}
 
-    {%- if collection.filters.size > 0 -%}
-      <a href="{{ collection.url }}" style="display: block; text-align: center; color: #ff4444; text-decoration: none; font-size: 12px; margin-top: 15px; font-weight: 600;">Clear All Filters</a>
+    <div style="margin-bottom: 30px; border-bottom: 1px solid #111; padding-bottom: 20px;">
+      <h3 style="font-size: 12px; letter-spacing: 1.5px; text-transform: uppercase; color: #666; margin-bottom: 15px; font-weight: 700;">Select Size</h3>
+      <div style="display: flex; flex-wrap: wrap; gap: 8px;">
+        {% assign sizes = "S,M,L,XL,XXL" | split: "," %}
+        {% for size in sizes %}
+          {% assign tag_value = size | prepend: 'size-' %}
+          <label style="cursor: pointer;">
+            <input type="checkbox" name="constraint" value="{{ tag_value }}" {% if current_tags contains tag_value %}checked{% endif %} onchange="location.href='/collections/{{ collection.handle }}/' + this.value;" style="display:none;">
+            <span style="display: inline-block; padding: 8px 16px; border-radius: 20px; font-size: 12px; font-weight: 600; border: 1px solid {% if current_tags contains tag_value %}#fff{% else %}#222{% endif %}; background: {% if current_tags contains tag_value %}#fff{% else %}#000{% endif %}; color: {% if current_tags contains tag_value %}#000{% else %}#fff{% endif %};">
+              {{ size }}
+            </span>
+          </label>
+        {% endfor %}
+      </div>
+    </div>
+
+    <div style="margin-bottom: 30px; border-bottom: 1px solid #111; padding-bottom: 20px;">
+      <h3 style="font-size: 12px; letter-spacing: 1.5px; text-transform: uppercase; color: #666; margin-bottom: 15px; font-weight: 700;">Select Color</h3>
+      <div style="display: flex; flex-direction: column; gap: 12px;">
+        
+        {% assign color_names = "Black,Off-White,Charcoal,Navy Blue,Olive Green,Burgundy,Mustard,Beige,Chocolate Brown,Sage Green,Rust Orange,Classic Blue,Lavender" | split: "," %}
+        {% assign color_hexes = "#000000,#f5f5f0,#333333,#0a192f,#3b4d3a,#58111a,#e1ad01,#f5f5dc,#3d2314,#9c9f84,#b7410e,#0047ab,#e6e6fa" | split: "," %}
+        
+        {% for name in color_names %}
+          {% assign idx = forloop.index0 %}
+          {% assign current_hex = color_hexes[idx] %}
+          {% assign color_tag = name | downcase | replace: " ", "-" | prepend: 'color-' %}
+          
+          <label style="display: flex; align-items: center; justify-content: space-between; font-size: 13px; cursor: pointer; color: {% if current_tags contains color_tag %}#fff{% else %}#aaa{% endif %}; padding: 4px 0;">
+            <div style="display: flex; align-items: center; gap: 12px;">
+              <input type="checkbox" value="{{ color_tag }}" {% if current_tags contains color_tag %}checked{% endif %} onchange="location.href='/collections/{{ collection.handle }}/' + this.value;" style="accent-color: #fff; cursor: pointer;">
+              <span style="width: 14px; height: 14px; border-radius: 50%; background: {{ current_hex }}; border: 1px solid #444; display: inline-block;"></span>
+              <span>{{ name }}</span>
+            </div>
+          </label>
+        {% endfor %}
+        
+      </div>
+    </div>
+
+    {%- if current_tags.size > 0 or collection.filters.size > 0 -%}
+      <a href="/collections/{{ collection.handle }}" style="display: block; text-align: center; color: #ff4444; text-decoration: none; font-size: 12px; margin-top: 15px; font-weight: 600;">Clear All Filters</a>
     {%- endif -%}
   </form>
 </div>
 
-<div id="fancySortDrawer" style="position: fixed; top: 0; right: 0; width: 85%; max-width: 400px; height: 100vh; background: #0d0d0d; border-left: 1px solid #1a1a1a; z-index: 99999; transform: translateX(100%); transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1); padding: 30px; box-sizing: border-box; color: #fff; font-family: -apple-system, BlinkMacSystemFont, sans-serif;">
+<div id="fancySortDrawer" style="position: fixed; top: 0; right: 0; width: 85%; max-width: 400px; height: 100vh; background: #0d0d0d; border-left: 1px solid #1a1a1a; z-index: 99999; transform: translateX(100%); transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1); padding: 30px; box-sizing: border-box; color: #fff;">
   <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #1a1a1a; padding-bottom: 15px; margin-bottom: 25px;">
-    <h2 style="font-size: 16px; font-weight: 700; letter-spacing: 2px; margin: 0; text-transform: uppercase;">Sort Engine</h2>
+    <h2 style="font-size: 16px; font-weight: 700; letter-spacing: 2px; margin: 0; text-transform: uppercase;">Sort By</h2>
     <span onclick="document.getElementById('fancySortDrawer').style.transform='translateX(100%)'" style="cursor: pointer; font-size: 20px; color: #666;">✕</span>
   </div>
-
-  {%- assign current_sort = collection.sort_by | default: collection.default_sort_by -%}
-
-  <div style="display: flex; flex-direction: column; gap: 8px;">
-    <a href="{{ collection.url }}?sort_by=manual" style="color: {% if current_sort == 'manual' %}#FFB800{% else %}#fff{% endif %}; text-decoration: none; padding: 12px 15px; border-radius: 8px; font-size: 13px; font-weight: 600; background: #000; border: 1px solid #111;">✦ Featured Selection</a>
-    <a href="{{ collection.url }}?sort_by=best-selling" style="color: {% if current_sort == 'best-selling' %}#FFB800{% else %}#fff{% endif %}; text-decoration: none; padding: 12px 15px; border-radius: 8px; font-size: 13px; font-weight: 700; background: #000; border: 1px solid #111;">★ Best Selling</a>
-    <a href="{{ collection.url }}?sort_by=title-ascending" style="color: {% if current_sort == 'title-ascending' %}#FFB800{% else %}#aaa{% endif %}; text-decoration: none; padding: 12px 15px; font-size: 13px;">Alphabetically, A-Z</a>
-    <a href="{{ collection.url }}?sort_by=title-descending" style="color: {% if current_sort == 'title-descending' %}#FFB800{% else %}#aaa{% endif %}; text-decoration: none; padding: 12px 15px; font-size: 13px;">Alphabetically, Z-A</a>
-    <a href="{{ collection.url }}?sort_by=price-ascending" style="color: {% if current_sort == 'price-ascending' %}#FFB800{% else %}#aaa{% endif %}; text-decoration: none; padding: 12px 15px; font-size: 13px;">Price, Low to High</a>
-    <a href="{{ collection.url }}?sort_by=price-descending" style="color: {% if current_sort == 'price-descending' %}#FFB800{% else %}#aaa{% endif %}; text-decoration: none; padding: 12px 15px; font-size: 13px;">Price, High to Low</a>
+  <div style="display: flex; flex-direction: column; gap: 10px;">
+    <a href="{{ collection.url }}?sort_by=best-selling" style="color: #fff; text-decoration: none; padding: 10px; background: #111; border-radius: 8px; font-size: 13px;">★ Best Selling</a>
+    <a href="{{ collection.url }}?sort_by=price-ascending" style="color: #aaa; text-decoration: none; padding: 10px; font-size: 13px;">Price, Low to High</a>
+    <a href="{{ collection.url }}?sort_by=price-descending" style="color: #aaa; text-decoration: none; padding: 10px; font-size: 13px;">Price, High to Low</a>
   </div>
 </div>
 
 <style>
-  /* Base Scaffolding */
   .brand-collection-wrapper { background-color: #000000; color: #ffffff; padding: 40px 15px; min-height: 100vh; font-family: -apple-system, BlinkMacSystemFont, sans-serif; }
   .brand-collection-container { max-width: 1200px; margin: 0 auto; }
-  
-  /* Header Section */
   .collection-intro-header { text-align: left; margin-bottom: 35px; border-bottom: 1px solid #111; padding-bottom: 20px; }
-  .main-collection-title { font-size: 32px; font-weight: 800; letter-spacing: 1px; margin: 0 0 5px 0; }
-  .main-collection-subtitle { color: #555555; font-size: 13px; margin: 0; letter-spacing: 0.5px; }
-
-  /* Figma Utility Filter Component */
-  .figma-utility-bar { display: flex; flex-direction: column; gap: 15px; justify-content: space-between; align-items: flex-start; margin-bottom: 30px; }
+  .main-collection-title { font-size: 32px; font-weight: 800; letter-spacing: 1px; margin: 0; }
+  .main-collection-subtitle { color: #555555; font-size: 13px; margin-top: 5px; }
+  .figma-utility-bar { display: flex; flex-direction: column; gap: 15px; justify-content: space-between; margin-bottom: 30px; }
   .utility-search-box { display: flex; align-items: center; gap: 10px; background-color: #0d0d0d; border: 1px solid #1a1a1a; padding: 10px 15px; border-radius: 25px; width: 100%; max-width: 320px; }
   .utility-search-box input { background: none; border: none; color: #fff; font-size: 13px; width: 100%; outline: none; }
-  
   .utility-right-side { display: flex; align-items: center; gap: 15px; width: 100%; justify-content: space-between; }
-  .product-counter-text { color: #555555; font-size: 13px; font-weight: 500; }
-  .utility-filter-btn, .utility-sort-dropdown { background-color: #0d0d0d; border: 1px solid #1a1a1a; color: #ffffff; font-size: 12px; font-weight: 700; padding: 10px 20px; border-radius: 25px; display: flex; align-items: center; gap: 8px; cursor: pointer; transition: 0.2s; }
-  .utility-filter-btn:hover, .utility-sort-dropdown:hover { border-color: #444; background-color: #111; }
-
-  /* Grid Architecture */
+  .product-counter-text { color: #555555; font-size: 13px; }
+  .utility-filter-btn, .utility-sort-dropdown { background-color: #0d0d0d; border: 1px solid #1a1a1a; color: #ffffff; font-size: 12px; font-weight: 700; padding: 10px 20px; border-radius: 25px; display: flex; align-items: center; gap: 8px; cursor: pointer; }
   .brand-products-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 15px; }
-  .brand-product-card { background-color: transparent; position: relative; }
-  .product-card-anchor { text-decoration: none; color: inherit; display: block; }
-
-  /* Light Round Curved Corners */
   .product-image-container-wrapper { width: 100%; aspect-ratio: 3/4; border-radius: 12px; overflow: hidden; background-color: #0d0d0d; position: relative; border: 1px solid #111; }
-  .main-grid-img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94); }
-  .brand-product-card:hover .main-grid-img { transform: scale(1.04); }
-
-  /* Badges Stack Style */
-  .badge-stack-container { position: absolute; top: 12px; left: 12px; display: flex; flex-direction: column; gap: 6px; z-index: 3; }
-  .badge-discount-tag { background-color: #000000; color: #ffffff; font-size: 10px; font-weight: 700; padding: 4px 8px; border-radius: 20px; border: 1px solid #222; }
-  .badge-new-tag { background-color: #ffffff; color: #000000; font-size: 10px; font-weight: 800; padding: 4px 10px; border-radius: 20px; text-align: center; }
-  .badge-best-tag { background-color: #FFB800; color: #000000; font-size: 10px; font-weight: 800; padding: 4px 10px; border-radius: 20px; text-align: center; }
-
-  /* Typography Details Block */
+  .main-grid-img { width: 100%; height: 100%; object-fit: cover; }
+  .badge-stack-container { position: absolute; top: 12px; left: 12px; display: flex; flex-direction: column; gap: 6px; }
+  .badge-discount-tag { background-color: #000; color: #fff; font-size: 10px; font-weight: 700; padding: 4px 8px; border-radius: 20px; border: 1px solid #222; }
+  .badge-new-tag { background-color: #fff; color: #000; font-size: 10px; font-weight: 800; padding: 4px 10px; border-radius: 20px; }
   .product-meta-details-block { padding: 12px 2px; }
-  .meta-category-subtitle { font-size: 10px; color: #444444; text-transform: uppercase; letter-spacing: 1px; display: block; margin-bottom: 4px; font-weight: 600; }
-  .meta-product-title { font-size: 14px; font-weight: 700; color: #ffffff; margin: 0 0 6px 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-  
-  /* Star Ratings */
+  .meta-category-subtitle { font-size: 10px; color: #444; text-transform: uppercase; display: block; margin-bottom: 4px; }
+  .meta-product-title { font-size: 14px; font-weight: 700; color: #ffffff; margin: 0 0 6px 0; }
   .figma-stars-row { display: flex; align-items: center; gap: 6px; margin-bottom: 8px; }
-  .gold-stars { color: #FFB800; font-size: 11px; letter-spacing: 1px; }
-  .reviews-count-text { color: #444444; font-size: 11px; font-weight: 500; }
-
-  /* Prices */
+  .gold-stars { color: #FFB800; font-size: 11px; }
+  .reviews-count-text { color: #444; font-size: 11px; }
   .meta-price-row { display: flex; align-items: center; gap: 10px; }
-  .meta-price-active { font-size: 15px; font-weight: 700; color: #ffffff; }
-  .meta-price-old { font-size: 12px; color: #444444; text-decoration: line-through; }
-  .empty-collection-fallback { grid-column: 1/-1; text-align: center; padding: 100px 0; color: #444; }
+  .meta-price-active { font-size: 15px; font-weight: 700; }
+  .meta-price-old { font-size: 12px; color: #444; text-decoration: line-through; }
 
-  /* Desktop Responsiveness */
   @media (min-width: 768px) {
     .brand-products-grid { grid-template-columns: repeat(4, 1fr); gap: 25px; }
     .figma-utility-bar { flex-direction: row; align-items: center; }
     .utility-right-side { width: auto; gap: 20px; }
-    .main-collection-title { font-size: 42px; }
     .product-image-container-wrapper { border-radius: 16px; }
   }
 </style>
