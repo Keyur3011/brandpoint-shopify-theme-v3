@@ -71,48 +71,17 @@
 </div>
 
 <div id="fancyFilterDrawer" class="filter-drawer-overlay">
-  <form id="ShopifyFilterForm" action="{{ collection.url }}" method="get" class="filter-drawer-form">
+  <form id="ShopifyFilterForm" onsubmit="handleFilterSubmit(event)" class="filter-drawer-form">
     
     <div class="drawer-header">
-      <h2>Filter</h2>
+      <h2>Filters</h2>
       <span class="drawer-close-btn" onclick="document.getElementById('fancyFilterDrawer').style.transform='translateX(100%)'">✕</span>
     </div>
 
     <div class="drawer-body">
       
       <div class="filter-group-box">
-        <h3 class="filter-group-title">Price</h3>
-        <div class="price-inputs-container">
-          <div class="price-field">
-            <span>₹</span>
-            <input type="number" name="filter.v.price.gte" id="Filter-Price-GTE"
-              {% if collection.filters.size > 0 %}
-                {% for filter in collection.filters %}
-                  {% if filter.type == 'price_range' and filter.min_value.value %}
-                    value="{{ filter.min_value.value | divided_by: 100 }}"
-                  {% endif %}
-                {% endfor %}
-              {% endif %}
-              placeholder="0">
-          </div>
-          <span class="to-separator">to</span>
-          <div class="price-field">
-            <span>₹</span>
-            <input type="number" name="filter.v.price.lte" id="Filter-Price-LTE"
-              {% if collection.filters.size > 0 %}
-                {% for filter in collection.filters %}
-                  {% if filter.type == 'price_range' and filter.max_value.value %}
-                    value="{{ filter.max_value.value | divided_by: 100 }}"
-                  {% endif %}
-                {% endfor %}
-              {% endif %}
-              placeholder="1,299.00">
-          </div>
-        </div>
-      </div>
-
-      <div class="filter-group-box">
-        <h3 class="filter-group-title">Size</h3>
+        <h3 class="filter-group-title">Select Size</h3>
         <div class="size-pills-grid">
           {% assign sizes = "S,M,L,XL,XXL" | split: "," %}
           {% for size in sizes %}
@@ -120,16 +89,16 @@
             {% assign is_size_active = false %}
             {% if current_tags contains tag_value %}{% assign is_size_active = true %}{% endif %}
             
-            <label class="size-pill-label {% if is_size_active %}active-pill{% endif %}">
-              <input type="checkbox" name="constraint" value="{{ tag_value }}" {% if is_size_active %}checked{% endif %} class="hidden-filter-checkbox">
+            <div class="size-pill-label {% if is_size_active %}active-pill{% endif %}" data-tag="{{ tag_value }}" onclick="toggleSelectElement(this)">
+              <input type="checkbox" value="{{ tag_value }}" {% if is_size_active %}checked{% endif %} style="display:none;" class="real-filter-checkbox">
               {{ size }}
-            </label>
+            </div>
           {% endfor %}
         </div>
       </div>
 
       <div class="filter-group-box">
-        <h3 class="filter-group-title">Color</h3>
+        <h3 class="filter-group-title">Select Color</h3>
         <div class="color-swatches-matrix">
           {% assign color_names = "Black,Off-White,Charcoal,Navy Blue,Olive Green,Burgundy,Mustard,Beige,Chocolate Brown,Sage Green,Rust Orange,Classic Blue,Lavender" | split: "," %}
           {% assign color_hexes = "#000000,#f5f5f0,#333333,#0a192f,#3b4d3a,#58111a,#e1ad01,#f5f5dc,#3d2314,#9c9f84,#b7410e,#0047ab,#e6e6fa" | split: "," %}
@@ -141,36 +110,21 @@
             {% assign is_color_active = false %}
             {% if current_tags contains color_tag %}{% assign is_color_active = true %}{% endif %}
             
-            <label class="color-swatch-item {% if is_color_active %}active-color-border{% endif %}" title="{{ name }}">
-              <input type="checkbox" name="constraint" value="{{ color_tag }}" {% if is_color_active %}checked{% endif %} class="hidden-filter-checkbox">
+            <div class="color-swatch-item {% if is_color_active %}active-color-border{% endif %}" data-tag="{{ color_tag }}" title="{{ name }}" onclick="toggleSelectElement(this)">
+              <input type="checkbox" value="{{ color_tag }}" {% if is_color_active %}checked{% endif %} style="display:none;" class="real-filter-checkbox">
               <span class="color-dot-visual" style="background-color: {{ current_hex }};">
-                {% if is_color_active %}
-                  <span class="checkmark-tick">✓</span>
-                {% endif %}
+                <span class="checkmark-tick" style="display: {% if is_color_active %}block{% else %}none{% endif %};">✓</span>
               </span>
-            </label>
+            </div>
           {% endfor %}
         </div>
-      </div>
-
-      <div class="filter-group-box" style="border-bottom: none;">
-        <h3 class="filter-group-title">Sort</h3>
-        <select name="sort_by" class="drawer-sort-select">
-          <option value="best-selling" {% if collection.sort_by == 'best-selling' %}selected{% endif %}>Best selling</option>
-          <option value="price-ascending" {% if collection.sort_by == 'price-ascending' %}selected{% endif %}>Price, Low to High</option>
-          <option value="price-descending" {% if collection.sort_by == 'price-descending' %}selected{% endif %}>Price, High to Low</option>
-          <option value="title-ascending" {% if collection.sort_by == 'title-ascending' %}selected{% endif %}>Alphabetically, A-Z</option>
-          <option value="created-descending" {% if collection.sort_by == 'created-descending' %}selected{% endif %}>Date, New to Old</option>
-        </select>
       </div>
 
     </div>
 
     <div class="drawer-bottom-actions">
-      {% if current_tags.size > 0 %}
-        <a href="/collections/{{ collection.handle }}" class="clear-all-link">Clear All</a>
-      {% endif %}
-      <button type="submit" class="apply-filters-sticky-btn">See Items</button>
+      <a href="/collections/{{ collection.handle }}" class="clear-all-link">Clear All</a>
+      <button type="submit" class="apply-filters-sticky-btn">Apply Filters</button>
     </div>
 
   </form>
@@ -202,8 +156,7 @@
   .no-products-found-box { text-align: center; padding: 60px 20px; background: #0d0d0d; border: 1px solid #1a1a1a; border-radius: 16px; max-width: 500px; margin: 40px auto; }
   .no-products-found-box h2 { font-size: 18px; font-weight: 700; color: #fff; margin: 0 0 10px 0; }
   .no-products-found-box p { font-size: 13px; color: #666; margin: 0 0 20px 0; line-height: 1.5; }
-  .error-clear-btn { display: inline-block; background: #fff; color: #000; font-size: 13px; font-weight: 700; padding: 12px 30px; border-radius: 25px; transition: opacity 0.2s; }
-  .error-clear-btn:hover { opacity: 0.9; }
+  .error-clear-btn { display: inline-block; background: #fff; color: #000; font-size: 13px; font-weight: 700; padding: 12px 30px; border-radius: 25px; }
 
   /* प्रोडक्ट ग्रिड */
   .brand-products-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 15px; }
@@ -212,9 +165,9 @@
   .badge-stack-container { position: absolute; top: 12px; left: 12px; display: flex; flex-direction: column; gap: 6px; z-index: 2; }
   .badge-discount-tag { background-color: #000; color: #fff; font-size: 10px; font-weight: 700; padding: 4px 8px; border-radius: 20px; border: 1px solid #222; }
   .badge-new-tag { background-color: #fff; color: #000; font-size: 10px; font-weight: 800; padding: 4px 10px; border-radius: 20px; }
-  .product-meta-details-block { padding: 12px 2px; text-decoration: none !important; }
+  .product-meta-details-block { padding: 12px 2px; }
   .meta-category-subtitle { font-size: 10px; color: #444; text-transform: uppercase; display: block; margin-bottom: 4px; }
-  .meta-product-title { font-size: 14px; font-weight: 700; color: #ffffff !important; margin: 0 0 6px 0; text-decoration: none !important; }
+  .meta-product-title { font-size: 14px; font-weight: 700; color: #ffffff !important; margin: 0 0 6px 0; }
   .figma-stars-row { display: flex; align-items: center; gap: 6px; margin-bottom: 8px; }
   .gold-stars { color: #FFB800; font-size: 11px; }
   .reviews-count-text { color: #444; font-size: 11px; }
@@ -223,90 +176,93 @@
   .meta-price-old { font-size: 12px; color: #444; text-decoration: line-through !important; }
 
   /* फ़िल्टर ड्रावर UI */
-  .filter-drawer-overlay { position: fixed; top: 0; right: 0; width: 88%; max-width: 400px; height: 100vh; background: #2b1e16; border-left: 1px solid #3d2b20; z-index: 99999; transform: translateX(100%); transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1); color: #fff; box-shadow: -5px 0 25px rgba(0,0,0,0.5); }
+  .filter-drawer-overlay { position: fixed; top: 0; right: 0; width: 88%; max-width: 400px; height: 100vh; background: #0f0f0f; border-left: 1px solid #1e1e1e; z-index: 99999; transform: translateX(100%); transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1); color: #fff; box-shadow: -5px 0 25px rgba(0,0,0,0.5); }
   .filter-drawer-form { display: flex; flex-direction: column; height: 100%; margin: 0; padding: 0; }
   
   .drawer-header { display: flex; justify-content: space-between; align-items: center; padding: 20px 25px; border-bottom: 1px solid rgba(255,255,255,0.08); }
   .drawer-header h2 { font-size: 20px; font-weight: 600; margin: 0; color: #fff; }
   .drawer-close-btn { cursor: pointer; font-size: 20px; color: rgba(255,255,255,0.6); padding: 5px; }
 
-  .drawer-body { flex: 1; overflow-y: auto; padding: 20px 25px 100px 25px; }
+  .drawer-body { flex: 1; overflow-y: auto; padding: 20px 25px 120px 25px; }
   .filter-group-box { margin-bottom: 25px; border-bottom: 1px solid rgba(255,255,255,0.08); padding-bottom: 25px; }
-  .filter-group-title { font-size: 16px; font-weight: 500; color: #fff; margin: 0 0 15px 0; }
-
-  /* प्राइस फ़ील्ड्स */
-  .price-inputs-container { display: flex; align-items: center; gap: 12px; }
-  .price-field { display: flex; align-items: center; background: rgba(0,0,0,0.25); border: 1px solid rgba(255,255,255,0.15); border-radius: 8px; padding: 10px 12px; width: 100%; }
-  .price-field span { color: rgba(255,255,255,0.4); font-size: 14px; margin-right: 5px; }
-  .price-field input { background: transparent; border: none; color: #fff; font-size: 14px; width: 100%; outline: none; }
-  .to-separator { color: rgba(255,255,255,0.5); font-size: 14px; }
+  .filter-group-title { font-size: 15px; font-weight: 600; color: #fff; margin: 0 0 15px 0; text-transform: uppercase; letter-spacing: 0.5px; }
 
   /* साइज पिल्स */
   .size-pills-grid { display: flex; flex-wrap: wrap; gap: 10px; }
-  .size-pill-label { display: inline-block; padding: 10px 22px; border-radius: 12px; font-size: 13px; font-weight: 500; background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.12); color: rgba(255,255,255,0.8); cursor: pointer; transition: all 0.2s ease; user-select: none; text-align: center; }
-  .size-pill-label:hover { border-color: rgba(255,255,255,0.4); }
-  .hidden-filter-checkbox { display: none !important; }
+  .size-pill-label { display: inline-block; padding: 10px 22px; border-radius: 12px; font-size: 13px; font-weight: 500; background: #1a1a1a; border: 1px solid #2d2d2d; color: #aaa; cursor: pointer; transition: all 0.2s ease; user-select: none; text-align: center; }
   .size-pill-label.active-pill { background: #fff !important; color: #000 !important; border-color: #fff !important; font-weight: 700; }
 
   /* कलर स्वैचेस */
-  .color-swatches-matrix { display: grid; grid-template-columns: repeat(6, 1fr); gap: 12px; }
-  .color-swatch-item { width: 36px; height: 36px; border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; border: 2px solid transparent; transition: all 0.2s ease; background: transparent; }
-  .color-dot-visual { width: 28px; height: 28px; border-radius: 50%; display: flex; align-items: center; justify-content: center; position: relative; border: 1px solid rgba(0,0,0,0.15); }
-  .checkmark-tick { font-size: 12px; font-weight: 900; color: #fff; text-shadow: 0 1px 3px rgba(0,0,0,0.8); }
+  .color-swatches-matrix { display: grid; grid-template-columns: repeat(5, 1fr); gap: 14px; }
+  .color-swatch-item { width: 42px; height: 42px; border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; border: 2px solid transparent; transition: all 0.2s ease; background: transparent; }
+  .color-dot-visual { width: 32px; height: 32px; border-radius: 50%; display: flex; align-items: center; justify-content: center; position: relative; border: 1px solid rgba(255,255,255,0.1); }
+  .checkmark-tick { font-size: 14px; font-weight: 900; color: #fff; text-shadow: 0 1px 3px rgba(0,0,0,0.8); }
   .color-swatch-item.active-color-border { border-color: #fff; }
 
-  /* सॉर्ट */
-  .drawer-sort-select { width: 100%; background: rgba(0,0,0,0.25); border: 1px solid rgba(255,255,255,0.15); border-radius: 8px; padding: 12px; color: #fff; font-size: 14px; outline: none; cursor: pointer; }
-
   /* स्टिकी बॉटम बार */
-  .drawer-bottom-actions { position: absolute; bottom: 0; left: 0; width: 100%; background: #2b1e16; padding: 15px 25px; border-top: 1px solid rgba(255,255,255,0.08); display: flex; align-items: center; gap: 15px; box-sizing: border-box; }
-  .clear-all-link { color: rgba(255,255,255,0.5); font-size: 13px; text-decoration: none !important; border-bottom: 1px solid rgba(255,255,255,0.3) !important; padding-bottom: 2px; cursor: pointer; }
-  .clear-all-link:hover { color: #fff; border-color: #fff !important; }
-  .apply-filters-sticky-btn { flex: 1; background: #000000; color: #ffffff; border: none; padding: 14px 20px; font-size: 14px; font-weight: 700; border-radius: 25px; cursor: pointer; text-align: center; text-transform: uppercase; letter-spacing: 1px; transition: background 0.2s; }
-  .apply-filters-sticky-btn:hover { background: #111; }
+  .drawer-bottom-actions { position: absolute; bottom: 0; left: 0; width: 100%; background: #0f0f0f; padding: 20px 25px; border-top: 1px solid rgba(255,255,255,0.08); display: flex; align-items: center; gap: 20px; box-sizing: border-box; }
+  .clear-all-link { color: rgba(255,255,255,0.5); font-size: 14px; text-decoration: none !important; border-bottom: 1px solid rgba(255,255,255,0.3) !important; padding-bottom: 2px; }
+  .apply-filters-sticky-btn { flex: 1; background: #ffffff; color: #000000; border: none; padding: 14px 20px; font-size: 14px; font-weight: 700; border-radius: 25px; cursor: pointer; text-align: center; text-transform: uppercase; letter-spacing: 1px; }
 
   @media (min-width: 768px) {
     .brand-products-grid { grid-template-columns: repeat(4, 1fr); gap: 25px; }
     .figma-utility-bar { flex-direction: row; align-items: center; }
     .utility-right-side { width: auto; gap: 20px; }
-    .product-image-container-wrapper { border-radius: 16px; }
   }
 </style>
 
 <script>
-  document.addEventListener("DOMContentLoaded", function() {
-    const sizePills = document.querySelectorAll('.size-pill-label');
-    sizePills.forEach(pill => {
-      pill.addEventListener('click', function() {
-        const checkbox = this.querySelector('input[type="checkbox"]');
-        if(checkbox) {
-          setTimeout(() => {
-            if(checkbox.checked) {
-              this.classList.add('active-pill');
-            } else {
-              this.classList.remove('active-pill');
-            }
-          }, 50);
+  // क्लिक करने पर केवल फ्रंटएंड पर सिलेक्ट/अनसिलेक्ट और टिक दिखेगा
+  function toggleSelectElement(element) {
+    const checkbox = element.querySelector('.real-filter-checkbox');
+    if (checkbox) {
+      checkbox.checked = !checkbox.checked;
+      
+      // साइज पिल क्लास चेंज
+      if (element.classList.contains('size-pill-label')) {
+        if (checkbox.checked) {
+          element.classList.add('active-pill');
+        } else {
+          element.classList.remove('active-pill');
         }
-      });
-    });
+      }
+      
+      // कलर डॉट क्लास और टिक मार्क चेंज
+      if (element.classList.contains('color-swatch-item')) {
+        const tick = element.querySelector('.checkmark-tick');
+        if (checkbox.checked) {
+          element.classList.add('active-color-border');
+          if(tick) tick.style.display = 'block';
+        } else {
+          element.classList.remove('active-color-border');
+          if(tick) tick.style.display = 'none';
+        }
+      }
+    }
+  }
 
-    const colorSwatches = document.querySelectorAll('.color-swatch-item');
-    colorSwatches.forEach(swatch => {
-      swatch.addEventListener('click', function() {
-        const checkbox = this.querySelector('input[type="checkbox"]');
-        if(checkbox) {
-          setTimeout(() => {
-            if(checkbox.checked) {
-              this.classList.add('active-color-border');
-            } else {
-              this.classList.remove('active-color-border');
-            }
-          }, 50);
-        }
-      });
+  // जब कस्टमर "Apply Filters" बटन दबाएगा, तब ये फ़ंक्शन शॉपिफाई यूआरएल बनाएगा
+  function handleFilterSubmit(event) {
+    event.preventDefault();
+    
+    const checkedBoxes = document.querySelectorAll('.real-filter-checkbox:checked');
+    let tagsToApply = [];
+    
+    checkedBoxes.forEach(box => {
+      tagsToApply.push(box.value);
     });
-  });
+    
+    // शॉपिफाई कलेक्शन का सही हैंडल यूआरएल रास्ता
+    const collectionHandle = "{{ collection.handle }}";
+    let newUrl = '/collections/' + collectionHandle;
+    
+    if (tagsToApply.length > 0) {
+      newUrl += '/' + tagsToApply.join('+');
+    }
+    
+    // अब पेज सीधे सही फ़िल्टर के साथ रीडायरेक्ट होगा
+    window.location.href = newUrl;
+  }
 </script>
 
 {% schema %}
