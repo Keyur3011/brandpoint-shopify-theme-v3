@@ -11,7 +11,12 @@
           {% for item in cart.items %}
             <div class="cart-product-row">
               <div class="cart-item-image-box">
-                <img src="{{ item.image | img_url: '200x' }}" alt="{{ item.title | escape }}">
+                <!-- 🎯 यहाँ बदलाव किया गया है: अब यह चुने हुए वेरिएंट की ही फोटो दिखाएगा -->
+                {% if item.variant.image %}
+                  <img src="{{ item.variant.image | img_url: '200x' }}" alt="{{ item.title | escape }}">
+                {% else %}
+                  <img src="{{ item.image | img_url: '200x' }}" alt="{{ item.title | escape }}">
+                {% endif %}
               </div>
               
               <div class="cart-item-details-box">
