@@ -42,7 +42,7 @@
                 {% for value in option.values %}
                   {% assign is_color = false %}
                   {% assign option_name_lower = option.name | downcase %}
-                  if option_name_lower contains 'color' or option_name_lower contains 'colour'
+                  {% if option_name_lower contains 'color' or option_name_lower contains 'colour' %}
                     {% assign is_color = true %}
                   {% endif %}
 
@@ -203,7 +203,10 @@
 
   // 🚀 नया मास्टर वेरिएंट और इमेज कंट्रोलर इंजन
   document.addEventListener('DOMContentLoaded', function() {
-    const variantsData = JSON.parse(document.getElementById('ProductJson-Data').innerHTML);
+    const dataEl = document.getElementById('ProductJson-Data');
+    if(!dataEl) return;
+    
+    const variantsData = JSON.parse(dataEl.innerHTML);
     const swatchGroups = document.querySelectorAll('.variant-option-group');
 
     // एक्टिव सिलेक्शन के आधार पर सही वेरिएंट खोजना
@@ -224,9 +227,10 @@
 
       if (matchedVariant) {
         // बैकएंड इनपुट अपडेट करना
-        document.getElementById('MasterVariantId').value = matchedVariant.id;
+        const masterInput = document.getElementById('MasterVariantId');
+        if(masterInput) masterInput.value = matchedVariant.id;
         
-        // यूआरएल बदलना (ताकि रिफ्रेश करने पर भी वही वेरिएंट सिलेक्टेड रहे)
+        // यूआरएल बदलना
         const newUrl = window.location.pathname + '?variant=' + matchedVariant.id;
         window.history.replaceState({ path: newUrl }, '', newUrl);
 
@@ -249,7 +253,6 @@
         const srcText = img.src.toLowerCase();
         
         if (altText.includes(cleanColor) || srcText.includes(cleanColor)) {
-          // जो पहला मैचिंग थंबनेल मिले, उस पर क्लिक करवा दो
           img.parentElement.click();
           break;
         }
@@ -259,7 +262,8 @@
     // स्वैचेस पर क्लिक इवेंट बाइंड करना
     swatchGroups.forEach(group => {
       const swatches = group.querySelectorAll('.color-swatch-circle, .size-swatch-box');
-      const isColorGroup = group.getAttribute('data-option-name').includes('color') || group.getAttribute('data-option-name').includes('colour');
+      const optName = group.getAttribute('data-option-name') || '';
+      const isColorGroup = optName.includes('color') || optName.includes('colour');
 
       swatches.forEach(swatch => {
         // डिफ़ॉल्ट रूप से अगर कोई एक्टिव नहीं है, तो पहले वाले को एक्टिव करें
@@ -271,7 +275,6 @@
           group.querySelectorAll('.color-swatch-circle, .size-swatch-box').forEach(s => s.classList.remove('active-swatch'));
           this.classList.add('active-swatch');
           
-          // अगर कलर बदला है, तो फोटो बदलें
           if (isColorGroup) {
             autoSwapColorImage(this.getAttribute('data-value'));
           }
@@ -333,3 +336,4 @@
 
   </div>
 </div>
+
