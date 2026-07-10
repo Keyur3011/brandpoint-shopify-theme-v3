@@ -1,12 +1,10 @@
-<!-- Premium Figma-to-Shopify Product Page Structure -->
 <div class="premium-product-wrapper">
   <div class="premium-product-container">
     
-    <!-- Left: Media Gallery -->
     <div class="product-media-gallery">
       <div class="main-image-holder">
         {% if product.featured_image %}
-          <img id="MainProductImage" src="{{ product.featured_image | img_url: 'master' }}" alt="{{ product.title }}">
+          <img id="MainProductImage" src="{{ product.featured_image | img_url: 'master' }}" alt="{{ product.title | escape }}">
         {% else %}
           <img src="https://images.unsplash.com/photo-1618886614638-80e3c103d31a?auto=format&fit=crop&q=80&w=800" alt="Placeholder">
         {% endif %}
@@ -16,14 +14,13 @@
         <div class="product-thumbnails-grid">
           {% for image in product.images %}
             <div class="thumb-image-card {% if forloop.first %}active-thumb{% endif %}" onclick="switchProductImage('{{ image | img_url: 'master' }}', this)">
-              <img src="{{ image | img_url: '200x200', crop: 'center' }}" alt="Thumbnail">
+              <img src="{{ image | img_url: '200x200', crop: 'center' }}" alt="{{ image.alt | escape | default: product.title | escape }}">
             </div>
           {% endfor %}
         </div>
       {% endif %}
     </div>
 
-    <!-- Right: Product Information Panel -->
     <div class="product-info-panel">
       <h1 class="brand-product-title">{{ product.title }}</h1>
       
@@ -35,27 +32,24 @@
       </div>
 
       {% form 'product', product, id: 'PremiumProductForm' %}
-        <input type="hidden" name="id" value="{{ product.selected_or_first_available_variant.id }}">
+        <input type="hidden" name="id" id="MasterVariantId" value="{{ product.selected_or_first_available_variant.id }}">
 
-        <!-- Options Selector (Color & Size) -->
         <div class="product-variants-selectors">
           {% for option in product.options_with_values %}
-            <div class="variant-option-group">
+            <div class="variant-option-group" data-option-index="{{ forloop.index0 }}" data-option-name="{{ option.name | downcase }}">
               <label class="variant-label">{{ option.name | upcase }}:</label>
               <div class="variant-values-list">
                 {% for value in option.values %}
                   {% assign is_color = false %}
                   {% assign option_name_lower = option.name | downcase %}
-                  {% if option_name_lower contains 'color' or option_name_lower contains 'colour' %}
+                  if option_name_lower contains 'color' or option_name_lower contains 'colour'
                     {% assign is_color = true %}
                   {% endif %}
 
                   {% if is_color %}
-                    <!-- Round Color Swatches -->
-                    <span class="color-swatch-circle" style="background-color: {{ value | downcase }};" title="{{ value }}"></span>
+                    <span class="color-swatch-circle {% if option.selected_value == value %}active-swatch{% endif %}" data-value="{{ value | escape }}" style="background-color: {{ value | downcase }};" title="{{ value | escape }}"></span>
                   {% else %}
-                    <!-- Box Size Swatches -->
-                    <span class="size-swatch-box">{{ value }}</span>
+                    <span class="size-swatch-box {% if option.selected_value == value %}active-swatch{% endif %}" data-value="{{ value | escape }}">{{ value }}</span>
                   {% endif %}
                 {% endfor %}
               </div>
@@ -63,7 +57,6 @@
           {% endfor %}
         </div>
 
-        <!-- Quantity Counter -->
         <div class="quantity-selector-wrapper">
           <label class="variant-label">QUANTITY</label>
           <div class="quantity-input-box">
@@ -73,7 +66,6 @@
           </div>
         </div>
 
-        <!-- Master Action Buttons -->
         <div class="action-buttons-stack">
           <button type="submit" class="btn-add-to-bag">
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path><line x1="3" y1="6" x2="21" y2="6"></line><path d="M16 10a4 4 0 0 1-8 0"></path></svg>
@@ -86,13 +78,11 @@
         </div>
       {% endform %}
 
-      <!-- WhatsApp Order Bridge -->
       <a href="https://wa.me/YOUR_NUMBER" target="_blank" class="whatsapp-order-btn">
         <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946C.06 5.348 5.397 0 11.948 0c3.174.001 6.161 1.24 8.413 3.488 2.253 2.248 3.492 5.232 3.492 8.406-.003 6.549-5.34 11.897-11.891 11.897-2.006-.002-3.973-.508-5.714-1.472L0 24zm6.59-4.846c1.6.95 3.188 1.449 4.755 1.451 5.352 0 9.713-4.346 9.716-9.693.001-2.59-1.006-5.025-2.834-6.855C16.404 2.228 13.976 1 11.95 1 6.599 1 2.239 5.348 2.236 10.697c-.001 1.637.452 3.232 1.311 4.647L2.518 20.9l5.69-1.492c-.22.1-.21.09-.56-.154z"/></svg>
         ORDER ON WHATSAPP
       </a>
 
-      <!-- Trust Pillars Grid -->
       <div class="trust-pillars-grid">
         <div class="pillar-card">
           <span class="pillar-icon">🔒</span>
@@ -121,6 +111,10 @@
   </div>
 </div>
 
+<script id="ProductJson-Data" type="application/json">
+  {{ product.variants | json }}
+</script>
+
 <style>
   .premium-product-wrapper { background-color: #000000; color: #ffffff; padding: 40px 15px; font-family: -apple-system, BlinkMacSystemFont, sans-serif; }
   .premium-product-container { max-width: 1200px; margin: 0 auto; display: grid; grid-template-columns: 1fr; gap: 40px; }
@@ -139,16 +133,20 @@
   .current-price { font-size: 22px; font-weight: 700; }
   .compare-price { font-size: 16px; color: #666; text-decoration: line-through; }
 
-  /* Swatches */
+  /* Swatches - Active/Selected Look */
   .variant-option-group { margin-bottom: 20px; }
   .variant-label { display: block; font-size: 12px; font-weight: 600; color: #888; letter-spacing: 1px; margin-bottom: 10px; }
-  .variant-values-list { display: flex; gap: 12px; align-items: center; }
+  .variant-values-list { display: flex; gap: 12px; align-items: center; flex-wrap: wrap; }
   
-  .color-swatch-circle { width: 28px; height: 28px; border-radius: 50%; display: inline-block; border: 2px solid #222; cursor: pointer; transition: 0.2s; }
-  .color-swatch-circle:hover { transform: scale(1.1); border-color: #fff; }
+  .color-swatch-circle { width: 28px; height: 28px; border-radius: 50%; display: inline-block; border: 2px solid #333; cursor: pointer; transition: 0.2s; position: relative; }
+  .color-swatch-circle:hover { transform: scale(1.1); }
   
-  .size-swatch-box { padding: 8px 16px; border: 1px solid #333; border-radius: 6px; font-size: 13px; font-weight: 500; cursor: pointer; transition: 0.2s; }
-  .size-swatch-box:hover { border-color: #fff; background-color: #111; }
+  .size-swatch-box { padding: 8px 16px; border: 1px solid #333; border-radius: 6px; font-size: 13px; font-weight: 500; cursor: pointer; transition: 0.2s; background: transparent; color: #fff; }
+  .size-swatch-box:hover { border-color: #fff; }
+  
+  /* Active Border Styles for Selection */
+  .color-swatch-circle.active-swatch { border-color: #ffffff !important; box-shadow: 0 0 8px #ffffff; }
+  .size-swatch-box.active-swatch { border-color: #ffffff !important; background-color: #ffffff !important; color: #000000 !important; font-weight: 700; }
 
   /* Qty Counter */
   .quantity-selector-wrapper { margin-bottom: 30px; }
@@ -183,22 +181,109 @@
 </style>
 
 <script>
+  // इमेज थंबनेल स्विच करना
   function switchProductImage(imgUrl, element) {
     document.getElementById('MainProductImage').src = imgUrl;
     document.querySelectorAll('.thumb-image-card').forEach(thumb => thumb.classList.remove('active-thumb'));
-    element.classList.add('active-thumb');
+    if(element) element.classList.add('active-thumb');
   }
+
   function changeQty(amount) {
     var input = document.getElementById('ProductQtyInput');
     var current = parseInt(input.value);
     if(current + amount >= 1) { input.value = current + amount; }
   }
+
   function triggerDirectCheckout() {
     var form = document.getElementById('PremiumProductForm');
     var input = document.createElement('input');
     input.type = 'hidden'; input.name = 'return_to'; input.value = '/checkout';
     form.appendChild(input); form.submit();
   }
+
+  // 🚀 नया मास्टर वेरिएंट और इमेज कंट्रोलर इंजन
+  document.addEventListener('DOMContentLoaded', function() {
+    const variantsData = JSON.parse(document.getElementById('ProductJson-Data').innerHTML);
+    const swatchGroups = document.querySelectorAll('.variant-option-group');
+
+    // एक्टिव सिलेक्शन के आधार पर सही वेरिएंट खोजना
+    function updateSelectedVariant() {
+      let selectedOptions = [];
+      
+      swatchGroups.forEach(group => {
+        const activeSwatch = group.querySelector('.active-swatch');
+        if (activeSwatch) {
+          selectedOptions.push(activeSwatch.getAttribute('data-value'));
+        }
+      });
+
+      // मैचिंग वेरिएंट ढूंढना
+      const matchedVariant = variantsData.find(variant => {
+        return variant.options.every((option, index) => option === selectedOptions[index]);
+      });
+
+      if (matchedVariant) {
+        // बैकएंड इनपुट अपडेट करना
+        document.getElementById('MasterVariantId').value = matchedVariant.id;
+        
+        // यूआरएल बदलना (ताकि रिफ्रेश करने पर भी वही वेरिएंट सिलेक्टेड रहे)
+        const newUrl = window.location.pathname + '?variant=' + matchedVariant.id;
+        window.history.replaceState({ path: newUrl }, '', newUrl);
+
+        // मूल्य (Price) अपडेट करना
+        const priceContainer = document.querySelector('.current-price');
+        if (priceContainer) {
+          priceContainer.innerHTML = window.Shopify ? Shopify.formatMoney(matchedVariant.price, "{{ shop.money_format }}") : (matchedVariant.price / 100).toFixed(2);
+        }
+      }
+    }
+
+    // कलर सिलेक्ट होने पर गैलरी से फोटो ऑटो-स्वैप करना
+    function autoSwapColorImage(colorValue) {
+      if (!colorValue) return;
+      const cleanColor = colorValue.toLowerCase().trim();
+      const thumbs = document.querySelectorAll('.thumb-image-card img');
+      
+      for (let img of thumbs) {
+        const altText = (img.getAttribute('alt') || '').toLowerCase();
+        const srcText = img.src.toLowerCase();
+        
+        if (altText.includes(cleanColor) || srcText.includes(cleanColor)) {
+          // जो पहला मैचिंग थंबनेल मिले, उस पर क्लिक करवा दो
+          img.parentElement.click();
+          break;
+        }
+      }
+    }
+
+    // स्वैचेस पर क्लिक इवेंट बाइंड करना
+    swatchGroups.forEach(group => {
+      const swatches = group.querySelectorAll('.color-swatch-circle, .size-swatch-box');
+      const isColorGroup = group.getAttribute('data-option-name').includes('color') || group.getAttribute('data-option-name').includes('colour');
+
+      swatches.forEach(swatch => {
+        // डिफ़ॉल्ट रूप से अगर कोई एक्टिव नहीं है, तो पहले वाले को एक्टिव करें
+        if (!group.querySelector('.active-swatch')) {
+          swatches[0].classList.add('active-swatch');
+        }
+
+        swatch.addEventListener('click', function() {
+          group.querySelectorAll('.color-swatch-circle, .size-swatch-box').forEach(s => s.classList.remove('active-swatch'));
+          this.classList.add('active-swatch');
+          
+          // अगर कलर बदला है, तो फोटो बदलें
+          if (isColorGroup) {
+            autoSwapColorImage(this.getAttribute('data-value'));
+          }
+
+          updateSelectedVariant();
+        });
+      });
+    });
+
+    // इनिशियल रन
+    updateSelectedVariant();
+  });
 </script>
 
 {% schema %}
@@ -207,24 +292,20 @@
   "settings": []
 }
 {% endschema %}
-<!-- NEXT LEVEL LUXURY REVIEW MODULE WITH RATING VIEW -->
+
 <div style="border-top: 2px solid #222; border-bottom: 2px solid #111; padding: 40px 15px; margin-top: 50px; font-family: sans-serif; background: #000;">
   <div style="max-width: 600px; margin: 0 auto; text-align: center;">
     
-    <!-- रेटिंग और स्टार्स जो दूर से चमकें -->
     <div style="margin-bottom: 20px;">
       <span style="color: #FFD700; font-size: 22px; letter-spacing: 3px;">★★★★★</span>
       <p style="color: #fff; font-size: 14px; font-weight: 600; margin: 8px 0 0 0; letter-spacing: 2px; text-transform: uppercase;">Customer Experience</p>
     </div>
 
-    <!-- नेक्स्ट लेवल क्रिएटिव बटन (प्रीमियम और बोल्ड लुक) -->
     <button onclick="var f=document.getElementById('brandReviewFormV2'); f.style.display=(f.style.display==='none'?'block':'none')" style="background: #fff; color: #000; border: 1px solid #fff; padding: 14px 35px; font-size: 11px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; cursor: pointer; box-shadow: 0 0 20px rgba(255,255,255,0.15); margin-bottom: 12px; border-radius: 0;">
       ★ Share Your Review
     </button>
     <p style="color: #666; font-size: 11px; margin: 0; font-style: italic;">Your feedback goes directly to our founding team.</p>
 
-    <!-- फॉर्म जो सीधा आपके ईमेल पर रिव्यू भेजेगा -->
-    <!-- नोट: नीचे 'your-brandpointfashion.in@gmail.com' की जगह अपना असली ईमेल डाल देना भाई -->
     <form id="brandReviewFormV2" action="mailto:your-email@example.com" method="post" enctype="text/plain" style="display: none; text-align: left; background: #050505; border: 1px solid #1a1a1a; padding: 25px; margin-top: 25px; border-radius: 0; box-shadow: 0 10px 30px rgba(0,0,0,0.5);">
       
       <div style="margin-bottom: 18px;">
@@ -252,5 +333,3 @@
 
   </div>
 </div>
-
-
