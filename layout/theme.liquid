@@ -19,7 +19,6 @@
       <meta name="description" content="{{ page_description | escape }}">
     {% endif %}
 
-    <!-- Global Variables & Typography Setup -->
     <style>
       :root {
         --bg-color: #000000;
@@ -50,16 +49,12 @@
   </head>
 
   <body>
-    <!-- 1. Announcement Bar Section -->
     {% section 'announcement-bar' %}
 
-    <!-- 2. Header / Navigation Section -->
     {% section 'header' %}
 
-    <!-- 3. Main Content Wrapper -->
     <main id="MainContent" class="content-for-layout focus-none" role="main" tabindex="-1">
       {% if request.page_type == 'index' %}
-        <!-- Homepage Dynamic Architecture Sections Grid -->
         {% section 'hero-slider' %}
         {% section 'category-grid' %}
         {% section 'trust-badges' %}
@@ -67,19 +62,89 @@
         {% section 'featured-product' %}
         {% section 'testimonials' %}
       {% else %}
-        <!-- Content for other subpages like Cart, Accounts, Products, Collections -->
         {{ content_for_layout }}
       {% endif %}
     </main>
 
-    <!-- 4. Footer Section -->
     {% section 'footer' %}
 
-    <!-- Global JavaScript Configurations for Slider Interactions -->
     <script>
       document.addEventListener('DOMContentLoaded', function() {
         console.log("Brand Point premium theme engine initiated successfully.");
       });
     </script>
-  </body>
+
+    <script>
+    (function() {
+      // 1. कलर बदलने पर फोटो ऑटो-चेंज करने का फंक्शन
+      function handleColorImageSwap(selectedColor) {
+        if (!selectedColor) return;
+        const cleanColor = selectedColor.toLowerCase().trim();
+        const allImages = document.querySelectorAll('img');
+        
+        allImages.forEach(img => {
+          const altText = (img.getAttribute('alt') || '').toLowerCase();
+          const srcText = img.src.toLowerCase();
+          
+          if (altText.includes(cleanColor) || srcText.includes(cleanColor)) {
+            // v3 थीम के मुख्य प्रोडक्ट इमेज के संभावित सेलेक्टर्स
+            const mainImage = document.querySelector('.product__media img, .featured-product img, .product-single__media img, [data-main-product-image], .shopify-product-form img, .bp-slide-image img');
+            if (mainImage && img.src !== mainImage.src) {
+              mainImage.src = img.src;
+              if (mainImage.srcset && img.srcset) mainImage.srcset = img.srcset;
+              console.log("Image auto-swapped for color: " + selectedColor);
+            }
+          }
+        });
+      }
+
+      // 2. साइज और कलर को आपस में लॉक रखने का फंक्शन (रीसेट होने से रोकने के लिए)
+      function lockOptionsAndFixCart() {
+        const params = new URLSearchParams(window.location.search);
+        const currentVariantId = params.get('variant');
+        
+        // कार्ट में सही वेरिएंट आईडी लॉक करना
+        const hiddenInputs = document.querySelectorAll('input[name="id"]');
+        if (currentVariantId && hiddenInputs.length > 0) {
+          hiddenInputs.forEach(input => {
+            if (input.value !== currentVariantId) {
+              input.value = currentVariantId;
+            }
+          });
+        }
+      }
+
+      // जब कोई इनपुट रेडियो या ड्रापडाउन बदला जाए
+      document.addEventListener('change', function(e) {
+        const target = e.target;
+        
+        // चेक करना कि क्या बदला हुआ इनपुट कलर का है
+        if (target.matches('[name*="color" i], [name*="colour" i], .color-input input, [data-color-option]')) {
+          handleColorImageSwap(target.value);
+        }
+        
+        setTimeout(lockOptionsAndFixCart, 100);
+      });
+
+      // क्लिक डिटेक्शन - अगर बटन रेडियो इनपुट न होकर डिज़ाइनर लेबल्स (Labels) हैं
+      document.addEventListener('click', function(e) {
+        const label = e.target.closest('label, button, .variant-input');
+        if (label) {
+          const text = label.innerText.toLowerCase().trim();
+          // आपके प्रोडक्ट्स के मुख्य कलर्स के नाम
+          if (text.includes('white') || text.includes('black') || text.includes('blue') || text.includes('red') || text.includes('green')) {
+            setTimeout(() => handleColorImageSwap(label.innerText), 150);
+          }
+        }
+      });
+
+      // हर स्थिति में डेटा प्रिजर्व (Lock) रखना
+      window.addEventListener('popstate', lockOptionsAndFixCart);
+      document.addEventListener('DOMContentLoaded', lockOptionsAndFixCart);
+      
+      // बैकएंड प्रोटेक्शन रन: हर आधे सेकंड में वैल्यू चेक होती रहेगी ताकि कोई बटन अन-सिलेक्ट न हो
+      setInterval(lockOptionsAndFixCart, 500);
+    })();
+    </script>
+    </body>
 </html>
