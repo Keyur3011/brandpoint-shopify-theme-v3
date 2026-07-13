@@ -6,32 +6,105 @@
       <p class="main-collection-subtitle">Premium Indian Streetwear & Luxury Casual Fashion</p>
     </div>
 
-    <div class="figma-utility-bar">
-      <!-- BRAND POINT ACTIVE COLLECTION SEARCH BAR -->
-      <div class="utility-search-box-active" style="width: 100%; max-width: 320px;">
-        <form action="{{ routes.search_url }}" method="get" role="search" style="position: relative; display: flex; align-items: center; width: 100%; background-color: #0d0d0d; border: 1px solid #1a1a1a; padding: 10px 15px; border-radius: 25px;">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#666" stroke-width="2" style="margin-right: 10px; flex-shrink: 0;"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
-          <input 
-            type="search" 
-            name="q" 
-            placeholder="Search products..." 
-            value="{{ search.terms | escape }}"
-            style="background: none; border: none; color: #fff; font-size: 13px; width: 100%; outline: none; padding: 0;"
-          >
-          <input type="hidden" name="options[prefix]" value="last">
-        </form>
+    <!-- फ़िल्टर फॉर्म को अब पूरे कलेक्शन ग्रिड के ऊपर रैप कर दिया है ताकि बटन्स कहीं भी काम कर सकें -->
+    <form id="ShopifyFilterForm" onsubmit="handleFilterSubmit(event)" style="margin: 0; padding: 0;">
+
+      <div class="figma-utility-bar">
+        <!-- BRAND POINT ACTIVE COLLECTION SEARCH BAR -->
+        <div class="utility-search-box-active" style="width: 100%; max-width: 320px;">
+          <div style="position: relative; display: flex; align-items: center; width: 100%; background-color: #0d0d0d; border: 1px solid #1a1a1a; padding: 10px 15px; border-radius: 25px;">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#666" stroke-width="2" style="margin-right: 10px; flex-shrink: 0;"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+            <input 
+              type="search" 
+              name="q" 
+              placeholder="Search products..." 
+              value="{{ search.terms | escape }}"
+              style="background: none; border: none; color: #fff; font-size: 13px; width: 100%; outline: none; padding: 0;"
+              onkeydown="if(event.key === 'Enter') { event.preventDefault(); window.location.href = '/search?q=' + this.value; }"
+            >
+          </div>
+        </div>
+
+        <div class="utility-right-side">
+          <span class="product-counter-text">{{ collection.products_count }} Products</span>
+          
+          <div style="display: flex; gap: 10px; align-items: center;">
+            <!-- ऑरिजनल फिल्टर ओपन बटन -->
+            <button type="button" class="utility-filter-btn" onclick="document.getElementById('fancyFilterDrawer').style.transform='translateX(0)'">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="4" y1="21" x2="4" y2="14"></line><line x1="4" y1="10" x2="4" y2="3"></line><line x1="12" y1="21" x2="12" y2="12"></line><line x1="12" y1="8" x2="12" y2="3"></line><line x1="20" y1="21" x2="20" y2="16"></line><line x1="20" y1="12" x2="20" y2="3"></line><line x1="1" y1="14" x2="7" y2="14"></line><line x1="9" y1="8" x2="15" y2="8"></line><line x1="17" y1="16" x2="23" y2="16"></line></svg>
+              FILTERS
+            </button>
+
+            <!-- अप्लाई फिल्टर बटन अब हमेशा यहाँ बाहर दिखेगा और वर्किंग रहेगा -->
+            <button type="submit" class="global-apply-btn">APPLY FILTERS</button>
+          </div>
+        </div>
       </div>
 
-      <div class="utility-right-side">
-        <span class="product-counter-text">{{ collection.products_count }} Products</span>
-        
-        <button class="utility-filter-btn" onclick="document.getElementById('fancyFilterDrawer').style.transform='translateX(0)'">
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="4" y1="21" x2="4" y2="14"></line><line x1="4" y1="10" x2="4" y2="3"></line><line x1="12" y1="21" x2="12" y2="12"></line><line x1="12" y1="8" x2="12" y2="3"></line><line x1="20" y1="21" x2="20" y2="16"></line><line x1="20" y1="12" x2="20" y2="3"></line><line x1="1" y1="14" x2="7" y2="14"></line><line x1="9" y1="8" x2="15" y2="8"></line><line x1="17" y1="16" x2="23" y2="16"></line></svg>
-          FILTERS
-        </button>
-      </div>
-    </div>
+      <!-- फ़िल्टर ड्रावर (इसके अंदर के आपके ओरिजिनल साइज और कलर ऑप्शन्स वैसे ही रहेंगे) -->
+      <div id="fancyFilterDrawer" class="filter-drawer-overlay">
+        <div class="drawer-header">
+          <h2>Filters</h2>
+          <span class="drawer-close-btn" onclick="document.getElementById('fancyFilterDrawer').style.transform='translateX(100%)'">✕</span>
+        </div>
 
+        <div class="drawer-body">
+          <div class="filter-group-box">
+            <h3 class="filter-group-title">Select Size</h3>
+            <div class="size-pills-grid">
+              {% assign current_handle = collection.handle | downcase %}
+              {% if current_handle contains 'denim' or current_handle contains 'track' or current_handle contains 'jeans' or current_handle contains 'pant' or current_handle contains 'lower' %}
+                {% assign sizes = "28,30,32,34,36,38" | split: "," %}
+              {% else %}
+                {% assign sizes = "S,M,L,XL,XXL" | split: "," %}
+              {% endif %}
+
+              {% for size in sizes %}
+                {% assign tag_value = size | downcase | prepend: 'size-' %}
+                {% assign is_size_active = false %}
+                {% if current_tags contains tag_value %}{% assign is_size_active = true %}{% endif %}
+                
+                <div class="size-pill-label {% if is_size_active %}active-pill{% endif %}" data-tag="{{ tag_value }}" onclick="toggleSelectElement(this)">
+                  <input type="checkbox" value="{{ tag_value }}" {% if is_size_active %}checked{% endif %} style="display:none;" class="real-filter-checkbox">
+                  {{ size }}
+                </div>
+              {% endfor %}
+            </div>
+          </div>
+
+          <div class="filter-group-box">
+            <h3 class="filter-group-title">Select Color</h3>
+            <div class="color-swatches-matrix">
+              {% assign color_names = "Black,Off-White,Charcoal,Navy Blue,Olive Green,Burgundy,Mustard,Yellow,Beige,Chocolate Brown,Sage Green,Rust Orange,Classic Blue,Lavender" | split: "," %}
+              {% assign color_hexes = "#000000,#f5f5f0,#333333,#0a192f,#3b4d3a,#58111a,#e1ad01,#ffcc00,#f5f5dc,#3d2314,#9c9f84,#b7410e,#0047ab,#e6e6fa" | split: "," %}
+              
+              {% for name in color_names %}
+                {% assign idx = forloop.index0 %}
+                {% assign current_hex = color_hexes[idx] %}
+                {% assign color_tag = name | downcase | replace: " ", "-" | prepend: 'color-' %}
+                {% assign is_color_active = false %}
+                {% if current_tags contains color_tag %}{% assign is_color_active = true %}{% endif %}
+                
+                <div class="color-swatch-item {% if is_color_active %}active-color-border{% endif %}" data-tag="{{ color_tag }}" title="{{ name }}" onclick="toggleSelectElement(this)">
+                  <input type="checkbox" value="{{ color_tag }}" {% if is_color_active %}checked{% endif %} style="display:none;" class="real-filter-checkbox">
+                  <span class="color-dot-visual" style="background-color: {{ current_hex }};">
+                    <span class="checkmark-tick" style="display: {% if is_color_active %}block{% else %}none{% endif %};">✓</span>
+                  </span>
+                </div>
+              {% endfor %}
+            </div>
+          </div>
+        </div>
+
+        <div class="drawer-bottom-actions">
+          <a href="/collections/{{ collection.handle }}" class="clear-all-link">Clear All</a>
+          <button type="button" class="apply-filters-sticky-btn" onclick="document.getElementById('fancyFilterDrawer').style.transform='translateX(100%)'">Done</button>
+        </div>
+      </div>
+
+    </form>
+
+    <!-- प्रोडक्ट्स ग्रिड -->
     {% if collection.products.size > 0 %}
       <div class="brand-products-grid">
         {% for product in collection.products %}
@@ -81,82 +154,8 @@
   </div>
 </div>
 
-<div id="fancyFilterDrawer" class="filter-drawer-overlay">
-  <form id="ShopifyFilterForm" onsubmit="handleFilterSubmit(event)" class="filter-drawer-form">
-    
-    <div class="drawer-header">
-      <h2>Filters</h2>
-      <span class="drawer-close-btn" onclick="document.getElementById('fancyFilterDrawer').style.transform='translateX(100%)'">✕</span>
-    </div>
-
-    <!-- नया लेआउट रैपर जो बटन को नीचे स्टिक रखेगा -->
-    <div class="drawer-inner-layout">
-      
-      <div class="drawer-body">
-        
-        <div class="filter-group-box">
-          <h3 class="filter-group-title">Select Size</h3>
-          <div class="size-pills-grid">
-            
-            {% assign current_handle = collection.handle | downcase %}
-            {% if current_handle contains 'denim' or current_handle contains 'track' or current_handle contains 'jeans' or current_handle contains 'pant' or current_handle contains 'lower' %}
-              <!-- For Denim & Track Pants (28 to 38) -->
-              {% assign sizes = "28,30,32,34,36,38" | split: "," %}
-            {% else %}
-              <!-- Default For Shirts, T-Shirts, Cord Sets (S to XXL) -->
-              {% assign sizes = "S,M,L,XL,XXL" | split: "," %}
-            {% endif %}
-
-            {% for size in sizes %}
-              {% assign tag_value = size | downcase | prepend: 'size-' %}
-              {% assign is_size_active = false %}
-              {% if current_tags contains tag_value %}{% assign is_size_active = true %}{% endif %}
-              
-              <div class="size-pill-label {% if is_size_active %}active-pill{% endif %}" data-tag="{{ tag_value }}" onclick="toggleSelectElement(this)">
-                <input type="checkbox" value="{{ tag_value }}" {% if is_size_active %}checked{% endif %} style="display:none;" class="real-filter-checkbox">
-                {{ size }}
-              </div>
-            {% endfor %}
-          </div>
-        </div>
-
-        <div class="filter-group-box">
-          <h3 class="filter-group-title">Select Color</h3>
-          <div class="color-swatches-matrix">
-            {% assign color_names = "Black,Off-White,Charcoal,Navy Blue,Olive Green,Burgundy,Mustard,Yellow,Beige,Chocolate Brown,Sage Green,Rust Orange,Classic Blue,Lavender" | split: "," %}
-            {% assign color_hexes = "#000000,#f5f5f0,#333333,#0a192f,#3b4d3a,#58111a,#e1ad01,#ffcc00,#f5f5dc,#3d2314,#9c9f84,#b7410e,#0047ab,#e6e6fa" | split: "," %}
-            
-            {% for name in color_names %}
-              {% assign idx = forloop.index0 %}
-              {% assign current_hex = color_hexes[idx] %}
-              {% assign color_tag = name | downcase | replace: " ", "-" | prepend: 'color-' %}
-              {% assign is_color_active = false %}
-              {% if current_tags contains color_tag %}{% assign is_color_active = true %}{% endif %}
-              
-              <div class="color-swatch-item {% if is_color_active %}active-color-border{% endif %}" data-tag="{{ color_tag }}" title="{{ name }}" onclick="toggleSelectElement(this)">
-                <input type="checkbox" value="{{ color_tag }}" {% if is_color_active %}checked{% endif %} style="display:none;" class="real-filter-checkbox">
-                <span class="color-dot-visual" style="background-color: {{ current_hex }};">
-                  <span class="checkmark-tick" style="display: {% if is_color_active %}block{% else %}none{% endif %};">✓</span>
-                </span>
-              </div>
-            {% endfor %}
-          </div>
-        </div>
-
-      </div>
-
-      <div class="drawer-bottom-actions">
-        <a href="/collections/{{ collection.handle }}" class="clear-all-link">Clear Filters</a>
-        <button type="submit" class="apply-filters-sticky-btn">Apply Filters</button>
-      </div>
-
-    </div>
-
-  </form>
-</div>
-
 <style>
-  /* ग्लोबल रीसेट - किसी भी टाइटल या कार्ड में अंडरलाइन न आए */
+  /* आपका ऑरिजनल स्टाइल बिल्कुल सुरक्षित है */
   .brand-collection-wrapper, .brand-collection-wrapper *, 
   .brand-product-card a, .meta-product-title, .product-card-anchor {
     text-decoration: none !important;
@@ -175,13 +174,14 @@
   .product-counter-text { color: #555555; font-size: 13px; }
   .utility-filter-btn { background-color: #0d0d0d; border: 1px solid #1a1a1a; color: #ffffff; font-size: 12px; font-weight: 700; padding: 10px 25px; border-radius: 25px; display: flex; align-items: center; gap: 8px; cursor: pointer; text-transform: uppercase; letter-spacing: 1px; }
 
-  /* नो प्रोडक्ट फाउंड बॉक्स */
+  /* नया ग्लोबल अप्लाई बटन स्टाइल जो हमेशा बाहर वर्क करेगा */
+  .global-apply-btn { background-color: #ffffff; color: #000000; font-size: 12px; font-weight: 700; padding: 10px 20px; border-radius: 25px; border: none; cursor: pointer; letter-spacing: 1px; text-transform: uppercase; }
+
   .no-products-found-box { text-align: center; padding: 60px 20px; background: #0d0d0d; border: 1px solid #1a1a1a; border-radius: 16px; max-width: 500px; margin: 40px auto; }
   .no-products-found-box h2 { font-size: 18px; font-weight: 700; color: #fff; margin: 0 0 10px 0; }
   .no-products-found-box p { font-size: 13px; color: #666; margin: 0 0 20px 0; line-height: 1.5; }
   .error-clear-btn { display: inline-block; background: #fff; color: #000; font-size: 13px; font-weight: 700; padding: 12px 30px; border-radius: 25px; }
 
-  /* प्रोडक्ट ग्रिड */
   .brand-products-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 15px; }
   .product-image-container-wrapper { width: 100%; aspect-ratio: 3/4; border-radius: 12px; overflow: hidden; background-color: #0d0d0d; position: relative; border: 1px solid #111; }
   .main-grid-img { width: 100%; height: 100%; object-fit: cover; }
@@ -198,37 +198,28 @@
   .meta-price-active { font-size: 15px; font-weight: 700; color: #fff; }
   .meta-price-old { font-size: 12px; color: #444; text-decoration: line-through !important; }
 
-  /* फ़िल्टर ड्रावर UI और वर्किंग फिक्स */
   .filter-drawer-overlay { position: fixed; top: 0; right: 0; width: 88%; max-width: 400px; height: 100vh; background: #0f0f0f; border-left: 1px solid #1e1e1e; z-index: 99999; transform: translateX(100%); transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1); color: #fff; box-shadow: -5px 0 25px rgba(0,0,0,0.5); }
-  .filter-drawer-form { display: flex; flex-direction: column; height: 100%; margin: 0; padding: 0; }
-  
-  .drawer-header { display: flex; justify-content: space-between; align-items: center; padding: 20px 25px; border-bottom: 1px solid rgba(255,255,255,0.08); flex-shrink: 0; }
+  .drawer-header { display: flex; justify-content: space-between; align-items: center; padding: 20px 25px; border-bottom: 1px solid rgba(255,255,255,0.08); }
   .drawer-header h2 { font-size: 20px; font-weight: 600; margin: 0; color: #fff; }
   .drawer-close-btn { cursor: pointer; font-size: 20px; color: rgba(255,255,255,0.6); padding: 5px; }
 
-  /* नया लेआउट बॉक्स ताकि बटन्स फिक्स रहें */
-  .drawer-inner-layout { display: flex; flex-direction: column; flex: 1; overflow: hidden; position: relative; }
-  .drawer-body { flex: 1; overflow-y: auto; padding: 20px 25px 40px 25px; }
-  
+  .drawer-body { height: calc(100% - 160px); overflow-y: auto; padding: 20px 25px; }
   .filter-group-box { margin-bottom: 25px; border-bottom: 1px solid rgba(255,255,255,0.08); padding-bottom: 25px; }
   .filter-group-title { font-size: 15px; font-weight: 600; color: #fff; margin: 0 0 15px 0; text-transform: uppercase; letter-spacing: 0.5px; }
 
-  /* साइज पिल्स */
   .size-pills-grid { display: flex; flex-wrap: wrap; gap: 10px; }
   .size-pill-label { display: inline-block; padding: 10px 22px; border-radius: 12px; font-size: 13px; font-weight: 500; background: #1a1a1a; border: 1px solid #2d2d2d; color: #aaa; cursor: pointer; transition: all 0.2s ease; user-select: none; text-align: center; }
   .size-pill-label.active-pill { background: #fff !important; color: #000 !important; border-color: #fff !important; font-weight: 700; }
 
-  /* कलर स्वैचेस */
   .color-swatches-matrix { display: grid; grid-template-columns: repeat(5, 1fr); gap: 14px; }
   .color-swatch-item { width: 42px; height: 42px; border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; border: 2px solid transparent; transition: all 0.2s ease; background: transparent; }
   .color-dot-visual { width: 32px; height: 32px; border-radius: 50%; display: flex; align-items: center; justify-content: center; position: relative; border: 1px solid rgba(255,255,255,0.1); }
   .checkmark-tick { font-size: 14px; font-weight: 900; color: #fff; text-shadow: 0 1px 3px rgba(0,0,0,0.8); }
   .color-swatch-item.active-color-border { border-color: #fff; }
 
-  /* हमेशा दिखने वाला फिक्स स्टिकी बॉटम बार */
-  .drawer-bottom-actions { position: relative; bottom: 0; left: 0; width: 100%; background: #0f0f0f; padding: 20px 25px; border-top: 1px solid rgba(255,255,255,0.08); display: flex; align-items: center; gap: 20px; box-sizing: border-box; flex-shrink: 0; }
+  .drawer-bottom-actions { position: absolute; bottom: 0; left: 0; width: 100%; background: #0f0f0f; padding: 20px 25px; border-top: 1px solid rgba(255,255,255,0.08); display: flex; align-items: center; gap: 20px; box-sizing: border-box; }
   .clear-all-link { color: rgba(255,255,255,0.5); font-size: 14px; text-decoration: none !important; border-bottom: 1px solid rgba(255,255,255,0.3) !important; padding-bottom: 2px; }
-  .apply-filters-sticky-btn { flex: 1; background: #ffffff; color: #000000; border: none; padding: 14px 20px; font-size: 14px; font-weight: 700; border-radius: 25px; cursor: pointer; text-align: center; text-transform: uppercase; letter-spacing: 1px; display: block !important; visibility: visible !important; }
+  .apply-filters-sticky-btn { flex: 1; background: #ffffff; color: #000000; border: none; padding: 14px 20px; font-size: 14px; font-weight: 700; border-radius: 25px; cursor: pointer; text-align: center; text-transform: uppercase; letter-spacing: 1px; }
 
   @media (min-width: 768px) {
     .brand-products-grid { grid-template-columns: repeat(4, 1fr); gap: 25px; }
