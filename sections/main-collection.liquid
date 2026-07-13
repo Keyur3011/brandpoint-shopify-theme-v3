@@ -94,9 +94,18 @@
       <div class="filter-group-box">
         <h3 class="filter-group-title">Select Size</h3>
         <div class="size-pills-grid">
-          {% assign sizes = "S,M,L,XL,XXL" | split: "," %}
+          
+          {% assign current_handle = collection.handle | downcase %}
+          {% if current_handle contains 'denim' or current_handle contains 'track' or current_handle contains 'jeans' or current_handle contains 'pant' or current_handle contains 'lower' %}
+            <!-- For Denim & Track Pants (28 to 38) -->
+            {% assign sizes = "28,30,32,34,36,38" | split: "," %}
+          {% else %}
+            <!-- Default For Shirts, T-Shirts, Cord Sets (S to XXL) -->
+            {% assign sizes = "S,M,L,XL,XXL" | split: "," %}
+          {% endif %}
+
           {% for size in sizes %}
-            {% assign tag_value = size | prepend: 'size-' %}
+            {% assign tag_value = size | downcase | prepend: 'size-' %}
             {% assign is_size_active = false %}
             {% if current_tags contains tag_value %}{% assign is_size_active = true %}{% endif %}
             
