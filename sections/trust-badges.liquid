@@ -234,8 +234,8 @@
     left: 0;
     width: 100%;
     height: 100%;
-    background: rgba(0, 0, 0, 0.5); 
-    backdrop-filter: blur(12px); /* Blurred background */
+    background: rgba(0, 0, 0, 0.6); 
+    backdrop-filter: blur(12px); 
     -webkit-backdrop-filter: blur(12px);
     display: flex;
     justify-content: center;
@@ -245,6 +245,7 @@
     pointer-events: none;
     transition: opacity 0.4s cubic-bezier(0.16, 1, 0.3, 1);
     padding: 20px;
+    box-sizing: border-box; /* Fixed sizing bug */
   }
 
   .bp-custom-modal.is-active {
@@ -252,12 +253,14 @@
     pointer-events: auto;
   }
 
+  /* Fixed Mobile Width Shift */
   .bp-modal-popup-box {
-    background: rgba(18, 18, 18, 0.8); 
+    background: rgba(18, 18, 18, 0.85); 
     border: 1px solid rgba(255, 255, 255, 0.12);
     border-radius: 18px;
     max-width: 450px;
     width: 100%;
+    box-sizing: border-box; /* Forces box to stay within screen boundaries */
     padding: 32px;
     position: relative;
     transform: scale(0.92);
@@ -307,7 +310,7 @@
     letter-spacing: 0.3px;
   }
 
-  /* Mobile Grid Responsiveness */
+  /* Mobile Grid & Modal Alignment Fix */
   @media (max-width: 768px) {
     .bp-modal-grid-container {
       grid-template-columns: repeat(2, 1fr);
@@ -327,7 +330,9 @@
       font-size: 9px;
     }
     .bp-modal-popup-box {
-      padding: 24px;
+      padding: 24px 20px;
+      width: calc(100% - 10px); /* Keeps strict uniform padding on screen borders */
+      margin: 0 auto;
     }
   }
 </style>
