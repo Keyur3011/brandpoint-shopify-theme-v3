@@ -89,62 +89,67 @@
       <span class="drawer-close-btn" onclick="document.getElementById('fancyFilterDrawer').style.transform='translateX(100%)'">✕</span>
     </div>
 
-    <div class="drawer-body">
+    <!-- नया लेआउट रैपर जो बटन को नीचे स्टिक रखेगा -->
+    <div class="drawer-inner-layout">
       
-      <div class="filter-group-box">
-        <h3 class="filter-group-title">Select Size</h3>
-        <div class="size-pills-grid">
-          
-          {% assign current_handle = collection.handle | downcase %}
-          {% if current_handle contains 'denim' or current_handle contains 'track' or current_handle contains 'jeans' or current_handle contains 'pant' or current_handle contains 'lower' %}
-            <!-- For Denim & Track Pants (28 to 38) -->
-            {% assign sizes = "28,30,32,34,36,38" | split: "," %}
-          {% else %}
-            <!-- Default For Shirts, T-Shirts, Cord Sets (S to XXL) -->
-            {% assign sizes = "S,M,L,XL,XXL" | split: "," %}
-          {% endif %}
-
-          {% for size in sizes %}
-            {% assign tag_value = size | downcase | prepend: 'size-' %}
-            {% assign is_size_active = false %}
-            {% if current_tags contains tag_value %}{% assign is_size_active = true %}{% endif %}
+      <div class="drawer-body">
+        
+        <div class="filter-group-box">
+          <h3 class="filter-group-title">Select Size</h3>
+          <div class="size-pills-grid">
             
-            <div class="size-pill-label {% if is_size_active %}active-pill{% endif %}" data-tag="{{ tag_value }}" onclick="toggleSelectElement(this)">
-              <input type="checkbox" value="{{ tag_value }}" {% if is_size_active %}checked{% endif %} style="display:none;" class="real-filter-checkbox">
-              {{ size }}
-            </div>
-          {% endfor %}
+            {% assign current_handle = collection.handle | downcase %}
+            {% if current_handle contains 'denim' or current_handle contains 'track' or current_handle contains 'jeans' or current_handle contains 'pant' or current_handle contains 'lower' %}
+              <!-- For Denim & Track Pants (28 to 38) -->
+              {% assign sizes = "28,30,32,34,36,38" | split: "," %}
+            {% else %}
+              <!-- Default For Shirts, T-Shirts, Cord Sets (S to XXL) -->
+              {% assign sizes = "S,M,L,XL,XXL" | split: "," %}
+            {% endif %}
+
+            {% for size in sizes %}
+              {% assign tag_value = size | downcase | prepend: 'size-' %}
+              {% assign is_size_active = false %}
+              {% if current_tags contains tag_value %}{% assign is_size_active = true %}{% endif %}
+              
+              <div class="size-pill-label {% if is_size_active %}active-pill{% endif %}" data-tag="{{ tag_value }}" onclick="toggleSelectElement(this)">
+                <input type="checkbox" value="{{ tag_value }}" {% if is_size_active %}checked{% endif %} style="display:none;" class="real-filter-checkbox">
+                {{ size }}
+              </div>
+            {% endfor %}
+          </div>
         </div>
+
+        <div class="filter-group-box">
+          <h3 class="filter-group-title">Select Color</h3>
+          <div class="color-swatches-matrix">
+            {% assign color_names = "Black,Off-White,Charcoal,Navy Blue,Olive Green,Burgundy,Mustard,Yellow,Beige,Chocolate Brown,Sage Green,Rust Orange,Classic Blue,Lavender" | split: "," %}
+            {% assign color_hexes = "#000000,#f5f5f0,#333333,#0a192f,#3b4d3a,#58111a,#e1ad01,#ffcc00,#f5f5dc,#3d2314,#9c9f84,#b7410e,#0047ab,#e6e6fa" | split: "," %}
+            
+            {% for name in color_names %}
+              {% assign idx = forloop.index0 %}
+              {% assign current_hex = color_hexes[idx] %}
+              {% assign color_tag = name | downcase | replace: " ", "-" | prepend: 'color-' %}
+              {% assign is_color_active = false %}
+              {% if current_tags contains color_tag %}{% assign is_color_active = true %}{% endif %}
+              
+              <div class="color-swatch-item {% if is_color_active %}active-color-border{% endif %}" data-tag="{{ color_tag }}" title="{{ name }}" onclick="toggleSelectElement(this)">
+                <input type="checkbox" value="{{ color_tag }}" {% if is_color_active %}checked{% endif %} style="display:none;" class="real-filter-checkbox">
+                <span class="color-dot-visual" style="background-color: {{ current_hex }};">
+                  <span class="checkmark-tick" style="display: {% if is_color_active %}block{% else %}none{% endif %};">✓</span>
+                </span>
+              </div>
+            {% endfor %}
+          </div>
+        </div>
+
       </div>
 
-      <div class="filter-group-box">
-        <h3 class="filter-group-title">Select Color</h3>
-        <div class="color-swatches-matrix">
-          {% assign color_names = "Black,Off-White,Charcoal,Navy Blue,Olive Green,Burgundy,Mustard,Beige,Chocolate Brown,Sage Green,Rust Orange,Classic Blue,Lavender" | split: "," %}
-          {% assign color_hexes = "#000000,#f5f5f0,#333333,#0a192f,#3b4d3a,#58111a,#e1ad01,#f5f5dc,#3d2314,#9c9f84,#b7410e,#0047ab,#e6e6fa" | split: "," %}
-          
-          {% for name in color_names %}
-            {% assign idx = forloop.index0 %}
-            {% assign current_hex = color_hexes[idx] %}
-            {% assign color_tag = name | downcase | replace: " ", "-" | prepend: 'color-' %}
-            {% assign is_color_active = false %}
-            {% if current_tags contains color_tag %}{% assign is_color_active = true %}{% endif %}
-            
-            <div class="color-swatch-item {% if is_color_active %}active-color-border{% endif %}" data-tag="{{ color_tag }}" title="{{ name }}" onclick="toggleSelectElement(this)">
-              <input type="checkbox" value="{{ color_tag }}" {% if is_color_active %}checked{% endif %} style="display:none;" class="real-filter-checkbox">
-              <span class="color-dot-visual" style="background-color: {{ current_hex }};">
-                <span class="checkmark-tick" style="display: {% if is_color_active %}block{% else %}none{% endif %};">✓</span>
-              </span>
-            </div>
-          {% endfor %}
-        </div>
+      <div class="drawer-bottom-actions">
+        <a href="/collections/{{ collection.handle }}" class="clear-all-link">Clear Filters</a>
+        <button type="submit" class="apply-filters-sticky-btn">Apply Filters</button>
       </div>
 
-    </div>
-
-    <div class="drawer-bottom-actions">
-      <a href="/collections/{{ collection.handle }}" class="clear-all-link">Clear All</a>
-      <button type="submit" class="apply-filters-sticky-btn">Apply Filters</button>
     </div>
 
   </form>
@@ -193,15 +198,18 @@
   .meta-price-active { font-size: 15px; font-weight: 700; color: #fff; }
   .meta-price-old { font-size: 12px; color: #444; text-decoration: line-through !important; }
 
-  /* फ़िल्टर ड्रावर UI */
+  /* फ़िल्टर ड्रावर UI और वर्किंग फिक्स */
   .filter-drawer-overlay { position: fixed; top: 0; right: 0; width: 88%; max-width: 400px; height: 100vh; background: #0f0f0f; border-left: 1px solid #1e1e1e; z-index: 99999; transform: translateX(100%); transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1); color: #fff; box-shadow: -5px 0 25px rgba(0,0,0,0.5); }
   .filter-drawer-form { display: flex; flex-direction: column; height: 100%; margin: 0; padding: 0; }
   
-  .drawer-header { display: flex; justify-content: space-between; align-items: center; padding: 20px 25px; border-bottom: 1px solid rgba(255,255,255,0.08); }
+  .drawer-header { display: flex; justify-content: space-between; align-items: center; padding: 20px 25px; border-bottom: 1px solid rgba(255,255,255,0.08); flex-shrink: 0; }
   .drawer-header h2 { font-size: 20px; font-weight: 600; margin: 0; color: #fff; }
   .drawer-close-btn { cursor: pointer; font-size: 20px; color: rgba(255,255,255,0.6); padding: 5px; }
 
-  .drawer-body { flex: 1; overflow-y: auto; padding: 20px 25px 120px 25px; }
+  /* नया लेआउट बॉक्स ताकि बटन्स फिक्स रहें */
+  .drawer-inner-layout { display: flex; flex-direction: column; flex: 1; overflow: hidden; position: relative; }
+  .drawer-body { flex: 1; overflow-y: auto; padding: 20px 25px 40px 25px; }
+  
   .filter-group-box { margin-bottom: 25px; border-bottom: 1px solid rgba(255,255,255,0.08); padding-bottom: 25px; }
   .filter-group-title { font-size: 15px; font-weight: 600; color: #fff; margin: 0 0 15px 0; text-transform: uppercase; letter-spacing: 0.5px; }
 
@@ -217,10 +225,10 @@
   .checkmark-tick { font-size: 14px; font-weight: 900; color: #fff; text-shadow: 0 1px 3px rgba(0,0,0,0.8); }
   .color-swatch-item.active-color-border { border-color: #fff; }
 
-  /* स्टिकी बॉटम बार */
-  .drawer-bottom-actions { position: absolute; bottom: 0; left: 0; width: 100%; background: #0f0f0f; padding: 20px 25px; border-top: 1px solid rgba(255,255,255,0.08); display: flex; align-items: center; gap: 20px; box-sizing: border-box; }
+  /* हमेशा दिखने वाला फिक्स स्टिकी बॉटम बार */
+  .drawer-bottom-actions { position: relative; bottom: 0; left: 0; width: 100%; background: #0f0f0f; padding: 20px 25px; border-top: 1px solid rgba(255,255,255,0.08); display: flex; align-items: center; gap: 20px; box-sizing: border-box; flex-shrink: 0; }
   .clear-all-link { color: rgba(255,255,255,0.5); font-size: 14px; text-decoration: none !important; border-bottom: 1px solid rgba(255,255,255,0.3) !important; padding-bottom: 2px; }
-  .apply-filters-sticky-btn { flex: 1; background: #ffffff; color: #000000; border: none; padding: 14px 20px; font-size: 14px; font-weight: 700; border-radius: 25px; cursor: pointer; text-align: center; text-transform: uppercase; letter-spacing: 1px; }
+  .apply-filters-sticky-btn { flex: 1; background: #ffffff; color: #000000; border: none; padding: 14px 20px; font-size: 14px; font-weight: 700; border-radius: 25px; cursor: pointer; text-align: center; text-transform: uppercase; letter-spacing: 1px; display: block !important; visibility: visible !important; }
 
   @media (min-width: 768px) {
     .brand-products-grid { grid-template-columns: repeat(4, 1fr); gap: 25px; }
@@ -230,13 +238,11 @@
 </style>
 
 <script>
-  // क्लिक करने पर केवल फ्रंटएंड पर सिलेक्ट/अनसिलेक्ट और टिक दिखेगा
   function toggleSelectElement(element) {
     const checkbox = element.querySelector('.real-filter-checkbox');
     if (checkbox) {
       checkbox.checked = !checkbox.checked;
       
-      // साइज पिल क्लास चेंज
       if (element.classList.contains('size-pill-label')) {
         if (checkbox.checked) {
           element.classList.add('active-pill');
@@ -245,7 +251,6 @@
         }
       }
       
-      // कलर डॉट क्लास और टिक मार्क चेंज
       if (element.classList.contains('color-swatch-item')) {
         const tick = element.querySelector('.checkmark-tick');
         if (checkbox.checked) {
@@ -259,7 +264,6 @@
     }
   }
 
-  // जब कस्टमर "Apply Filters" बटन दबाएगा, तब ये फ़ंक्शन शॉपिफाई यूआरएल बनाएगा
   function handleFilterSubmit(event) {
     event.preventDefault();
     
@@ -270,7 +274,6 @@
       tagsToApply.push(box.value);
     });
     
-    // शॉपिफाई कलेक्शन का सही हैंडल यूआरएल रास्ता
     const collectionHandle = "{{ collection.handle }}";
     let newUrl = '/collections/' + collectionHandle;
     
@@ -278,7 +281,6 @@
       newUrl += '/' + tagsToApply.join('+');
     }
     
-    // अब पेज सीधे सही फ़िल्टर के साथ रीडायरेक्ट होगा
     window.location.href = newUrl;
   }
 </script>
