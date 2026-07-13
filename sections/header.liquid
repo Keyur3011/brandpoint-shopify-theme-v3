@@ -97,10 +97,28 @@
       <button type="button" class="bp-search-close-btn" id="bpSearchCloseBtn">✕</button>
     </div>
     
-    <div class="bp-search-input-field-row">
-      <input type="text" autocomplete="off" placeholder="SEARCH FOR SHIRTS, DENIM, CORSET..." class="bp-smart-search-input" id="bpSearchInputField">
+    <!-- 🎯 यहाँ बदलाव किया गया है: अब हेडर जैसा सेम सर्च आइकॉन अंदर भी आ गया है -->
+    <form action="/search" method="get" role="search" class="bp-search-input-field-row">
+      <div style="position: relative; display: flex; align-items: center; width: 100%;">
+        <input 
+          type="search" 
+          name="q"
+          autocomplete="off" 
+          placeholder="SEARCH FOR SHIRTS, DENIM, CORSET..." 
+          class="bp-smart-search-input" 
+          id="bpSearchInputField"
+          value="{{ search.terms | escape }}"
+          style="padding-right: 40px;"
+        >
+        <button type="submit" aria-label="Submit Search" style="background: none; border: none; color: #ffffff; cursor: pointer; position: absolute; right: 0; padding: 8px; display: flex; align-items: center; justify-content: center;">
+          <svg viewBox="0 0 24 24" width="22" height="22" stroke="currentColor" stroke-width="1.5" fill="none">
+            <circle cx="11" cy="11" r="8"></circle>
+            <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+          </svg>
+        </button>
+      </div>
       <span class="bp-search-input-underline"></span>
-    </div>
+    </form>
 
     <div class="bp-search-predictions-container" id="bpSearchPredictions">
       <div class="bp-search-static-suggestions" id="bpStaticSuggestions">
@@ -357,6 +375,7 @@
     position: relative;
     width: 100%;
     margin-bottom: 30px;
+    display: block;
   }
   .bp-smart-search-input {
     width: 100%;
@@ -550,5 +569,3 @@ document.addEventListener("DOMContentLoaded", function() {
   "settings": []
 }
 {% endschema %}
-
-
