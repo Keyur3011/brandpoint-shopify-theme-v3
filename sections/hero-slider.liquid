@@ -286,6 +286,91 @@ document.addEventListener("DOMContentLoaded", function() {
   ]
 }
 {% endschema %}
+<!-- BRAND POINT CUSTOM HERO SLIDER STYLE START -->
+<style>
+/* बैनर के कंटेंट को नीचे की तरफ परफेक्ट सेट करने के लिए */
+.hero-slider .banner__content,
+.hero-slider__content,
+.banner__content {
+  display: flex !important;
+  flex-direction: column !important;
+  justify-content: flex-end !important; 
+  align-items: center !important;
+  padding-bottom: 55px !important; 
+}
+
+/* "Elevate your everyday style" - बड़ा, बोल्ड और क्लासी फॉन्ट */
+.hero-slider .banner__heading,
+.hero-slider__heading,
+.banner__heading {
+  font-family: 'Oswald', 'Montserrat', 'Helvetica Neue', sans-serif !important;
+  font-weight: 800 !important; 
+  font-size: 32px !important; 
+  letter-spacing: 3px !important; 
+  text-transform: uppercase !important; 
+  color: #ffffff !important;
+  line-height: 1.2 !important;
+  text-align: center !important;
+  text-shadow: 0 4px 15px rgba(0, 0, 0, 0.85), 0 2px 4px rgba(0, 0, 0, 0.5) !important; 
+  margin-bottom: 22px !important; 
+  max-width: 90% !important;
+}
+
+/* नीचे वाला बटन - छोटा, स्लीक और राउंडेड (Curved) */
+.hero-slider .banner__buttons a.button,
+.hero-slider .button,
+.banner__buttons a.button {
+  font-family: 'Montserrat', sans-serif !important;
+  background: #ffffff !important; 
+  color: #000000 !important; 
+  font-weight: 700 !important;
+  letter-spacing: 2px !important;
+  text-transform: uppercase !important;
+  font-size: 12px !important; 
+  border-radius: 50px !important; /* परफेक्ट कैप्सूल शेप */
+  border: none !important;
+  padding: 12px 36px !important;
+  min-width: 170px !important;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5) !important;
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1) !important;
+  display: inline-block !important;
+}
+
+/* बटन पर होवर (उंगली जाने पर) इफ़ेक्ट */
+.hero-slider .banner__buttons a.button:hover,
+.hero-slider .button:hover,
+.banner__buttons a.button:hover {
+  background: #000000 !important; 
+  color: #ffffff !important; 
+  transform: translateY(-3px) !important; 
+  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.7), 0 0 15px rgba(255, 255, 255, 0.2) !important;
+}
+
+/* मोबाइल स्क्रीन्स के लिए परफेक्ट अलाइनमेंट */
+@media (max-width: 768px) {
+  .hero-slider .banner__heading,
+  .hero-slider__heading,
+  .banner__heading {
+    font-size: 22px !important; 
+    letter-spacing: 2px !important;
+    padding: 0 10px !important;
+    margin-bottom: 18px !important;
+  }
+  .hero-slider .banner__buttons a.button,
+  .hero-slider .button,
+  .banner__buttons a.button {
+    padding: 10px 30px !important;
+    font-size: 11px !important;
+    min-width: 150px !important;
+  }
+  .hero-slider .banner__content,
+  .hero-slider__content,
+  .banner__content {
+    padding-bottom: 40px !important; 
+  }
+}
+</style>
+<!-- BRAND POINT CUSTOM HERO SLIDER STYLE END -->
 
 
 
