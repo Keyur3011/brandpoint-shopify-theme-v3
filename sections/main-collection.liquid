@@ -6,11 +6,10 @@
       <p class="main-collection-subtitle">Premium Indian Streetwear & Luxury Casual Fashion</p>
     </div>
 
-    <!-- फ़िल्टर फॉर्म को अब पूरे कलेक्शन ग्रिड के ऊपर रैप कर दिया है ताकि बटन्स कहीं भी काम कर सकें -->
+    <!-- फ़िल्टर फॉर्म -->
     <form id="ShopifyFilterForm" onsubmit="handleFilterSubmit(event)" style="margin: 0; padding: 0;">
 
       <div class="figma-utility-bar">
-        <!-- BRAND POINT ACTIVE COLLECTION SEARCH BAR -->
         <div class="utility-search-box-active" style="width: 100%; max-width: 320px;">
           <div style="position: relative; display: flex; align-items: center; width: 100%; background-color: #0d0d0d; border: 1px solid #1a1a1a; padding: 10px 15px; border-radius: 25px;">
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#666" stroke-width="2" style="margin-right: 10px; flex-shrink: 0;"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
@@ -29,19 +28,16 @@
           <span class="product-counter-text">{{ collection.products_count }} Products</span>
           
           <div style="display: flex; gap: 10px; align-items: center;">
-            <!-- ऑरिजनल फिल्टर ओपन बटन -->
             <button type="button" class="utility-filter-btn" onclick="document.getElementById('fancyFilterDrawer').style.transform='translateX(0)'">
               <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="4" y1="21" x2="4" y2="14"></line><line x1="4" y1="10" x2="4" y2="3"></line><line x1="12" y1="21" x2="12" y2="12"></line><line x1="12" y1="8" x2="12" y2="3"></line><line x1="20" y1="21" x2="20" y2="16"></line><line x1="20" y1="12" x2="20" y2="3"></line><line x1="1" y1="14" x2="7" y2="14"></line><line x1="9" y1="8" x2="15" y2="8"></line><line x1="17" y1="16" x2="23" y2="16"></line></svg>
               FILTERS
             </button>
-
-            <!-- अप्लाई फिल्टर बटन अब हमेशा यहाँ बाहर दिखेगा और वर्किंग रहेगा -->
             <button type="submit" class="global-apply-btn">APPLY FILTERS</button>
           </div>
         </div>
       </div>
 
-      <!-- फ़िल्टर ड्रावर (इसके अंदर के आपके ओरिजिनल साइज और कलर ऑप्शन्स वैसे ही रहेंगे) -->
+      <!-- फ़िल्टर ड्रावर -->
       <div id="fancyFilterDrawer" class="filter-drawer-overlay">
         <div class="drawer-header">
           <h2>Filters</h2>
@@ -104,6 +100,83 @@
 
     </form>
 
+    <!-- 6 डायनामिक कैटेगरीज ग्रिड (अब ये सीधे कस्टमाइज़र से इमेजेस लोड करेगा) -->
+    <div class="brand-categories-nav-grid" style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 15px; margin-bottom: 40px;">
+      
+      <!-- SHIRTS -->
+      <a href="/collections/shirts" class="category-card-item" style="position: relative; aspect-ratio: 3/4; border-radius: 12px; overflow: hidden; border: 1px solid #111;">
+        {% if section.settings.img_shirts != blank %}
+          <img src="{{ section.settings.img_shirts | img_url: 'master' }}" style="width:100%; height:100%; object-fit:cover;">
+        {% else %}
+          <img src="https://images.unsplash.com/photo-1618886614638-80e3c103d31a?auto=format&fit=crop&q=80&w=600" style="width:100%; height:100%; object-fit:cover;">
+        {% endif %}
+        <div style="position:absolute; inset:0; background:rgba(0,0,0,0.4); display:flex; align-items:center; justify-content:center;">
+          <span style="color:#fff; font-size:18px; font-weight:700; letter-spacing:1px; text-transform:uppercase;">SHIRTS</span>
+        </div>
+      </a>
+
+      <!-- DENIM -->
+      <a href="/collections/denim" class="category-card-item" style="position: relative; aspect-ratio: 3/4; border-radius: 12px; overflow: hidden; border: 1px solid #111;">
+        {% if section.settings.img_denim != blank %}
+          <img src="{{ section.settings.img_denim | img_url: 'master' }}" style="width:100%; height:100%; object-fit:cover;">
+        {% else %}
+          <img src="https://images.unsplash.com/photo-1542272604-787c3835535d?auto=format&fit=crop&q=80&w=600" style="width:100%; height:100%; object-fit:cover;">
+        {% endif %}
+        <div style="position:absolute; inset:0; background:rgba(0,0,0,0.4); display:flex; align-items:center; justify-content:center;">
+          <span style="color:#fff; font-size:18px; font-weight:700; letter-spacing:1px; text-transform:uppercase;">DENIM</span>
+        </div>
+      </a>
+
+      <!-- T-SHIRTS -->
+      <a href="/collections/t-shirts" class="category-card-item" style="position: relative; aspect-ratio: 3/4; border-radius: 12px; overflow: hidden; border: 1px solid #111;">
+        {% if section.settings.img_tshirts != blank %}
+          <img src="{{ section.settings.img_tshirts | img_url: 'master' }}" style="width:100%; height:100%; object-fit:cover;">
+        {% else %}
+          <img src="https://images.unsplash.com/photo-1521572267360-ee0c2909d518?auto=format&fit=crop&q=80&w=600" style="width:100%; height:100%; object-fit:cover;">
+        {% endif %}
+        <div style="position:absolute; inset:0; background:rgba(0,0,0,0.4); display:flex; align-items:center; justify-content:center;">
+          <span style="color:#fff; font-size:18px; font-weight:700; letter-spacing:1px; text-transform:uppercase;">T-SHIRTS</span>
+        </div>
+      </a>
+
+      <!-- CORD SET -->
+      <a href="/collections/cord-set" class="category-card-item" style="position: relative; aspect-ratio: 3/4; border-radius: 12px; overflow: hidden; border: 1px solid #111;">
+        {% if section.settings.img_cordset != blank %}
+          <img src="{{ section.settings.img_cordset | img_url: 'master' }}" style="width:100%; height:100%; object-fit:cover;">
+        {% else %}
+          <img src="https://images.unsplash.com/photo-1523381210434-271e8be1f52b?auto=format&fit=crop&q=80&w=600" style="width:100%; height:100%; object-fit:cover;">
+        {% endif %}
+        <div style="position:absolute; inset:0; background:rgba(0,0,0,0.4); display:flex; align-items:center; justify-content:center;">
+          <span style="color:#fff; font-size:18px; font-weight:700; letter-spacing:1px; text-transform:uppercase;">CORD SET</span>
+        </div>
+      </a>
+
+      <!-- TRACK -->
+      <a href="/collections/track" class="category-card-item" style="position: relative; aspect-ratio: 3/4; border-radius: 12px; overflow: hidden; border: 1px solid #111;">
+        {% if section.settings.img_track != blank %}
+          <img src="{{ section.settings.img_track | img_url: 'master' }}" style="width:100%; height:100%; object-fit:cover;">
+        {% else %}
+          <img src="https://images.unsplash.com/photo-1483721310020-03333e577078?auto=format&fit=crop&q=80&w=600" style="width:100%; height:100%; object-fit:cover;">
+        {% endif %}
+        <div style="position:absolute; inset:0; background:rgba(0,0,0,0.4); display:flex; align-items:center; justify-content:center;">
+          <span style="color:#fff; font-size:18px; font-weight:700; letter-spacing:1px; text-transform:uppercase;">TRACK</span>
+        </div>
+      </a>
+
+      <!-- ACCESSORIES -->
+      <a href="/collections/accessories" class="category-card-item" style="position: relative; aspect-ratio: 3/4; border-radius: 12px; overflow: hidden; border: 1px solid #111;">
+        {% if section.settings.img_accessories != blank %}
+          <img src="{{ section.settings.img_accessories | img_url: 'master' }}" style="width:100%; height:100%; object-fit:cover;">
+        {% else %}
+          <img src="https://images.unsplash.com/photo-1509319117193-57bab727e09d?auto=format&fit=crop&q=80&w=600" style="width:100%; height:100%; object-fit:cover;">
+        {% endif %}
+        <div style="position:absolute; inset:0; background:rgba(0,0,0,0.4); display:flex; align-items:center; justify-content:center;">
+          <span style="color:#fff; font-size:18px; font-weight:700; letter-spacing:1px; text-transform:uppercase;">ACCESSORIES</span>
+        </div>
+      </a>
+
+    </div>
+
     <!-- प्रोडक्ट्स ग्रिड -->
     {% if collection.products.size > 0 %}
       <div class="brand-products-grid">
@@ -155,7 +228,6 @@
 </div>
 
 <style>
-  /* आपका ऑरिजनल स्टाइल बिल्कुल सुरक्षित है */
   .brand-collection-wrapper, .brand-collection-wrapper *, 
   .brand-product-card a, .meta-product-title, .product-card-anchor {
     text-decoration: none !important;
@@ -173,8 +245,6 @@
   .utility-right-side { display: flex; align-items: center; gap: 15px; width: 100%; justify-content: space-between; }
   .product-counter-text { color: #555555; font-size: 13px; }
   .utility-filter-btn { background-color: #0d0d0d; border: 1px solid #1a1a1a; color: #ffffff; font-size: 12px; font-weight: 700; padding: 10px 25px; border-radius: 25px; display: flex; align-items: center; gap: 8px; cursor: pointer; text-transform: uppercase; letter-spacing: 1px; }
-
-  /* नया ग्लोबल अप्लाई बटन स्टाइल जो हमेशा बाहर वर्क करेगा */
   .global-apply-btn { background-color: #ffffff; color: #000000; font-size: 12px; font-weight: 700; padding: 10px 20px; border-radius: 25px; border: none; cursor: pointer; letter-spacing: 1px; text-transform: uppercase; }
 
   .no-products-found-box { text-align: center; padding: 60px 20px; background: #0d0d0d; border: 1px solid #1a1a1a; border-radius: 16px; max-width: 500px; margin: 40px auto; }
@@ -223,6 +293,7 @@
 
   @media (min-width: 768px) {
     .brand-products-grid { grid-template-columns: repeat(4, 1fr); gap: 25px; }
+    .brand-categories-nav-grid { grid-template-columns: repeat(6, 1fr) !important; }
     .figma-utility-bar { flex-direction: row; align-items: center; }
     .utility-right-side { width: auto; gap: 20px; }
   }
@@ -279,6 +350,37 @@
 {% schema %}
 {
   "name": "Collection Grid Matrix",
-  "settings": []
+  "settings": [
+    {
+      "type": "image_picker",
+      "id": "img_shirts",
+      "label": "Shirts Category Image"
+    },
+    {
+      "type": "image_picker",
+      "id": "img_denim",
+      "label": "Denim Category Image"
+    },
+    {
+      "type": "image_picker",
+      "id": "img_tshirts",
+      "label": "T-Shirts Category Image"
+    },
+    {
+      "type": "image_picker",
+      "id": "img_cordset",
+      "label": "Cord Set Category Image"
+    },
+    {
+      "type": "image_picker",
+      "id": "img_track",
+      "label": "Track Category Image"
+    },
+    {
+      "type": "image_picker",
+      "id": "img_accessories",
+      "label": "Accessories Category Image"
+    }
+  ]
 }
 {% endschema %}
