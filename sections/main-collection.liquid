@@ -100,16 +100,12 @@
 
     </form>
 
-    <!-- 6 डायनामिक कैटेगरीज ग्रिड (अब ये सीधे कस्टमाइज़र से इमेजेस लोड करेगा) -->
+    <!-- 6 कैटेगरीज ग्रिड (फिक्स्ड एचडी इमेजेस के साथ) -->
     <div class="brand-categories-nav-grid" style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 15px; margin-bottom: 40px;">
       
       <!-- SHIRTS -->
       <a href="/collections/shirts" class="category-card-item" style="position: relative; aspect-ratio: 3/4; border-radius: 12px; overflow: hidden; border: 1px solid #111;">
-        {% if section.settings.img_shirts != blank %}
-          <img src="{{ section.settings.img_shirts | img_url: 'master' }}" style="width:100%; height:100%; object-fit:cover;">
-        {% else %}
-          <img src="https://images.unsplash.com/photo-1618886614638-80e3c103d31a?auto=format&fit=crop&q=80&w=600" style="width:100%; height:100%; object-fit:cover;">
-        {% endif %}
+        <img src="https://cdn.shopify.com/s/files/1/0811/5716/1212/files/1eaabf158ea5aa381e4b72ac390c5768_1.jpg?v=1784124920" style="width:100%; height:100%; object-fit:cover;">
         <div style="position:absolute; inset:0; background:rgba(0,0,0,0.4); display:flex; align-items:center; justify-content:center;">
           <span style="color:#fff; font-size:18px; font-weight:700; letter-spacing:1px; text-transform:uppercase;">SHIRTS</span>
         </div>
@@ -117,11 +113,7 @@
 
       <!-- DENIM -->
       <a href="/collections/denim" class="category-card-item" style="position: relative; aspect-ratio: 3/4; border-radius: 12px; overflow: hidden; border: 1px solid #111;">
-        {% if section.settings.img_denim != blank %}
-          <img src="{{ section.settings.img_denim | img_url: 'master' }}" style="width:100%; height:100%; object-fit:cover;">
-        {% else %}
-          <img src="https://images.unsplash.com/photo-1542272604-787c3835535d?auto=format&fit=crop&q=80&w=600" style="width:100%; height:100%; object-fit:cover;">
-        {% endif %}
+        <img src="https://cdn.shopify.com/s/files/1/0811/5716/1212/files/96597c5e6336df569b4a5977d7accc4a5e88d841a57b8152965a299037332854_1.png?v=1784124767" style="width:100%; height:100%; object-fit:cover;">
         <div style="position:absolute; inset:0; background:rgba(0,0,0,0.4); display:flex; align-items:center; justify-content:center;">
           <span style="color:#fff; font-size:18px; font-weight:700; letter-spacing:1px; text-transform:uppercase;">DENIM</span>
         </div>
@@ -129,11 +121,7 @@
 
       <!-- T-SHIRTS -->
       <a href="/collections/t-shirts" class="category-card-item" style="position: relative; aspect-ratio: 3/4; border-radius: 12px; overflow: hidden; border: 1px solid #111;">
-        {% if section.settings.img_tshirts != blank %}
-          <img src="{{ section.settings.img_tshirts | img_url: 'master' }}" style="width:100%; height:100%; object-fit:cover;">
-        {% else %}
-          <img src="https://images.unsplash.com/photo-1521572267360-ee0c2909d518?auto=format&fit=crop&q=80&w=600" style="width:100%; height:100%; object-fit:cover;">
-        {% endif %}
+        <img src="https://cdn.shopify.com/s/files/1/0811/5716/1212/files/file_0000000003bc7206a58062f9ebe1503c_1.png?v=1784124903" style="width:100%; height:100%; object-fit:cover;">
         <div style="position:absolute; inset:0; background:rgba(0,0,0,0.4); display:flex; align-items:center; justify-content:center;">
           <span style="color:#fff; font-size:18px; font-weight:700; letter-spacing:1px; text-transform:uppercase;">T-SHIRTS</span>
         </div>
@@ -141,35 +129,23 @@
 
       <!-- CORD SET -->
       <a href="/collections/cord-set" class="category-card-item" style="position: relative; aspect-ratio: 3/4; border-radius: 12px; overflow: hidden; border: 1px solid #111;">
-        {% if section.settings.img_cordset != blank %}
-          <img src="{{ section.settings.img_cordset | img_url: 'master' }}" style="width:100%; height:100%; object-fit:cover;">
-        {% else %}
-          <img src="https://images.unsplash.com/photo-1523381210434-271e8be1f52b?auto=format&fit=crop&q=80&w=600" style="width:100%; height:100%; object-fit:cover;">
-        {% endif %}
+        <img src="https://cdn.shopify.com/s/files/1/0811/5716/1212/files/d211733ea295e2578021583a0640aee2_1.jpg?v=1784124938" style="width:100%; height:100%; object-fit:cover;">
         <div style="position:absolute; inset:0; background:rgba(0,0,0,0.4); display:flex; align-items:center; justify-content:center;">
           <span style="color:#fff; font-size:18px; font-weight:700; letter-spacing:1px; text-transform:uppercase;">CORD SET</span>
         </div>
       </a>
 
-      <!-- TRACK -->
+      <!-- TRACK (अस्थायी डिफ़ॉल्ट इमेज) -->
       <a href="/collections/track" class="category-card-item" style="position: relative; aspect-ratio: 3/4; border-radius: 12px; overflow: hidden; border: 1px solid #111;">
-        {% if section.settings.img_track != blank %}
-          <img src="{{ section.settings.img_track | img_url: 'master' }}" style="width:100%; height:100%; object-fit:cover;">
-        {% else %}
-          <img src="https://images.unsplash.com/photo-1483721310020-03333e577078?auto=format&fit=crop&q=80&w=600" style="width:100%; height:100%; object-fit:cover;">
-        {% endif %}
+        <img src="https://images.unsplash.com/photo-1483721310020-03333e577078?auto=format&fit=crop&q=80&w=600" style="width:100%; height:100%; object-fit:cover;">
         <div style="position:absolute; inset:0; background:rgba(0,0,0,0.4); display:flex; align-items:center; justify-content:center;">
           <span style="color:#fff; font-size:18px; font-weight:700; letter-spacing:1px; text-transform:uppercase;">TRACK</span>
         </div>
       </a>
 
-      <!-- ACCESSORIES -->
+      <!-- ACCESSORIES (अस्थायी डिफ़ॉल्ट इमेज) -->
       <a href="/collections/accessories" class="category-card-item" style="position: relative; aspect-ratio: 3/4; border-radius: 12px; overflow: hidden; border: 1px solid #111;">
-        {% if section.settings.img_accessories != blank %}
-          <img src="{{ section.settings.img_accessories | img_url: 'master' }}" style="width:100%; height:100%; object-fit:cover;">
-        {% else %}
-          <img src="https://images.unsplash.com/photo-1509319117193-57bab727e09d?auto=format&fit=crop&q=80&w=600" style="width:100%; height:100%; object-fit:cover;">
-        {% endif %}
+        <img src="https://images.unsplash.com/photo-1509319117193-57bab727e09d?auto=format&fit=crop&q=80&w=600" style="width:100%; height:100%; object-fit:cover;">
         <div style="position:absolute; inset:0; background:rgba(0,0,0,0.4); display:flex; align-items:center; justify-content:center;">
           <span style="color:#fff; font-size:18px; font-weight:700; letter-spacing:1px; text-transform:uppercase;">ACCESSORIES</span>
         </div>
@@ -350,37 +326,6 @@
 {% schema %}
 {
   "name": "Collection Grid Matrix",
-  "settings": [
-    {
-      "type": "image_picker",
-      "id": "img_shirts",
-      "label": "Shirts Category Image"
-    },
-    {
-      "type": "image_picker",
-      "id": "img_denim",
-      "label": "Denim Category Image"
-    },
-    {
-      "type": "image_picker",
-      "id": "img_tshirts",
-      "label": "T-Shirts Category Image"
-    },
-    {
-      "type": "image_picker",
-      "id": "img_cordset",
-      "label": "Cord Set Category Image"
-    },
-    {
-      "type": "image_picker",
-      "id": "img_track",
-      "label": "Track Category Image"
-    },
-    {
-      "type": "image_picker",
-      "id": "img_accessories",
-      "label": "Accessories Category Image"
-    }
-  ]
+  "settings": []
 }
 {% endschema %}
