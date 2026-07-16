@@ -24,6 +24,11 @@
     <div class="product-info-panel">
       <h1 class="brand-product-title">{{ product.title }}</h1>
       
+      <!-- ⭐ JUDGE.ME STAR RATING UNDER TITLE -->
+      <div style="margin-bottom: 15px;">
+        {% render 'judgeme_widgets', widget_type: 'judgeme_preview_badge', concierge_install: false, product: product %}
+      </div>
+      
       <div class="brand-price-container">
         <span class="current-price">{{ product.price | money }}</span>
         {% if product.compare_at_price > product.price %}
@@ -120,6 +125,13 @@
       </div>
 
     </div>
+  </div>
+</div>
+
+<!-- 📦 JUDGE.ME MAIN AUTOMATIC REVIEW BOX (BELOW PRODUCT CARD) -->
+<div class="premium-review-section" style="border-top: 1px solid #1a1a1a; padding: 60px 15px; background: #000000;">
+  <div style="max-width: 1200px; margin: 0 auto;">
+    {% render 'judgeme_widgets', widget_type: 'judgeme_review_widget', concierge_install: false, product: product %}
   </div>
 </div>
 
@@ -247,7 +259,6 @@
     });
   }
 
-  // 🚀 एडवांस सिंगल-टाइम नेटिव इमेज控制ओ इंजन
   document.addEventListener('DOMContentLoaded', function() {
     const dataEl = document.getElementById('ProductJson-Data');
     if(!dataEl) return;
