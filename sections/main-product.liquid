@@ -222,13 +222,11 @@
     var variantId = document.getElementById('MasterVariantId').value;
     var quantity = document.getElementById('ProductQtyInput').value;
 
-    // 1. सबसे पहले पुराने कार्ट को पूरा क्लियर करो
     fetch('/cart/clear.js', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' }
     })
     .then(function() {
-      // 2. अब सिर्फ करंट वेरिएंट और चुनी हुई क्वांटिटी ही ऐड करो
       var formData = {
         'items': [{
           'id': parseInt(variantId),
@@ -242,7 +240,6 @@
       });
     })
     .then(function() {
-      // 3. सीधे चेकआउट पर रीडायरेक्ट करो (बिना किसी कचरे के)
       window.location.href = '/checkout';
     })
     .catch(function(error) {
@@ -250,7 +247,7 @@
     });
   }
 
-  // 🚀 एडवांस सिंगल-टाइम नेटिव इमेज कंट्रोलर इंजन
+  // 🚀 एडवांस सिंगल-टाइम नेटिव इमेज控制ओ इंजन
   document.addEventListener('DOMContentLoaded', function() {
     const dataEl = document.getElementById('ProductJson-Data');
     if(!dataEl) return;
@@ -284,7 +281,6 @@
           priceContainer.innerHTML = window.Shopify ? Shopify.formatMoney(matchedVariant.price, "{{ shop.money_format }}") : (matchedVariant.price / 100).toFixed(2);
         }
 
-        // शॉपिफाई की आंतरिक आईडी के द्वारा तुरंत इमेज स्विच
         if (matchedVariant.featured_image && matchedVariant.featured_image.id) {
           const targetThumb = document.querySelector(`.thumb-image-card[data-image-id="${matchedVariant.featured_image.id}"]`);
           if (targetThumb) {
@@ -321,36 +317,3 @@
   "settings": []
 }
 {% endschema %}
-
-<div style="border-top: 2px solid #222; border-bottom: 2px solid #111; padding: 40px 15px; margin-top: 50px; font-family: sans-serif; background: #000;">
-  <div style="max-width: 600px; margin: 0 auto; text-align: center;">
-    <div style="margin-bottom: 20px;">
-      <span style="color: #FFD700; font-size: 22px; letter-spacing: 3px;">★★★★★</span>
-      <p style="color: #fff; font-size: 14px; font-weight: 600; margin: 8px 0 0 0; letter-spacing: 2px; text-transform: uppercase;">Customer Experience</p>
-    </div>
-    <button onclick="var f=document.getElementById('brandReviewFormV2'); f.style.display=(f.style.display==='none'?'block':'none')" style="background: #fff; color: #000; border: 1px solid #fff; padding: 14px 35px; font-size: 11px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; cursor: pointer; box-shadow: 0 0 20px rgba(255,255,255,0.15); margin-bottom: 12px; border-radius: 0;">
-      ★ Share Your Review
-    </button>
-    <p style="color: #666; font-size: 11px; margin: 0; font-style: italic;">Your feedback goes directly to our founding team.</p>
-    <form id="brandReviewFormV2" action="mailto:your-email@example.com" method="post" enctype="text/plain" style="display: none; text-align: left; background: #050505; border: 1px solid #1a1a1a; padding: 25px; margin-top: 25px; border-radius: 0; box-shadow: 0 10px 30px rgba(0,0,0,0.5);">
-      <div style="margin-bottom: 18px;">
-        <label style="color: #aaa; display: block; font-size: 10px; letter-spacing: 1px; text-transform: uppercase; margin-bottom: 6px; font-weight: 600;">Overall Rating</label>
-        <select name="Rating" style="width: 100%; padding: 12px; background: #000; color: #fff; border: 1px solid #333; font-size: 12px; border-radius: 0; outline: none;">
-          <option>5 / 5 — Absolutely Premium</option>
-          <option>4 / 5 — Very Good Quality & Fit</option>
-        </select>
-      </div>
-      <div style="margin-bottom: 18px;">
-        <label style="color: #aaa; display: block; font-size: 10px; letter-spacing: 1px; text-transform: uppercase; margin-bottom: 6px; font-weight: 600;">Your Full Name</label>
-        <input type="text" name="Customer Name" placeholder="e.g., Keyur" required style="width: 100%; padding: 12px; background: #000; color: #fff; border: 1px solid #333; font-size: 12px; border-radius: 0; box-sizing: border-box; outline: none;">
-      </div>
-      <div style="margin-bottom: 18px;">
-        <label style="color: #aaa; display: block; font-size: 10px; letter-spacing: 1px; text-transform: uppercase; margin-bottom: 6px; font-weight: 600;">Your Review</label>
-        <textarea name="Review Details" rows="4" placeholder="Share your experience about fabric weight, fitting or delivery..." required style="width: 100%; padding: 12px; background: #000; color: #fff; border: 1px solid #333; font-size: 12px; border-radius: 0; box-sizing: border-box; resize: none; outline: none; line-height: 1.5;"></textarea>
-      </div>
-      <button type="submit" style="background: #fff; color: #000; border: none; width: 100%; padding: 14px; font-size: 11px; letter-spacing: 2px; font-weight: 700; text-transform: uppercase; cursor: pointer;">
-        Submit Experience
-      </button>
-    </form>
-  </div>
-</div>
