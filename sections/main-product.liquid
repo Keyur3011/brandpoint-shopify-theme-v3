@@ -217,11 +217,37 @@
     if(current + amount >= 1) { input.value = current + amount; }
   }
 
+  // 🎯 न्यू एडवांस्ड 'Buy Now' कार्ट-क्लियरिंग इंजन
   function triggerDirectCheckout() {
-    var form = document.getElementById('PremiumProductForm');
-    var input = document.createElement('input');
-    input.type = 'hidden'; input.name = 'return_to'; input.value = '/checkout';
-    form.appendChild(input); form.submit();
+    var variantId = document.getElementById('MasterVariantId').value;
+    var quantity = document.getElementById('ProductQtyInput').value;
+
+    // 1. सबसे पहले पुराने कार्ट को पूरा क्लियर करो
+    fetch('/cart/clear.js', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' }
+    })
+    .then(function() {
+      // 2. अब सिर्फ करंट वेरिएंट और चुनी हुई क्वांटिटी ही ऐड करो
+      var formData = {
+        'items': [{
+          'id': parseInt(variantId),
+          'quantity': parseInt(quantity)
+        }]
+      };
+      return fetch('/cart/add.js', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(formData)
+      });
+    })
+    .then(function() {
+      // 3. सीधे चेकआउट पर रीडायरेक्ट करो (बिना किसी कचरे के)
+      window.location.href = '/checkout';
+    })
+    .catch(function(error) {
+      console.error('Checkout Error:', error);
+    });
   }
 
   // 🚀 एडवांस सिंगल-टाइम नेटिव इमेज कंट्रोलर इंजन
@@ -258,7 +284,7 @@
           priceContainer.innerHTML = window.Shopify ? Shopify.formatMoney(matchedVariant.price, "{{ shop.money_format }}") : (matchedVariant.price / 100).toFixed(2);
         }
 
-        // 🎯 शॉपिफाई की आंतरिक आईडी के द्वारा तुरंत इमेज स्विच
+        // शॉपिफाई की आंतरिक आईडी के द्वारा तुरंत इमेज स्विच
         if (matchedVariant.featured_image && matchedVariant.featured_image.id) {
           const targetThumb = document.querySelector(`.thumb-image-card[data-image-id="${matchedVariant.featured_image.id}"]`);
           if (targetThumb) {
