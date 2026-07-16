@@ -21,10 +21,11 @@
       "hero-slider": {
         "type": "hero-slider",
         "blocks": {
-          "slide_x4TyGB": {
+          "slide_RnBGix": {
             "type": "slide",
             "settings": {
-              "image": "shopify://shop_images/1000548968.jpg",
+              "image": "shopify://shop_images/B87117FE-3E19-4F49-AC76-931703B142DB_1.png",
+              "heading": "ELEVATE YOUR EVERYDAY STYLE",
               "button_label": "SHOP NOW",
               "button_link": ""
             }
@@ -33,13 +34,14 @@
             "type": "slide",
             "settings": {
               "image": "shopify://shop_images/IMG-20260701-WA0058.jpg",
+              "heading": "ELEVATE YOUR EVERYDAY STYLE",
               "button_label": "SHOP NOW",
               "button_link": ""
             }
           }
         },
         "block_order": [
-          "slide_x4TyGB",
+          "slide_RnBGix",
           "slide_LTdBed"
         ],
         "custom_css": [],
