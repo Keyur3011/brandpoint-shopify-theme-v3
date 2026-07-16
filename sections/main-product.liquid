@@ -128,7 +128,7 @@
   </div>
 </div>
 
-<!-- 📦 CUSTOM MOBILE-RESPONSIVE PREMIUM REVIEW SECTION WITH ENGINE -->
+<!-- 📦 ULTIMATE FIXED MOBILE-RESPONSIVE REVIEW SECTION (BROWN THEME & VISIBLE TEXT) -->
 <div class="premium-review-section" style="border-top: 1px solid #1a1a1a; padding: 60px 15px; background: #000000;">
   <div class="custom-jdgm-box-container" style="max-width: 800px; margin: 0 auto;">
     <!-- Start of Judge.me code -->
@@ -185,7 +185,7 @@
   .current-price { font-size: 22px; font-weight: 700; }
   .compare-price { font-size: 16px; color: #666; text-decoration: line-through; }
 
-  /* Swatches - Active/Selected Look */
+  /* Swatches */
   .variant-option-group { margin-bottom: 20px; }
   .variant-label { display: block; font-size: 12px; font-weight: 600; color: #888; letter-spacing: 1px; margin-bottom: 10px; }
   .variant-values-list { display: flex; gap: 12px; align-items: center; flex-wrap: wrap; }
@@ -196,7 +196,6 @@
   .size-swatch-box { padding: 8px 16px; border: 1px solid #333; border-radius: 6px; font-size: 13px; font-weight: 500; cursor: pointer; transition: 0.2s; background: transparent; color: #fff; }
   .size-swatch-box:hover { border-color: #fff; }
   
-  /* Active Border Styles for Selection */
   .color-swatch-circle.active-swatch { border-color: #ffffff !important; box-shadow: 0 0 8px #ffffff; }
   .size-swatch-box.active-swatch { border-color: #ffffff !important; background-color: #ffffff !important; color: #000000 !important; font-weight: 700; }
 
@@ -216,10 +215,7 @@
   .btn-buy-now { background-color: #000000; color: #ffffff; border: 1px solid #ffffff; }
   .btn-buy-now:hover { background-color: #111111; }
 
-  /* WhatsApp & Badges */
   .whatsapp-order-btn { display: flex; align-items: center; justify-content: center; gap: 10px; width: 100%; height: 52px; border: 1px solid #075E54; border-radius: 8px; color: #25D366; text-decoration: none; font-weight: 700; font-size: 14px; margin-bottom: 15px; }
-  
-  /* Description content style reset for safety */
   .product-description-content p, .product-description-content ul, .product-description-content li { color: #ccc !important; background: transparent !important; }
 
   .trust-pillars-grid { display: grid; grid-template-columns: 1fr; gap: 15px; border-top: 1px solid #222; padding-top: 25px; }
@@ -228,42 +224,76 @@
   .pillar-card h4 { font-size: 14px; font-weight: 600; margin: 0 0 2px 0; }
   .pillar-card p { font-size: 12px; color: #666; margin: 0; }
 
-  /* 🎨 JUDGE.ME UI PREMIUM BOX STYLING WITH MOBILE OVERRIDES */
+  /* 🎨 EXTRA POWERFUL JUDGE.ME DARK + LUXURY BROWN STYLING */
   .custom-jdgm-box-container .jdgm-widget {
     background: #0d0d0d !important;
-    border: 1px solid #222 !important;
+    border: 1px solid #332211 !important; /* Premium Brown Border */
     border-radius: 12px !important;
     padding: 25px !important;
     color: #ffffff !important;
     box-sizing: border-box !important;
   }
+  
+  /* All Title and Text visibility fixes */
+  .custom-jdgm-box-container .jdgm-widget *, 
+  .custom-jdgm-box-container .jdgm-rev-title, 
+  .custom-jdgm-box-container .jdgm-rev-widg__title,
+  .custom-jdgm-box-container .jdgm-nodata-text,
+  .custom-jdgm-box-container .jdgm-preview-badge-text {
+    color: #ffffff !important; /* Force all hidden texts to White */
+  }
+
+  /* "Be the first to write a review" link style */
   .custom-jdgm-box-container .jdgm-write-rev-link {
-    background: #ffffff !important;
-    color: #000000 !important;
+    background: #8B5A2B !important; /* Luxury Brown */
+    color: #ffffff !important;
     display: inline-block !important;
     padding: 12px 24px !important;
     border-radius: 6px !important;
     font-weight: 700 !important;
     text-transform: uppercase !important;
     letter-spacing: 0.5px !important;
+    border: none !important;
+    margin-top: 10px !important;
   }
+  
+  .custom-jdgm-box-container .jdgm-write-rev-link:hover {
+    background: #A06D3B !important;
+  }
+
+  /* Form Elements & Fields */
   .custom-jdgm-box-container .jdgm-form__fieldset--reviewer-info .jdgm-form__fieldset-title {
     display: none !important;
   }
   .custom-jdgm-box-container .jdgm-form__label {
-    color: #888 !important;
-    font-size: 12px !important;
+    color: #cccccc !important;
+    font-size: 13px !important;
   }
   .custom-jdgm-box-container .jdgm-form__input {
-    background: #151515 !important;
-    border: 1px solid #333 !important;
+    background: #1a1a1a !important;
+    border: 1px solid #444 !important;
     color: #fff !important;
     border-radius: 6px !important;
     box-sizing: border-box !important;
     width: 100% !important;
+    padding: 10px !important;
+  }
+  
+  /* Submit / Next Buttons Inside Form */
+  .custom-jdgm-box-container .jdgm-submit-rev, 
+  .custom-jdgm-box-container .jdgm-form__actions .jdgm-btn,
+  .custom-jdgm-box-container .jdgm-btn--primary {
+    background: #8B5A2B !important; /* Luxury Brown */
+    color: #ffffff !important;
+    border: none !important;
+    font-weight: 700 !important;
+    border-radius: 6px !important;
+    text-transform: uppercase !important;
+    padding: 12px 20px !important;
+    cursor: pointer !important;
   }
 
-  /* 📱 MOBILE EXCLUSIVE PRESETS (BOX TYPES & SCALING FOR EXTRA SMALL SCREENS) */
+  /* 📱 SUPER MOBILE RE-INFORCED CSS (PREVENTS OVERFLOW & CLIPPING) */
   @media (max-width: 767px) {
     .custom-jdgm-box-container .jdgm-widget {
       padding: 15px !important;
@@ -271,28 +301,42 @@
     .custom-jdgm-box-container .jdgm-form__fieldset {
       margin-bottom: 12px !important;
       padding: 0 !important;
+      width: 100% !important;
     }
     .custom-jdgm-box-container .jdgm-form__actions {
       display: flex !important;
       flex-direction: column !important;
       gap: 10px !important;
+      width: 100% !important;
     }
     .custom-jdgm-box-container .jdgm-submit-rev, 
     .custom-jdgm-box-container .jdgm-form__actions .jdgm-btn {
       width: 100% !important;
       box-sizing: border-box !important;
-      padding: 12px !important;
-      font-size: 14px !important;
       text-align: center !important;
+      display: block !important;
     }
-    /* Fixing potential overflowing layout containers in Judge.me */
-    .jdgm-form, .jdgm-row, .jdgm-col {
+    
+    /* Strict layout reset for global Judge.me mobile grids */
+    .custom-jdgm-box-container .jdgm-form, 
+    .custom-jdgm-box-container .jdgm-row, 
+    .custom-jdgm-box-container .jdgm-col,
+    .custom-jdgm-box-container .jdgm-form__fieldset-inside {
       width: 100% !important;
       max-width: 100% !important;
+      min-width: 100% !important;
       float: none !important;
       padding: 0 !important;
-      margin: 0 0 10px 0 !important;
+      margin: 0 0 12px 0 !important;
       box-sizing: border-box !important;
+      display: block !important;
+    }
+    
+    /* Star selector scaling for mobile */
+    .custom-jdgm-box-container .jdgm-form__rating-stars {
+      font-size: 24px !important;
+      display: flex !important;
+      justify-content: flex-start !important;
     }
   }
 
