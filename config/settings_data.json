@@ -62,10 +62,28 @@
       "featured-product": {
         "type": "featured-product",
         "blocks": {
-          "product_block_mYT9Nb": {
+          "product_block_A3jEL4": {
             "type": "product_block",
             "settings": {
-              "featured_product_handle": "imported-embroidery-lilen-shirts"
+              "featured_product_handle": "premium-brown-collar-t-shirt-for-men-half-sleeve-regular-fit"
+            }
+          },
+          "product_block_TWrV8r": {
+            "type": "product_block",
+            "settings": {
+              "featured_product_handle": "straight-fit-track-lower-red"
+            }
+          },
+          "product_block_zBKH3A": {
+            "type": "product_block",
+            "settings": {
+              "featured_product_handle": "bootcut-denim-jeans"
+            }
+          },
+          "product_block_Xffm7n": {
+            "type": "product_block",
+            "settings": {
+              "featured_product_handle": "birds-night-embroidered-purple-shirt"
             }
           },
           "product_block_VLJYgq": {
@@ -73,25 +91,14 @@
             "settings": {
               "featured_product_handle": "lets-see-dropsholder-shirt"
             }
-          },
-          "product_block_ricPk4": {
-            "type": "product_block",
-            "settings": {
-              "featured_product_handle": "cordset"
-            }
-          },
-          "product_block_DtA99a": {
-            "type": "product_block",
-            "settings": {
-              "featured_product_handle": "short-sleeves-t-shirt"
-            }
           }
         },
         "block_order": [
-          "product_block_mYT9Nb",
-          "product_block_VLJYgq",
-          "product_block_ricPk4",
-          "product_block_DtA99a"
+          "product_block_A3jEL4",
+          "product_block_TWrV8r",
+          "product_block_zBKH3A",
+          "product_block_Xffm7n",
+          "product_block_VLJYgq"
         ],
         "settings": {
           "heading_text": "Featured",
