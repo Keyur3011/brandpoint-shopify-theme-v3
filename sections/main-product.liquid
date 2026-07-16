@@ -24,11 +24,6 @@
     <div class="product-info-panel">
       <h1 class="brand-product-title">{{ product.title }}</h1>
       
-      <!-- ⭐ JUDGE.ME STAR RATING BADGE UNDER TITLE -->
-      <div style="margin-bottom: 15px;">
-        <div class="jdgm-widget jdgm-preview-badge" data-id="{{ product.id }}"></div>
-      </div>
-      
       <div class="brand-price-container">
         <span class="current-price">{{ product.price | money }}</span>
         {% if product.compare_at_price > product.price %}
@@ -128,32 +123,6 @@
   </div>
 </div>
 
-<!-- 📦 ULTIMATE FIXED MOBILE-RESPONSIVE REVIEW SECTION (BROWN THEME & VISIBLE TEXT) -->
-<div class="premium-review-section" style="border-top: 1px solid #1a1a1a; padding: 60px 15px; background: #000000;">
-  <div class="custom-jdgm-box-container" style="max-width: 800px; margin: 0 auto;">
-    <!-- Start of Judge.me code -->
-    {% assign has_legacy = false %}
-    {% if product.metafields.judgeme.widget.size > 20 %}
-      {% assign has_legacy = true %}
-    {% endif %}
-    <div style='clear:both'></div>
-    <div id='judgeme_product_reviews' class='jdgm-widget jdgm-review-widget' data-product-title='{{ product.title | escape }}' data-id='{{ product.id }}' data-product-id='{{ product.id }}' data-widget='review' data-auto-install='false' data-shop-reviews-count='{{ shop.metafields.judgeme.shop_reviews_count | default: 0 | escape }}' data-entry-point='review_widget.js' data-entry-key='review-widget/main.js'>
-      {% if has_legacy %}
-        <div class='jdgm-legacy-widget-content' style='display: none;'>{{ product.metafields.judgeme.widget }}</div>
-      {% endif %}
-    </div>
-    {% if product.metafields.judgeme.review_widget_data %}
-      <script>
-        window.jdgm = window.jdgm || {};
-        jdgm.data ||= {}; 
-        jdgm.data.reviewWidget ||= {}; 
-        jdgm.data.reviewWidget[{{ product.id }}] = {{ product.metafields.judgeme.review_widget_data }};
-      </script>
-    {% endif %}
-    <!-- End of Judge.me code -->
-  </div>
-</div>
-
 <script id="ProductJson-Data" type="application/json">
   [
     {% for variant in product.variants %}
@@ -216,6 +185,7 @@
   .btn-buy-now:hover { background-color: #111111; }
 
   .whatsapp-order-btn { display: flex; align-items: center; justify-content: center; gap: 10px; width: 100%; height: 52px; border: 1px solid #075E54; border-radius: 8px; color: #25D366; text-decoration: none; font-weight: 700; font-size: 14px; margin-bottom: 15px; }
+  
   .product-description-content p, .product-description-content ul, .product-description-content li { color: #ccc !important; background: transparent !important; }
 
   .trust-pillars-grid { display: grid; grid-template-columns: 1fr; gap: 15px; border-top: 1px solid #222; padding-top: 25px; }
@@ -223,122 +193,6 @@
   .pillar-icon { font-size: 20px; }
   .pillar-card h4 { font-size: 14px; font-weight: 600; margin: 0 0 2px 0; }
   .pillar-card p { font-size: 12px; color: #666; margin: 0; }
-
-  /* 🎨 EXTRA POWERFUL JUDGE.ME DARK + LUXURY BROWN STYLING */
-  .custom-jdgm-box-container .jdgm-widget {
-    background: #0d0d0d !important;
-    border: 1px solid #332211 !important; /* Premium Brown Border */
-    border-radius: 12px !important;
-    padding: 25px !important;
-    color: #ffffff !important;
-    box-sizing: border-box !important;
-  }
-  
-  /* All Title and Text visibility fixes */
-  .custom-jdgm-box-container .jdgm-widget *, 
-  .custom-jdgm-box-container .jdgm-rev-title, 
-  .custom-jdgm-box-container .jdgm-rev-widg__title,
-  .custom-jdgm-box-container .jdgm-nodata-text,
-  .custom-jdgm-box-container .jdgm-preview-badge-text {
-    color: #ffffff !important; /* Force all hidden texts to White */
-  }
-
-  /* "Be the first to write a review" link style */
-  .custom-jdgm-box-container .jdgm-write-rev-link {
-    background: #8B5A2B !important; /* Luxury Brown */
-    color: #ffffff !important;
-    display: inline-block !important;
-    padding: 12px 24px !important;
-    border-radius: 6px !important;
-    font-weight: 700 !important;
-    text-transform: uppercase !important;
-    letter-spacing: 0.5px !important;
-    border: none !important;
-    margin-top: 10px !important;
-  }
-  
-  .custom-jdgm-box-container .jdgm-write-rev-link:hover {
-    background: #A06D3B !important;
-  }
-
-  /* Form Elements & Fields */
-  .custom-jdgm-box-container .jdgm-form__fieldset--reviewer-info .jdgm-form__fieldset-title {
-    display: none !important;
-  }
-  .custom-jdgm-box-container .jdgm-form__label {
-    color: #cccccc !important;
-    font-size: 13px !important;
-  }
-  .custom-jdgm-box-container .jdgm-form__input {
-    background: #1a1a1a !important;
-    border: 1px solid #444 !important;
-    color: #fff !important;
-    border-radius: 6px !important;
-    box-sizing: border-box !important;
-    width: 100% !important;
-    padding: 10px !important;
-  }
-  
-  /* Submit / Next Buttons Inside Form */
-  .custom-jdgm-box-container .jdgm-submit-rev, 
-  .custom-jdgm-box-container .jdgm-form__actions .jdgm-btn,
-  .custom-jdgm-box-container .jdgm-btn--primary {
-    background: #8B5A2B !important; /* Luxury Brown */
-    color: #ffffff !important;
-    border: none !important;
-    font-weight: 700 !important;
-    border-radius: 6px !important;
-    text-transform: uppercase !important;
-    padding: 12px 20px !important;
-    cursor: pointer !important;
-  }
-
-  /* 📱 SUPER MOBILE RE-INFORCED CSS (PREVENTS OVERFLOW & CLIPPING) */
-  @media (max-width: 767px) {
-    .custom-jdgm-box-container .jdgm-widget {
-      padding: 15px !important;
-    }
-    .custom-jdgm-box-container .jdgm-form__fieldset {
-      margin-bottom: 12px !important;
-      padding: 0 !important;
-      width: 100% !important;
-    }
-    .custom-jdgm-box-container .jdgm-form__actions {
-      display: flex !important;
-      flex-direction: column !important;
-      gap: 10px !important;
-      width: 100% !important;
-    }
-    .custom-jdgm-box-container .jdgm-submit-rev, 
-    .custom-jdgm-box-container .jdgm-form__actions .jdgm-btn {
-      width: 100% !important;
-      box-sizing: border-box !important;
-      text-align: center !important;
-      display: block !important;
-    }
-    
-    /* Strict layout reset for global Judge.me mobile grids */
-    .custom-jdgm-box-container .jdgm-form, 
-    .custom-jdgm-box-container .jdgm-row, 
-    .custom-jdgm-box-container .jdgm-col,
-    .custom-jdgm-box-container .jdgm-form__fieldset-inside {
-      width: 100% !important;
-      max-width: 100% !important;
-      min-width: 100% !important;
-      float: none !important;
-      padding: 0 !important;
-      margin: 0 0 12px 0 !important;
-      box-sizing: border-box !important;
-      display: block !important;
-    }
-    
-    /* Star selector scaling for mobile */
-    .custom-jdgm-box-container .jdgm-form__rating-stars {
-      font-size: 24px !important;
-      display: flex !important;
-      justify-content: flex-start !important;
-    }
-  }
 
   @media (min-width: 768px) {
     .premium-product-container { grid-template-columns: 1.1fr 0.9fr; gap: 60px; }
