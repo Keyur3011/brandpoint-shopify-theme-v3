@@ -24,9 +24,9 @@
     <div class="product-info-panel">
       <h1 class="brand-product-title">{{ product.title }}</h1>
       
-      <!-- ⭐ JUDGE.ME STAR RATING UNDER TITLE -->
+      <!-- ⭐ JUDGE.ME STAR RATING UNDER TITLE (NO ERROR HTML METHOD) -->
       <div style="margin-bottom: 15px;">
-        {% render 'judgeme_widgets', widget_type: 'judgeme_preview_badge', concierge_install: false, product: product %}
+        <div class='jdgm-widget jdgm-preview-badge' data-id='{{ product.id }}'></div>
       </div>
       
       <div class="brand-price-container">
@@ -128,10 +128,12 @@
   </div>
 </div>
 
-<!-- 📦 JUDGE.ME MAIN AUTOMATIC REVIEW BOX (BELOW PRODUCT CARD) -->
+<!-- 📦 JUDGE.ME MAIN AUTOMATIC REVIEW BOX (NO ERROR HTML METHOD) -->
 <div class="premium-review-section" style="border-top: 1px solid #1a1a1a; padding: 60px 15px; background: #000000;">
   <div style="max-width: 1200px; margin: 0 auto;">
-    {% render 'judgeme_widgets', widget_type: 'judgeme_review_widget', concierge_install: false, product: product %}
+    <div id='judgeme_product_reviews' class='jdgm-widget jdgm-review-widget' data-id='{{ product.id }}'>
+      {{ product.metafields.judgeme.widget }}
+    </div>
   </div>
 </div>
 
@@ -229,7 +231,6 @@
     if(current + amount >= 1) { input.value = current + amount; }
   }
 
-  // 🎯 न्यू एडवांस्ड 'Buy Now' कार्ट-क्लियरिंग इंजन
   function triggerDirectCheckout() {
     var variantId = document.getElementById('MasterVariantId').value;
     var quantity = document.getElementById('ProductQtyInput').value;
