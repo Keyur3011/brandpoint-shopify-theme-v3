@@ -49,7 +49,15 @@
                   {% if is_color %}
                     <span class="color-swatch-circle {% if option.selected_value == value %}active-swatch{% endif %}" data-value="{{ value | escape }}" style="background-color: {{ value | downcase }};" title="{{ value | escape }}"></span>
                   {% else %}
-                    <span class="size-swatch-box {% if option.selected_value == value %}active-swatch{% endif %}" data-value="{{ value | escape }}">{{ value }}</span>
+                    <!-- सोल्ड आउट चेक करने का लॉजिक बैकएंड से -->
+                    {%- assign is_available = false -%}
+                    {%- for variant in product.variants -%}
+                      {%- if variant.options contains value and variant.available -%}
+                        {%- assign is_available = true -%}
+                      {%- endif -%}
+                    {%- endfor -%}
+
+                    <span class="size-swatch-box {% if option.selected_value == value %}active-swatch{% endif %} {% unless is_available %}sold-out-variant{% endunless %}" data-value="{{ value | escape }}">{{ value }}</span>
                   {% endif %}
                 {% endfor %}
               </div>
@@ -130,6 +138,7 @@
         "id": {{ variant.id }},
         "options": {{ variant.options | json }},
         "price": {{ variant.price }},
+        "available": {{ variant.available }},
         "featured_image": {% if variant.featured_image %}{ "id": {{ variant.featured_image.id }} }{% else %}null{% endif %}
       }{% unless forloop.last %},{% endunless %}
     {% endfor %}
@@ -162,11 +171,36 @@
   .color-swatch-circle { width: 28px; height: 28px; border-radius: 50%; display: inline-block; border: 2px solid #333; cursor: pointer; transition: 0.2s; position: relative; }
   .color-swatch-circle:hover { transform: scale(1.1); }
   
-  .size-swatch-box { padding: 8px 16px; border: 1px solid #333; border-radius: 6px; font-size: 13px; font-weight: 500; cursor: pointer; transition: 0.2s; background: transparent; color: #fff; }
+  .size-swatch-box { padding: 8px 16px; border: 1px solid #333; border-radius: 6px; font-size: 13px; font-weight: 500; cursor: pointer; transition: 0.2s; background: transparent; color: #fff; position: relative; overflow: hidden; }
   .size-swatch-box:hover { border-color: #fff; }
   
   .color-swatch-circle.active-swatch { border-color: #ffffff !important; box-shadow: 0 0 8px #ffffff; }
   .size-swatch-box.active-swatch { border-color: #ffffff !important; background-color: #ffffff !important; color: #000000 !important; font-weight: 700; }
+
+  /* ==========================================
+     START: SOLD OUT SWATCH DESIGN
+     ========================================== */
+  .size-swatch-box.sold-out-variant {
+    opacity: 0.3 !important;
+    pointer-events: none !important; /* क्लिक बंद करने के लिए */
+    background-color: #111111 !important;
+    color: #666666 !important;
+    border: 1px dashed #444444 !important;
+    cursor: not-allowed !important;
+  }
+  .size-swatch-box.sold-out-variant::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(to top right, transparent calc(50% - 1px), #888, transparent calc(50% + 1px));
+    pointer-events: none;
+  }
+  /* ==========================================
+     END: SOLD OUT SWATCH DESIGN
+     ========================================== */
 
   /* Qty Counter */
   .quantity-selector-wrapper { margin-bottom: 30px; }
@@ -283,6 +317,45 @@
           }
         }
       }
+
+      // ==========================================
+      // dynamic check for sold-out size options based on selected color
+      // ==========================================
+      const colorGroup = document.querySelector('.variant-option-group[data-option-name*="color"], .variant-option-group[data-option-name*="colour"]');
+      const sizeGroup = document.querySelector('.variant-option-group[data-option-name*="size"]');
+
+      if (colorGroup && sizeGroup) {
+        const activeColor = colorGroup.querySelector('.active-swatch').getAttribute('data-value');
+        const sizeSwatches = sizeGroup.querySelectorAll('.size-swatch-box');
+
+        sizeSwatches.forEach(sizeSwatch => {
+          const sizeVal = sizeSwatch.getAttribute('data-value');
+          
+          // find variant matching this size and active color
+          const specificVariant = variantsData.find(v => {
+            return v.options.includes(activeColor) && v.options.includes(sizeVal);
+          });
+
+          if (specificVariant && !specificVariant.available) {
+            sizeSwatch.classList.add('sold-out-variant');
+            // If the currently active size just became sold out because of color change, remove active class
+            if (sizeSwatch.classList.contains('active-swatch')) {
+              sizeSwatch.classList.remove('active-swatch');
+            }
+          } else {
+            sizeSwatch.classList.remove('sold-out-variant');
+          }
+        });
+
+        // Auto-select first available size if active is lost
+        if (!sizeGroup.querySelector('.active-swatch')) {
+          const firstAvailable = sizeGroup.querySelector('.size-swatch-box:not(.sold-out-variant)');
+          if (firstAvailable) {
+            firstAvailable.classList.add('active-swatch');
+            updateSelectedVariant();
+          }
+        }
+      }
     }
 
     swatchGroups.forEach(group => {
@@ -294,6 +367,8 @@
         }
 
         swatch.addEventListener('click', function() {
+          if (this.classList.contains('sold-out-variant')) return; // prevent clicking sold out
+
           group.querySelectorAll('.color-swatch-circle, .size-swatch-box').forEach(s => s.classList.remove('active-swatch'));
           this.classList.add('active-swatch');
           
