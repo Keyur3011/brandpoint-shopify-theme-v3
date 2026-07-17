@@ -45,6 +45,25 @@
       }
     </style>
 
+    <!-- ==========================================
+         START: CATEGORY BORDER RADIUS (ROUND CORNERS)
+         ========================================== -->
+    <style>
+      /* कैटेगरी ग्रिड के इमेज और बॉक्स के कोनों को गोल करने के लिए */
+      .category-grid .category-item, 
+      .category-grid img, 
+      .bp-category-card, 
+      .bp-category-card img,
+      .category-grid__item,
+      .category-grid__item img {
+        border-radius: 16px !important; /* कोनों को गोल करने के लिए */
+        overflow: hidden !important;    /* ताकि इमेज कोने से बाहर न निकले */
+      }
+    </style>
+    <!-- ==========================================
+         END: CATEGORY BORDER RADIUS
+         ========================================== -->
+
     {{ content_for_header }}
   </head>
 
